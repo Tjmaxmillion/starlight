@@ -3,6 +3,8 @@ using System.Numerics;
 using Content.Shared.Screen;
 using Content.Shared.Screen.Components;
 using Content.Shared.TextScreen;
+using Content.Shared._Starlight.Screen;
+using Content.Shared._Starlight.Screen.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -13,7 +15,8 @@ namespace Content.Client._Starlight.Screen;
 /// Data is passed from server to client through <see cref="SharedAppearanceSystem.SetData"/>,
 /// calling <see cref="OnAppearanceChange"/>, which calls almost everything else.
 
-/// Data for the (at most one) timer is stored in <see cref="ScreenTimerComponent"/>.
+/// Data for the shuttle timer is stored in <see cref="ScreenTimerComponent"/>.
+/// Data for the nuke timer is stored in <see cref="NukeTimerComponent"/>.
 
 /// All screens have <see cref="ScreenVisualsComponent"/>, but:
 /// the update method only updates the timers, so the timercomp is added/removed by appearance changes/timing out.
@@ -56,6 +59,13 @@ public sealed partial class ScreenSystem : VisualizerSystem<ScreenVisualsCompone
     ///     A string prefix for all timer layers.
     /// </summary>
     private const string TimerMapKey = "timerMapKey";
+
+    /// <summary>
+    ///     String prefixes for the nuke-timer top-text and shadow layers.
+    /// </summary>
+    private const string NukeTimerTopTextKey = "nukeTimerTopText";
+    private const string NukeTimerShadowKey = "nukeTimerShadow";
+
     private const string TextPath = "Effects/text.rsi";
     private const int CharWidth = 4;
 
@@ -149,7 +159,6 @@ public sealed partial class ScreenSystem : VisualizerSystem<ScreenVisualsCompone
             }
         }
 
-        // Starlight
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.AlertLevel, out var alertLevel))
         {
             if (TryComp<ScreenComponent>(uid, out var screenComp) && TryComp<SpriteComponent>(uid, out var sprite))
@@ -159,6 +168,31 @@ public sealed partial class ScreenSystem : VisualizerSystem<ScreenVisualsCompone
 
                 layer.SetRsi(null);
                 layer.SetState(alertLevel.ToString());
+            }
+        }
+        if (args.AppearanceData.TryGetValue(ScreenVisuals.NukeTime, out var nukeRaw) && nukeRaw is TimeSpan nukeTarget)
+        {
+            if (nukeTarget > _gameTiming.CurTime)
+            {
+                var nukeTimer = EnsureComp<NukeTimerComponent>(uid);
+                nukeTimer.Target = nukeTarget;
+
+                if (!args.Sprite.LayerMapTryGet(NukeTimerTopTextKey + 0, out _))
+                    InitNukeTimerLayers(uid, component, args.Sprite);
+
+                var alreadyOnAlertPhase = TryComp<ScreenComponent>(uid, out var screenComp)
+                    && screenComp.CurrentScreen == ScreenType.AlertLevel;
+                for (var i = 0; i < component.RowLength; i++)
+                {
+                    _sprite.LayerSetVisible((uid, args.Sprite), NukeTimerTopTextKey + i, alreadyOnAlertPhase);
+                    _sprite.LayerSetVisible((uid, args.Sprite), NukeTimerShadowKey + i, alreadyOnAlertPhase);
+                }
+
+                BuildNukeTimerLayers(uid, nukeTimer, component, args.Sprite);
+            }
+            else
+            {
+                ClearNukeTimerLayers(uid, component);
             }
         }
     }
@@ -183,6 +217,97 @@ public sealed partial class ScreenSystem : VisualizerSystem<ScreenVisualsCompone
         BuildTextLayers(uid, screen, sprite);
         DrawLayers(uid, screen.LayerStatesToDraw);
     }
+
+    private void InitNukeTimerLayers(EntityUid uid, ScreenVisualsComponent screen, SpriteComponent sprite)
+    {
+        for (var i = 0; i < screen.RowLength; i++)
+        {
+            var shadowKey = NukeTimerShadowKey + i;
+            var shadowLayer = _sprite.LayerMapReserve((uid, sprite), shadowKey);
+            _sprite.LayerSetRsi((uid, sprite), shadowKey, new ResPath(TextPath));
+            _sprite.LayerSetColor((uid, sprite), shadowKey, Color.Black);
+            _sprite.LayerSetRsiState((uid, sprite), shadowKey, DefaultState);
+            sprite.LayerSetShader(shadowLayer, "unshaded");
+
+            var topTextKey = NukeTimerTopTextKey + i;
+            var topTextLayer = _sprite.LayerMapReserve((uid, sprite), topTextKey);
+            _sprite.LayerSetRsi((uid, sprite), topTextKey, new ResPath(TextPath));
+            _sprite.LayerSetColor((uid, sprite), topTextKey, Color.Yellow);
+            _sprite.LayerSetRsiState((uid, sprite), topTextKey, DefaultState);
+            sprite.LayerSetShader(topTextLayer, "unshaded");
+        }
+    }
+
+    private void BuildNukeTimerLayers(EntityUid uid, NukeTimerComponent timer, ScreenVisualsComponent screen, SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref sprite, false))
+            return;
+
+        var time = TimeToString(
+            (_gameTiming.CurTime - timer.Target).Duration(),
+            false,
+            screen.HourFormat, screen.MinuteFormat, screen.SecondFormat);
+
+        var min = Math.Min(time.Length, screen.RowLength);
+
+        for (var i = 0; i < screen.RowLength; i++)
+        {
+            var state = i < min ? GetStateFromChar(time[i]) : DefaultState;
+            var xOffset = (i - min / 2f + 0.5f) * CharWidth;
+
+            var topTextKey = NukeTimerTopTextKey + i;
+            _sprite.LayerSetOffset(
+                (uid, sprite), topTextKey,
+                new Vector2(xOffset, 0f) * ScreenVisualsComponent.PixelSize);
+            if (state != null)
+                _sprite.LayerSetRsiState((uid, sprite), topTextKey, state);
+
+            var shadowKey = NukeTimerShadowKey + i;
+            _sprite.LayerSetOffset(
+                (uid, sprite), shadowKey,
+                new Vector2(xOffset, -1f) * ScreenVisualsComponent.PixelSize);
+            if (state != null)
+                _sprite.LayerSetRsiState((uid, sprite), shadowKey, state);
+        }
+    }
+
+    private void ClearNukeTimerLayers(EntityUid uid, ScreenVisualsComponent? screen = null)
+    {
+        if (!Resolve(uid, ref screen, false))
+            return;
+
+        if (TryComp<SpriteComponent>(uid, out var sprite) && sprite.LayerMapTryGet(NukeTimerTopTextKey + 0, out _))
+        {
+            for (var i = 0; i < screen.RowLength; i++)
+            {
+                _sprite.RemoveLayer((uid, sprite), NukeTimerTopTextKey + i, false);
+                _sprite.RemoveLayer((uid, sprite), NukeTimerShadowKey + i, false);
+            }
+        }
+
+        RemComp<NukeTimerComponent>(uid);
+    }
+
+    private void UpdateNukeTimerVisibility(EntityUid uid, SpriteComponent sprite, ScreenVisualsComponent? screen = null)
+    {
+        if (!TryComp<NukeTimerComponent>(uid, out var nukeTimer) || !Resolve(uid, ref screen, false))
+            return;
+
+        if (!sprite.LayerMapTryGet(NukeTimerTopTextKey + 0, out _))
+            return;
+
+        var visible = false;
+        if (sprite.LayerMapTryGet(TextScreenVisuals.AlertLevel, out var alertId) && sprite.TryGetLayer(alertId, out var alertLayer))
+            visible = alertLayer.Visible;
+
+        var isVisible = visible && nukeTimer.Target > _gameTiming.CurTime;
+        for (var i = 0; i < screen.RowLength; i++)
+        {
+            _sprite.LayerSetVisible((uid, sprite), NukeTimerTopTextKey + i, isVisible);
+            _sprite.LayerSetVisible((uid, sprite), NukeTimerShadowKey + i, isVisible);
+        }
+    }
+
 
     /// <summary>
     ///     Converts string to string?[] based on
@@ -372,8 +497,16 @@ public sealed partial class ScreenSystem : VisualizerSystem<ScreenVisualsCompone
 
                 foreach (var key in visuals.LayerStatesToDraw.Keys)
                     sprite.LayerSetVisible(key, false);
+
+                if (TryComp<NukeTimerComponent>(uid, out var nukeTimer)
+                    && nukeTimer.Target > _gameTiming.CurTime)
+                {
+                    BuildNukeTimerLayers(uid, nukeTimer, visuals, sprite);
+                }
                 break;
         }
+
+        UpdateNukeTimerVisibility(uid, sprite, visuals);
     }
 
     public static ScreenType GetNextScreen(ScreenType current)
@@ -412,6 +545,17 @@ public sealed partial class ScreenSystem : VisualizerSystem<ScreenVisualsCompone
 
             BuildTimerLayers(uid, timer, visuals);
             DrawLayers(uid, timer.LayerStatesToDraw);
+        }
+        var nukeTimerUpdate = EntityQueryEnumerator<ScreenVisualsComponent, NukeTimerComponent>();
+        while (nukeTimerUpdate.MoveNext(out var uid, out var visuals, out var nukeTimer))
+        {
+            if (nukeTimer.Target < _gameTiming.CurTime)
+            {
+                ClearNukeTimerLayers(uid, visuals);
+                continue;
+            }
+
+            BuildNukeTimerLayers(uid, nukeTimer, visuals);
         }
     }
 
