@@ -158,6 +158,88 @@
   - FancyPen
 
 - type: loadoutGroup
+  id: HOSPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenHOS
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: WardenPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenWarden
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: CEPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenCE
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: CMOPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenCMO
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: RDPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenRD
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: QMPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenQM
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: SalvLeadPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenSalvLead
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: MagiPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenMagi
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: IAAPens
+  name: loadout-group-pens
+  minLimit: 1
+  loadouts:
+  - PenIAA
+  - Pen
+  - FancyPen
+
+
+- type: loadoutGroup
   id: AssistantGlasses
   name: loadout-group-assistant-glasses
   minLimit: 0

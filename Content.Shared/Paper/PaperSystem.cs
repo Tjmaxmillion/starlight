@@ -19,6 +19,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared._Starlight.Time;
+using Content.Shared._Starlight.Paper;
 // Starlight-end
 
 namespace Content.Shared.Paper;
@@ -149,7 +150,8 @@ public sealed partial class PaperSystem : EntitySystem
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
         // only allow editing if there are no stamps or when using a cyberpen
-        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
+        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag)
+            || _pairedPen.CanEdit(args.Used, args.User, entity.Comp.StampedBy); // Starlight - paired pens
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
             if (editable)
@@ -191,7 +193,7 @@ public sealed partial class PaperSystem : EntitySystem
 
         // If a stamp, attempt to stamp paper
         if (TryComp<StampComponent>(args.Used, out var stampComp) &&
-            TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+            TryStamp(entity, GetStampInfo(stampComp, _pairedPen.GetPairId(args.Used)), stampComp.StampState)) // Starlight-edit
         {
             // successfully stamped, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
@@ -214,12 +216,13 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
-    private static StampDisplayInfo GetStampInfo(StampComponent stamp)
+    private static StampDisplayInfo GetStampInfo(StampComponent stamp, string? pairId = null) // Starlight-edit
     {
         return new StampDisplayInfo
         {
             StampedName = stamp.StampedName,
-            StampedColor = stamp.StampedColor
+            StampedColor = stamp.StampedColor,
+            PairId = pairId // Starlight
         };
     }
 
@@ -324,12 +327,13 @@ public sealed partial class PaperSystem : EntitySystem
             return;
 
         EntityUid user = args.User;
+        EntityUid? pen = args.Using; // Starlight-edit
 
         AlternativeVerb verb = new()
         {
             Act = () =>
             {
-                TrySign(uid, user);
+                TrySign(uid, user, pen); // Starlight-edit: pass pen
             },
             Text = Loc.GetString("paper-component-verb-sign"),
             Priority = 4
@@ -339,15 +343,22 @@ public sealed partial class PaperSystem : EntitySystem
     }
 
     // Umbra: Actual signature code.
-    public bool TrySign(Entity<PaperComponent> paper, EntityUid signer)
+    public bool TrySign(Entity<PaperComponent> paper, EntityUid signer, EntityUid? pen = null) // Starlight-edit: pen
     {
+        // Starlight-start: Record if signed with a special paired pen
+        string? pairId = null;
+        if (pen != null && TryComp<PairedPenComponent>(pen, out _))
+            pairId = PairedPenSystem.PairedSignatureId;
+        // Starlight-end
+
         // Generate display information.
         StampDisplayInfo info = new StampDisplayInfo
         {
             StampedName = Name(signer),
             StampedColor = Color.FromHex("#333333"),
             Type = StampType.Signature,
-            Font = "/Fonts/_Starlight/Signature.ttf" // 🌟Starlight🌟
+            Font = "/Fonts/_Starlight/Signature.ttf", // 🌟Starlight🌟
+            PairId = pairId // Starlight
         };
 
         // STARLIGHT START

@@ -27,3 +27,102 @@
       tags:
       - Write
       - Pen
+
+- type: entity
+  name: HoS's fountain pen
+  parent: PenEmbeddable
+  id: PenHOS
+  description: A combat fountain pen for the Head of Security.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_hos
+
+- type: entity
+  name: warden's fountain pen
+  parent: PenEmbeddable
+  id: PenWarden
+  description: A combat fountain pen for the Warden.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_warden
+
+- type: entity
+  name: CE's fountain pen
+  parent: PenEmbeddable
+  id: PenCE
+  description: A durable fountain pen for the Chief Engineer.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_ce
+
+- type: entity
+  name: CMO's fountain pen
+  parent: PenEmbeddable
+  id: PenCMO
+  description: A sterile fountain pen for the Chief Medical Officer.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_cmo
+
+- type: entity
+  name: RD's fountain pen
+  parent: PenEmbeddable
+  id: PenRD
+  description: A high-tech fountain pen for the Research Director.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_rd
+
+- type: entity
+  name: QM's fountain pen
+  parent: PenEmbeddable
+  id: PenQM
+  description: A well-used fountain pen for the Quartermaster.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_qm
+
+- type: entity
+  name: salvage lead's fountain pen
+  parent: PenEmbeddable
+  id: PenSalvLead
+  description: A rugged fountain pen for the Salvage Lead.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_salvlead
+
+- type: entity
+  name: magistrate's fountain pen
+  parent: PenEmbeddable
+  id: PenMagi
+  description: A distinguished fountain pen for the Magistrate.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_magi
+
+- type: entity
+  name: internal affairs agent's fountain pen
+  parent: PenEmbeddable
+  id: PenIAA
+  description: A corporate fountain pen for the Internal Affairs Agent.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_iaa

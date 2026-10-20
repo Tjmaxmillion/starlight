@@ -57,3 +57,58 @@
   storage:
     id:
       - CrayonMime
+
+- type: loadout
+  id: PenHOS
+  storage:
+    id:
+      - PenHOS
+
+- type: loadout
+  id: PenWarden
+  storage:
+    id:
+      - PenWarden
+
+- type: loadout
+  id: PenCE
+  storage:
+    id:
+      - PenCE
+
+- type: loadout
+  id: PenCMO
+  storage:
+    id:
+      - PenCMO
+
+- type: loadout
+  id: PenRD
+  storage:
+    id:
+      - PenRD
+
+- type: loadout
+  id: PenQM
+  storage:
+    id:
+      - PenQM
+
+- type: loadout
+  id: PenSalvLead
+  storage:
+    id:
+      - PenSalvLead
+
+- type: loadout
+  id: PenMagi
+  storage:
+    id:
+      - PenMagi
+
+- type: loadout
+  id: PenIAA
+  storage:
+    id:
+      - PenIAA
+

@@ -1,0 +1,205 @@
+# Rubber stamps
+
+- type: !PartialOnly entity
+  id: RubberStampCaptain
+  components:
+  - type: PairedStamp
+    pairId: Captain
+
+- type: !PartialOnly entity
+  id: RubberStampHop
+  components:
+  - type: PairedStamp
+    pairId: HOP
+
+- type: !PartialOnly entity
+  id: RubberStampHos
+  components:
+  - type: PairedStamp
+    pairId: HOS
+
+- type: !PartialOnly entity
+  id: RubberStampWarden
+  components:
+  - type: PairedStamp
+    pairId: Warden
+
+- type: !PartialOnly entity
+  id: RubberStampCE
+  components:
+  - type: PairedStamp
+    pairId: CE
+
+- type: !PartialOnly entity
+  id: RubberStampCMO
+  components:
+  - type: PairedStamp
+    pairId: CMO
+
+- type: !PartialOnly entity
+  id: RubberStampRd
+  components:
+  - type: PairedStamp
+    pairId: RD
+
+- type: !PartialOnly entity
+  id: RubberStampQm
+  components:
+  - type: PairedStamp
+    pairId: QM
+
+- type: !PartialOnly entity
+  id: RubberStampSalvageLead
+  components:
+  - type: PairedStamp
+    pairId: SalvageLead
+
+- type: !PartialOnly entity
+  id: RubberStampNtrep
+  components:
+  - type: PairedStamp
+    pairId: NTR
+
+- type: !PartialOnly entity
+  id: RubberStampMagistrate
+  components:
+  - type: PairedStamp
+    pairId: Magistrate
+
+- type: !PartialOnly entity
+  id: RubberStampIAA
+  components:
+  - type: PairedStamp
+    pairId: IAA
+
+- type: !PartialOnly entity
+  id: RubberStampApproved
+  components:
+  - type: PairedStamp
+    pairId: Approved
+
+- type: !PartialOnly entity
+  id: RubberStampDenied
+  components:
+  - type: PairedStamp
+    pairId: Denied
+
+# Pens
+
+- type: !PartialOnly entity
+  id: PenCap
+  components:
+  - type: PairedPen
+    pairIds:
+    - Captain
+    - HOP
+    - HOS
+    - Warden
+    - CE
+    - CMO
+    - RD
+    - QM
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenHop
+  components:
+  - type: PairedPen
+    pairIds:
+    - HOP
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenHOS
+  components:
+  - type: PairedPen
+    pairIds:
+    - HOS
+    - Warden
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenWarden
+  components:
+  - type: PairedPen
+    pairIds:
+    - Warden
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenCE
+  components:
+  - type: PairedPen
+    pairIds:
+    - CE
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenCMO
+  components:
+  - type: PairedPen
+    pairIds:
+    - CMO
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenRD
+  components:
+  - type: PairedPen
+    pairIds:
+    - RD
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenQM
+  components:
+  - type: PairedPen
+    pairIds:
+    - QM
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenSalvLead
+  components:
+  - type: PairedPen
+    pairIds:
+    - SalvageLead
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenNTR
+  components:
+  - type: PairedPen
+    pairIds:
+    - NTR
+    - IAA
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenMagi
+  components:
+  - type: PairedPen
+    pairIds:
+    - Magistrate
+    - IAA
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenIAA
+  components:
+  - type: PairedPen
+    pairIds:
+    - IAA
+    - Approved
+    - Denied
