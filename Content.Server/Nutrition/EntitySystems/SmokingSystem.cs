@@ -48,7 +48,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
             InitializeCigars();
             InitializePipes();
-            InitializeVapes();
         }
 
         private void OnExtinguishEvent(Entity<SmokableComponent> ent, ref ExtinguishEvent args)
@@ -106,7 +105,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (args.Slot == "mask")
             {
-                _forensics.TransferDna(entity.Owner, args.Equipee, false);
+                _forensics.TransferDna(entity.Owner, args.EquipTarget, false);
             }
         }
 

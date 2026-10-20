@@ -148,7 +148,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         RaiseLocalEvent(ent, new DoorStateChangedEvent(door.State));
     }
 
-    public bool SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
+    public bool SetState(EntityUid uid, DoorState state, DoorComponent? door = null, EntityUid? user = null) // Starlight: added user param
     {
         if (!Resolve(uid, ref door))
             return false;
@@ -192,7 +192,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         door.State = state;
         Dirty(uid, door);
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(state));
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(state, user)); // Starlight: pass user through
 
         AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
         return true;
@@ -203,11 +203,19 @@ public abstract partial class SharedDoorSystem : EntitySystem
     #region Interactions
     protected void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        // Starlight edit start: Enable entities with prying capabilities on themselves to open doors
+        //Starlight-start
+        if (!_mapSystem.IsInitialized(Transform(uid).MapUid))
+        {
+            args.Handled = true;
+            return;
+        }
+        args.InteractionParticle &= door.ShowInteractionParticles; // don't show SECRET doors
+
+        // Enable entities with prying capabilities on themselves to open doors
         var pryingCapable = args.Complex || HasComp<PryingComponent>(args.User);
         if (args.Handled || !pryingCapable || !door.ClickOpen)
             return;
-        // Starlight edit end
+        // Starlight-end
 
         if (!TryToggleDoor(uid, door, args.User, predicted: true))
             _pryingSystem.TryPry(uid, args.User, out _);
@@ -370,7 +378,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         var lastState = door.State;
 
-        if (!SetState(uid, DoorState.Opening, door))
+        if (!SetState(uid, DoorState.Opening, door, user)) // Starlight: pass user through
             return;
 
         if (predicted)

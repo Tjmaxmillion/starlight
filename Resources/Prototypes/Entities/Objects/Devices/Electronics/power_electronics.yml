@@ -32,7 +32,6 @@
     - type: Tag
       tags:
         - WallmountSubstationElectronics
-        - RamChip #Protogen joke, makes them able to eat them. - FH
 
 # Wallmount Generator
 - type: entity
@@ -52,7 +51,6 @@
   - type: Tag
     tags:
       - WallmountGeneratorElectronics
-      - RamChip # FH
 
 # APU
 - type: entity
@@ -69,7 +67,6 @@
     - type: Tag
       tags:
         - WallmountGeneratorAPUElectronics
-        - RamChip # FH
 
 # Solar Tracker Electronics
 - type: entity
@@ -86,4 +83,3 @@
     - type: Tag
       tags:
         - SolarTrackerElectronics
-        - RamChip # FH

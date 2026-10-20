@@ -51,7 +51,7 @@ namespace Content.Shared.Weapons.Melee;
 public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected IMapManager MapManager = default!;
+    [Dependency] protected SharedMapSystem MapManager = default!;
     [Dependency] private   INetManager _netMan = default!;
     [Dependency] private   IPrototypeManager _protoManager = default!;
     [Dependency] private   IRobustRandom _random = default!;
@@ -352,12 +352,12 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(null, GetNetEntity(weaponUid), GetNetCoordinates(coordinates)), null);
     }
 
-    public bool AttemptLightAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
+    public bool AttemptLightAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target, bool predicted = true)
     {
         if (!TryComp(target, out TransformComponent? targetXform))
             return false;
 
-        return AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(targetXform.Coordinates)), null);
+        return AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(targetXform.Coordinates)), null, predicted);
     }
 
     public bool AttemptDisarmAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
@@ -372,7 +372,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
     /// <returns>True if attack successful</returns>
-    private bool AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
+    private bool AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session, bool predicted = true)
     {
         var curTime = Timing.CurTime;
 
@@ -485,7 +485,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                     throw new NotImplementedException();
             }
 
-            DoLungeAnimation(user, weaponUid, weapon.Angle, TransformSystem.ToMapCoordinates(GetCoordinates(attack.Coordinates)), weapon.Range, animation);
+            DoLungeAnimation(user, weaponUid, weapon.Angle, TransformSystem.ToMapCoordinates(GetCoordinates(attack.Coordinates)), weapon.Range, animation, predicted);
         }
 
         var attackEv = new MeleeAttackEvent(weaponUid);
@@ -528,7 +528,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                     LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (light) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, null);
+            var missEvent = new MeleeHitEvent(new HashSet<EntityUid>(), user, meleeUid, damage, null);
             RaiseLocalEvent(meleeUid, missEvent);
             _meleeSound.PlaySwingSound(user, meleeUid, component);
             return;
@@ -537,25 +537,25 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damage, null);
+        var hitEvent = new MeleeHitEvent(new HashSet<EntityUid> { target.Value }, user, meleeUid, damage, null);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
             return;
 
-        var targets = new List<EntityUid>(1)
+        var targets = new HashSet<EntityUid>(1)
         {
-            target.Value
+            target.Value,
         };
 
         var weapon = GetEntity(ev.Weapon);
 
         // We skip weapon -> target interaction, as forensics system applies DNA on hit
-        Interaction.DoContactInteraction(user, weapon);
+        Interaction.DoContactInteraction(user, weapon, null, true, interactionParticles: false); // Stellar - Interaction particles
 
         // If the user is using a long-range weapon, this probably shouldn't be happening? But I'll interpret melee as a
         // somewhat messy scuffle. See also, heavy attacks.
-        Interaction.DoContactInteraction(user, target);
+        Interaction.DoContactInteraction(user, target, weapon, true, interactionParticles: false); // Stellar/ES - Interaction particles
 
         // For stuff that cares about it being attacked.
         var attackedEvent = new AttackedEvent(meleeUid, user, targetXform.Coordinates);
@@ -588,7 +588,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         _meleeSound.PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component);
 
-        if (damageResult.GetTotal() > FixedPoint2.Zero)
+        if (damageResult.GetTotal() > FixedPoint2.Zero && !TerminatingOrDeleted(target.Value))
         {
             DoDamageEffect(targets, user, targetXform);
             DoScreenshake(meleeUid, damageResult, user, targets); // Starlight | ES Screenshake
@@ -597,18 +597,20 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         // Starlight-start
         if (damageResult != null)
         {
-            var afterHitEvent = new AfterMeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damageResult, null);
+            var afterHitEvent = new AfterMeleeHitEvent(new HashSet<EntityUid> { target.Value }, user, meleeUid, damageResult, null);
             RaiseLocalEvent(meleeUid, afterHitEvent);
         }
         // Starlight-end
     }
 
-    protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
+    protected abstract void DoDamageEffect(HashSet<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
     private bool DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
         // TODO: This is copy-paste as fuck with DoPreciseAttack
-        if (!TryComp(user, out TransformComponent? userXform))
+        var originEntity = GetOriginEntity(user); // Starlight edit
+
+        if (!TryComp(originEntity, out TransformComponent? userXform)) // Starlight edit
             return false;
 
         var targetMap = TransformSystem.ToMapCoordinates(GetCoordinates(ev.Coordinates));
@@ -622,7 +624,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var damage = GetDamage(meleeUid, user, component);
         var resistanceBypass = GetResistanceBypass(meleeUid, user, component);
-        var entities = GetEntityList(ev.Entities);
+        var entities = GetEntitySet(ev.Entities);
 
         if (entities.Count == 0)
         {
@@ -638,7 +640,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                     LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (heavy) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, direction);
+            var missEvent = new MeleeHitEvent(new HashSet<EntityUid>(), user, meleeUid, damage, direction);
             RaiseLocalEvent(meleeUid, missEvent);
 
             // immediate audio feedback
@@ -650,34 +652,27 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         // Naughty input
         if (entities.Count > MaxTargets)
         {
-            entities.RemoveRange(MaxTargets, entities.Count - MaxTargets);
+            entities = entities.Take(MaxTargets).ToHashSet();
         }
 
         // Validate client
-        for (var i = entities.Count - 1; i >= 0; i--)
-        {
-            if (ArcRaySuccessful(entities[i],
-                    userPos,
-                    direction.ToWorldAngle(),
-                    component.Angle,
-                    distance,
-                    userXform.MapID,
-                    user,
-                    session))
-            {
-                continue;
-            }
+        entities.RemoveWhere(entity => TerminatingOrDeleted(entity) ||
+            !ArcRaySuccessful(entity,
+                                        userPos,
+                                        direction.ToWorldAngle(),
+                                        component.Angle,
+                                        distance,
+                                        userXform.MapID,
+                                        originEntity, // Starlight
+                                        session));
 
-            // Bad input
-            entities.RemoveAt(i);
-        }
-
-        var targets = new List<EntityUid>();
+        var targets = new HashSet<EntityUid>();
         var damageQuery = GetEntityQuery<DamageableComponent>();
 
         foreach (var entity in entities)
         {
             if (entity == user ||
+                entity == originEntity || // Starlight edit
                 !damageQuery.HasComponent(entity))
                 continue;
 
@@ -695,7 +690,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var weapon = GetEntity(ev.Weapon);
 
-        Interaction.DoContactInteraction(user, weapon);
+        Interaction.DoContactInteraction(user, weapon, null, true, interactionParticles: false); // Stellar - Interaction particles
 
         // For stuff that cares about it being attacked.
         foreach (var target in targets)
@@ -704,21 +699,21 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
             // If the user is using a long-range weapon, this probably shouldn't be happening? But I'll interpret melee as a
             // somewhat messy scuffle. See also, light attacks.
-            Interaction.DoContactInteraction(user, target);
+            Interaction.DoContactInteraction(user, target, weapon, true, interactionParticles: false); // Stellar/ES - Interaction particles
         }
 
         var appliedDamage = new DamageSpecifier();
+        var filteredTargets = new HashSet<EntityUid>();
 
-        for (var i = targets.Count - 1; i >= 0; i--)
+        foreach (var entity in targets)
         {
-            var entity = targets[i];
             // We raise an attack attempt here as well,
             // primarily because this was an untargeted wideswing: if a subscriber to that event cared about
             // the potential target (such as for pacifism), they need to be made aware of the target here.
             // In that case, just continue.
             if (!Blocker.CanAttack(user, entity, (weapon, component)))
             {
-                targets.RemoveAt(i);
+                filteredTargets.Add(entity);
                 continue;
             }
 
@@ -753,6 +748,8 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
             }
         }
 
+        targets.ExceptWith(filteredTargets);
+
         if (entities.Count != 0)
         {
             var target = entities.First();
@@ -761,7 +758,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         if (appliedDamage.GetTotal() > FixedPoint2.Zero)
         {
-            DoDamageEffect(targets, user, Transform(targets[0]));
+            DoDamageEffect(targets, user, Transform(targets.First()));
             DoScreenshake(meleeUid, damage, user, targets); // Starlight | ES Screenshake
         }
 
@@ -961,7 +958,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
             return false;
         }
 
-        Interaction.DoContactInteraction(user, target);
+        Interaction.DoContactInteraction(user, target, null, true); // Stellar - Interaction particles
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
@@ -994,7 +991,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    private void DoLungeAnimation(EntityUid user, EntityUid weapon, Angle angle, MapCoordinates coordinates, float length, string? animation)
+    private void DoLungeAnimation(EntityUid user, EntityUid weapon, Angle angle, MapCoordinates coordinates, float length, string? animation, bool predicted = true)
     {
         // Starlight Begin - mech wideswing handling
         var originEntity = GetOriginEntity(user);
@@ -1019,7 +1016,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         if (localPos.Length() > visualLength)
             localPos = localPos.Normalized() * visualLength;
 
-        DoLunge(user, weapon, angle, localPos, animation);
+        DoLunge(user, weapon, angle, localPos, animation, predicted);
     }
 
     public abstract void DoLunge(EntityUid user, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
@@ -1100,7 +1097,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     }
 
     //Starlight begin | ES Screenshake
-    private void DoScreenshake(EntityUid weapon, DamageSpecifier damage, EntityUid attacker, List<EntityUid> targets)
+    private void DoScreenshake(EntityUid weapon, DamageSpecifier damage, EntityUid attacker, HashSet<EntityUid> targets)
     {
         if(damage.GetTotal()>8) // only show to others if it hurts real bad
         {

@@ -5,6 +5,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
+using Content.Shared.Players;
 using Content.Shared.Roles.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -124,6 +125,8 @@ public abstract partial class SharedRoleSystem : EntitySystem
                 $"Job Role of {ToPrettyString(mind.OwnedEntity)} changed from '{jobRole.Value.Comp1.JobPrototype}' to '{jobPrototype}'");
 
             jobRole.Value.Comp1.JobPrototype = jobPrototype;
+            Dirty(jobRole.Value.Owner, jobRole.Value.Comp1); // Starlight
+            MindRolesUpdate((mindId, mind)); // Starlight
         }
         else
             MindAddRoleDo(mindId, "MindRoleJob", mind, silent, jobPrototype);
@@ -213,22 +216,15 @@ public abstract partial class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var (roleType, subtype) = GetRoleTypeByTime(ent.Comp);
+        // Moffstation - Start - SubtypeColor
+        var (roleType, subtype, subtypeColor) = GetRoleTypeByTime(ent.Comp);
 
-        if (ent.Comp.RoleType == roleType && ent.Comp.Subtype == subtype)
+        if (ent.Comp.RoleType == roleType && ent.Comp.Subtype == subtype && ent.Comp.SubtypeColor == subtypeColor)
             return false;
 
-        SetRoleType(ent.Owner, roleType, subtype);
+        SetRoleType(ent.Owner, roleType, subtype, subtypeColor);
+        // Moffstation - End
         return true;
-    }
-
-    /// <summary>
-    ///     Return the most recently specified role type and subtype, or Neutral
-    /// </summary>
-    private (ProtoId<RoleTypePrototype>, LocId?) GetRoleTypeByTime(MindComponent mind)
-    {
-        var role = GetRoleCompByTime(mind);
-        return (role?.Comp?.RoleType ?? "Neutral", role?.Comp?.Subtype);
     }
 
     /// <summary>
@@ -249,7 +245,9 @@ public abstract partial class SharedRoleSystem : EntitySystem
         return (result);
     }
 
-    private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype)
+    // Moffstation - Start - SubtypeColor (added subtypeColor parameter)
+    public void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype, Color? subtypeColor = null) // Starlight, public
+    // Moffstation - End
     {
         if (!TryComp<MindComponent>(mind, out var comp))
         {
@@ -265,6 +263,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
 
         comp.RoleType = roleTypeId;
         comp.Subtype = subtype;
+        comp.SubtypeColor = subtypeColor; // Moffstation - SubtypeColor
         Dirty(mind, comp);
 
         // Update player character window
@@ -276,18 +275,24 @@ public abstract partial class SharedRoleSystem : EntitySystem
             _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
         }
 
+        #region Starlight
+        var roleProto = _prototypes.Index<RoleTypePrototype>(roleTypeId);
+        var roleTypeName = Loc.GetString(roleProto.Name);
+        var roleLabel = string.IsNullOrEmpty(subtype) ? roleTypeName : $"{roleTypeName}, {GetRoleSubtypeLabel(roleProto.Name, subtype)}";
+        #endregion
+
         if (comp.OwnedEntity is null)
         {
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Medium,
-                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}, {subtype}");
+                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeName}, {roleLabel}"); // Starlight
             return;
         }
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.High,
-            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
+            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeName}, {roleLabel}"); // Starlight
     }
 
     /// <summary>
@@ -633,6 +638,16 @@ public abstract partial class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
+    /// Does this player's mind possess an antagonist role
+    /// </summary>
+    /// <param name="player">The player session we want the mind of</param>
+    /// <returns>True if the mind possesses any antag roles</returns>
+    public bool PlayerIsAntagonist(ICommonSession player)
+    {
+        return MindIsAntagonist(player.GetMind());
+    }
+
+    /// <summary>
     /// Does this mind possess an antagonist role
     /// </summary>
     /// <param name="mindId">The mind entity</param>
@@ -643,6 +658,16 @@ public abstract partial class SharedRoleSystem : EntitySystem
             return false;
 
         return CheckAntagonistStatus(mindId.Value).Antag;
+    }
+
+    /// <summary>
+    /// Does this player's mind possess an exclusive antagonist role
+    /// </summary>
+    /// <param name="player">The player session we want the mind of</param>
+    /// <returns>True if the mind possesses any antag roles</returns>
+    public bool PlayerIsExclusiveAntagonist(ICommonSession player)
+    {
+        return MindIsExclusiveAntagonist(player.GetMind());
     }
 
     /// <summary>
@@ -711,7 +736,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
     /// <inheritdoc cref="GetRoleRequirements(JobPrototype)"/>
     public HashSet<JobRequirement>? GetRoleRequirements(AntagPrototype antag)
     {
-        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(antag.ID, out var req))
+        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag.ID, out var req))
             return req;
 
         return antag.Requirements;

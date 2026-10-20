@@ -25,12 +25,10 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Station.Components;
 using Content.Shared.Store.Components;
-// Starlight Start
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Cuffs;
-using Prometheus;
 using Robust.Shared.Prototypes;
 using Content.Server.AlertLevel;
 using Content.Server._NullLink.Helpers;
@@ -39,7 +37,7 @@ using Content.Shared._Starlight.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Server.Player;
 using Content.Server._Starlight.Achievement;
-// Starlight End
+using Content.Server._Starlight.Statistics;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -54,14 +52,8 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         (200, "john_syndicate")
     ];
     // Starlight end: Achievements
-    #region Starlight data collection
-    private static readonly Counter _nukeopsCount = Metrics.CreateCounter(
-        "nukie_count",
-        "Number of all nukies Win/Loses Count.",
-        ["results"]);
-    #endregion
-
     [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private RoundStatisticsSystem _roundStatistics = default!; // Starlight
     [Dependency] private EmergencyShuttleSystem _emergency = default!;
     [Dependency] private NpcFactionSystem _npcFaction = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
@@ -79,6 +71,13 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
 
     private static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = "NukeOpsUplink";
+
+    // TODO: This shouldn't be matching by ProtoId.
+    // It would be better if this were checked by component or something,
+    // but it needs to be distinct between the full Nukeops and Loneops rules,
+    // which NukeopsRuleComponent currently isn't.
+    // Better yet, maybe the behaviors this is used for could be moved to the rule component.
+    private static readonly EntProtoId NukeopsGameRule = "Nukeops";
 
     public override void Initialize()
     {
@@ -163,8 +162,8 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
                 if (ev.OwningStation == GetOutpost(uid))
                 {
                     nukeops.WinConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
-                    SetWinType((uid, nukeops), WinType.CrewMajor, GameTicker.IsGameRuleActive("Nukeops")); // End the round ONLY if the actual gamemode is NukeOps.
-                    if (!GameTicker.IsGameRuleActive("Nukeops")) // End the rule if the LoneOp shuttle got nuked, because that particular LoneOp clearly failed, and should not be considered a Syndie victory even if a future LoneOp wins.
+                    SetWinType((uid, nukeops), WinType.CrewMajor, GameTicker.IsGameRuleActive(NukeopsGameRule)); // End the round ONLY if the actual gamemode is NukeOps.
+                    if (!GameTicker.IsGameRuleActive(NukeopsGameRule)) // End the rule if the LoneOp shuttle got nuked, because that particular LoneOp clearly failed, and should not be considered a Syndie victory even if a future LoneOp wins.
                         GameTicker.EndGameRule(uid);
                     continue;
                 }
@@ -195,7 +194,7 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
                 nukeops.WinConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
             }
 
-            if (GameTicker.IsGameRuleActive("Nukeops")) // If it's Nukeops then end the round on any detonation
+            if (GameTicker.IsGameRuleActive(NukeopsGameRule)) // If it's Nukeops then end the round on any detonation
             {
                 _roundEndSystem.EndRound(TimeSpan.FromSeconds(_cfg.GetCVar(StarlightCCVars.NukeRoundRestartTime))); // Starlight Edit: Round end timer set by Cvar
             }
@@ -473,8 +472,8 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
     private void SetWinType(Entity<NukeopsRuleComponent> ent, WinType type, bool endRound = true)
     {
         ent.Comp.WinType = type;
+        _roundStatistics.RecordAntagOutcome(ent.Owner, "Nukeops", type.ToString()); // Starlight
 
-        _nukeopsCount.WithLabels(type.ToString()).Inc(1); // Starlight
         // Starlight start: Achievements
         if (type is WinType.OpsMajor or WinType.OpsMinor)
             TryAwardLoneOperativeAchievements(ent);

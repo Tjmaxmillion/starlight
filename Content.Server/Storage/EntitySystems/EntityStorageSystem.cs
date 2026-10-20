@@ -2,6 +2,7 @@ using Content.Server._Starlight.Medical.Body.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Server.GameObjects;
@@ -13,7 +14,7 @@ public sealed partial class EntityStorageSystem : SharedEntityStorageSystem
 {
     [Dependency] private ConstructionSystem _construction = default!;
     [Dependency] private AtmosphereSystem _atmos = default!;
-    [Dependency] private IMapManager _map = default!;
+    [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private MapSystem _mapSystem = default!;
 
     public override void Initialize()

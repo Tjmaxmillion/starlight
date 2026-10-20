@@ -17,8 +17,9 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
+    - Doll
 
 - type: entity
   parent: SurgeryOpenIncision
@@ -34,7 +35,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
 
 - type: entity
   parent: SurgeryBase
@@ -52,8 +53,9 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
+    - Doll
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -74,7 +76,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -96,7 +98,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -120,7 +122,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
 
 - type: entity
   parent: SurgeryCloseIncision
@@ -138,7 +140,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Head
@@ -159,7 +161,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Arm
@@ -175,6 +177,7 @@
   - type: Surgery
     requirement:
     - SurgeryOpenIncision
+    - SurgeryOpenIncisionDoll
     priority: -50
     steps:
     - SurgeryStepSawBones
@@ -185,7 +188,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: Sprite
     sprite: Mobs/Species/Skeleton/parts.rsi
@@ -200,6 +203,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     priority: -50
     steps:
     - SurgeryStepCutAbdominalMuscles
@@ -224,6 +228,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepExposeVocalCords
     - SurgeryStepAdjustVocalCords
@@ -257,7 +262,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -265,6 +270,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganLiver
+    container: liver
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: liver
@@ -286,7 +292,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -313,7 +319,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -340,7 +346,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -348,6 +354,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganKidneys
+    container: kidneys
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     layers:
@@ -371,7 +378,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -400,7 +407,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -408,6 +415,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganStomach
+    container: stomach
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: stomach
@@ -429,7 +437,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -456,7 +464,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -464,6 +472,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganLungs
+    container: lungs
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     layers:
@@ -485,7 +494,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -515,13 +524,14 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganLungs
+    container: lungs
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     layers:
@@ -544,7 +554,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -572,7 +582,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -580,6 +590,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganHeart
+    container: heart
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
@@ -599,7 +610,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -626,13 +637,14 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganHeart
+    container: heart
   - type: Sprite
     sprite: Mobs/Species/Slime/organs.rsi
     state: heart-on
@@ -652,7 +664,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -672,6 +684,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepLocateEyes
     - SurgeryStepClampOpticNerve
@@ -682,6 +695,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganEyes
+    container: eyes
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - IPC
@@ -700,6 +714,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepPrepareImplantSiteEyes
     - SurgeryStepInsertEyes
@@ -728,6 +743,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepLocateImplant
     - SurgeryStepClampOpticNerve
@@ -738,6 +754,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: EyeImplant
+    container: eye_implant
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - IPC
@@ -755,6 +772,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepPrepareImplantSiteEyes
     - SurgeryStepInsertEyeImplant
@@ -774,6 +792,69 @@
       - state: eye_implant_welding
 
 #
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractNoseImplant
+  name: Extract Nose Implant
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
+    steps:
+    - SurgeryStepLocateNoseImplant
+    - SurgeryStepClampOlfactoryNerve
+    - SurgeryStepRemoveNoseImplant
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: NoseImplant
+    container: nose_implant
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - IPC
+    - Vulpkanin # they can already smell
+    - Shadekin # they don't breathe; bypasses certain checks in smellsystem
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
+    layers:
+      - state: nose_implant_scent
+
+#
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantNoseImplant
+  name: Implant Nose Implant
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
+    steps:
+    - SurgeryStepPrepareImplantSiteNose
+    - SurgeryStepInsertNoseImplant
+    - SurgeryStepConnectOlfactoryNerve
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: NoseImplant
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - IPC
+    - Vulpkanin
+    - Shadekin
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
+    layers:
+      - state: nose_implant_scent
+
+#
 - type: entity
   parent: SurgeryBase
   id: SurgeryExtractHandImplant
@@ -783,6 +864,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepLocateImplant
     - SurgeryStepExposeNerves
@@ -793,6 +875,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: HandImplant
+    container: hand_implant
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - IPC
@@ -810,6 +893,7 @@
     requirement:
     - SurgeryOpenIncision
     - SurgeryOpenIncisionSlime
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepPrepareImplantSiteHand
     - SurgeryStepInsertHandImplant
@@ -837,6 +921,7 @@
   - type: Surgery
     requirement:
     - SurgeryOpenIncision
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepPreparePatient
     - SurgeryStepShaveHead
@@ -860,7 +945,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -868,6 +953,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: BrainImplant
+    container: brain_implant
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
@@ -881,6 +967,7 @@
   - type: Surgery
     requirement:
     - SurgeryOpenIncision
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepCleanImplantSite
     - SurgeryStepPrepareScalp
@@ -902,7 +989,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -934,13 +1021,14 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
   - type: SurgeryOrganExistCondition
     organ:
     - type: BrainImplant
+    container: brain_implant
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
@@ -965,7 +1053,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -994,6 +1082,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganTongue
+    container: tongue
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - IPC
@@ -1032,6 +1121,7 @@
   - type: Surgery
     requirement:
     - SurgeryOpenIncision
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepPreparePatient
     - SurgeryStepShaveHead
@@ -1049,7 +1139,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -1057,6 +1147,7 @@
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganBrain
+    container: brain
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: brain
@@ -1069,6 +1160,7 @@
   - type: Surgery
     requirement:
     - SurgeryOpenIncision
+    - SurgeryOpenIncisionDoll
     steps:
     - SurgeryStepCleanImplantSite
     - SurgeryStepPrepareScalp
@@ -1091,7 +1183,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -1117,18 +1209,19 @@
     - SurgeryStepDisinfectScalp
     - SurgeryStepMakeIncisionScalp
     - SurgeryStepRetractScalp
-    - SurgeryStepExtractBrain
+    - SurgeryStepExtractSlimeCore
   - type: SurgerySpeciesCondition
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganBrain
+    container: core
   - type: Sprite
     sprite: Mobs/Species/Slime/organs.rsi
     state: brain
@@ -1153,7 +1246,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -1199,7 +1292,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -1226,7 +1319,7 @@
   - type: SurgerySpeciesCondition
     speciesBlacklist:
     - SlimePerson
-    - ProtoSlimePerson
+    - NeoSlimePerson
     - IPC
   - type: SurgeryPartCondition
     parts:
@@ -1256,13 +1349,14 @@
     speciesBlacklist: []
     speciesWhitelist:
     - Shadekin
-    - ProtoKin
+    - NeoKin
   - type: SurgeryPartCondition
     parts:
     - Torso
   - type: SurgeryOrganExistCondition
     organ:
     - type: OrganShadekinCore
+    container: core
   - type: Sprite
     sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
     state: core
@@ -1283,7 +1377,7 @@
     speciesBlacklist: []
     speciesWhitelist:
     - Shadekin
-    - ProtoKin
+    - NeoKin
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -1293,3 +1387,83 @@
   - type: Sprite
     sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
     state: core
+
+#
+- type: entity
+  parent: SurgeryOpenIncision
+  id: SurgeryOpenIncisionDoll
+  name: Open Incision
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryRemoveShellDoll
+    priority: -100
+    steps:
+    - SurgeryStepRetractSkin
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - Doll
+
+- type: entity
+  parent: SurgeryCloseIncision
+  id: SurgeryCloseIncisionDoll
+  name: Close Incision
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncisionDoll
+    priority: 100
+    steps:
+    - SurgeryStepCloseIncisionDoll
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - Doll
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+    - Head
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryRemoveShellDoll
+  name: Remove Shell
+  description: Surgical removal of a dolls shell.
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepOpenShell
+    - SurgeryStepClampTendrils
+    - SurgeryStepRemoveShell
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - Doll
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: setter
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryReattachShellDoll
+  name: Reattach Shell
+  description: Surgical reattachment of a dolls shell.
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryCloseIncisionDoll
+    steps:
+    - SurgeryStepPositionShell
+    - SurgeryStepMendShellDoll
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - Doll
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Doll/organs.rsi
+    state: shell

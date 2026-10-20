@@ -28,9 +28,10 @@
     icon: ""
     iconColor: "#fd3f3f" # Antag
     color: "#6c15ae" # Mythical
-    image: /Textures/_Starlight/Railroading/criminal.png
+    image: /Textures/_Starlight/Railroading/antag.png
     description: rr-criminal-desc
   - type: RailroadFaxOnChosen
+    delay: 180
     addresses:
     - Captain's Office # PR #4706: Remove once fax protos are used everywhere
     - Captain

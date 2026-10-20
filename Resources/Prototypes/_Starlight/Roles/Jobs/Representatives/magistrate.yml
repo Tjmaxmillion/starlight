@@ -1,5 +1,6 @@
 - type: job
   id: Magistrate
+  roleType: CorporateAligned
   name: job-name-magistrate
   description: job-description-magistrate
   playTimeTracker: JobMagistrate
@@ -12,11 +13,15 @@
       time: 36000 # 10h
     - !type:RolesRequirement
       proto: ExtRolesReq
+    - !type:TraitsRequirement
+      traits:
+        - Iterator
+        - Muted
+      inverted: true
   startingGear: MagistrateGear
   icon: "JobIconMagistrate"
   rules: job-rules-corporate-aligned
   supervisors: job-supervisors-nanotrasen
-  canBeAntag: false
   setPreference: true
   displayWeight: 5
   access:
@@ -30,6 +35,7 @@
   - GenpopEnter
   - GenpopLeave
   - Debrief
+  - NTPersonnel
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -33,23 +33,12 @@
     sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/ntnc_officer.rsi
 
 - type: entity
-  parent: [ ClothingUniformBase, BaseMedTakContraband ]
-  id: ClothingUniformMedTakJumpsuit
-  name: MedTak jumpsuit
-  description: Standard issue MedTak uniform.
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitITGFormal
+  name: ITG formal suit
+  description: A refined suit worn by delegates of the guild.
   components:
   - type: Sprite
-    sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/medtak_uniform.rsi
+    sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/itgsuit.rsi
   - type: Clothing
-    sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/medtak_uniform.rsi
-
-- type: entity
-  parent: [ ClothingUniformBase, BaseMedTakContraband ]
-  id: ClothingUniformMedTakJumpsuitFormal
-  name: MedTak formal jumpsuit
-  description: A formal MedTak uniform.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/medtak_formal.rsi
-  - type: Clothing
-    sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/medtak_formal.rsi
+    sprite: _Starlight/Admeme/Clothing/Uniforms/Jumpsuit/itgsuit.rsi

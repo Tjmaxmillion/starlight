@@ -74,7 +74,7 @@
   id: VendorMobTrueDoctorbot
   productEntity: MobTrueDoctorbot
   cost:
-    NTCredit: 999
+    NTCredit: 500
   categories:
   - SLMedical
   conditions:
@@ -245,6 +245,16 @@
 - type: listing
   id: VendorMobOrganAvaliLungs
   productEntity: OrganAvaliLungs
+  cost:
+    NTCredit: 297
+  categories:
+  - SLSurgery
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorMobOrganVoxLungs
+  productEntity: OrganVoxLungs
   cost:
     NTCredit: 297
   categories:

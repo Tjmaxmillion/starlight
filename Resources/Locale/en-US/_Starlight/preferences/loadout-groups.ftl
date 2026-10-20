@@ -6,16 +6,22 @@ loadout-group-roboticist-gloves = Roboticist gloves
 loadout-group-roboticist-goggles = Roboticist eyewear
 loadout-group-roboticist-backpack = Roboticist backpack
 loadout-group-roboticist-shoes = Roboticist shoes
+loadout-group-roboticist-neck = Roboticist neck
 
 # Civilian
 loadout-group-assistant-glasses = Assistant glasses
 loadout-group-assistant-head = Assistant head
 loadout-group-assistant-backpack = Assistant backpack
 
+loadout-group-assistantmanager-head = Assistant Manager head
+loadout-group-assistantmanager-jumpsuit = Assistant Manager jumpsuit
+loadout-group-assistantmanager-backpack = Assistant Manager backpack
+loadout-group-assistantmanager-gloves = Assistant Manager gloves
+loadout-group-assistantmanager-outerclothing = Assistant Manager outer clothing
+loadout-group-assistantmanager-shoes = Assistant Manager shoes
+
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves
-
-loadout-group-reporter-head = Reporter head
 
 loadout-group-musician-head = Musician head
 
@@ -58,6 +64,11 @@ loadout-group-dutyofficer-jumpsuit = Duty officer jumpsuit
 loadout-group-dutyofficer-outerclothing = Duty officer outer clothing
 loadout-group-dutyofficer-belt = Duty officer belt
 
+loadout-group-k9-variant = K9 coat
+loadout-group-k9-outerclothing = K9 armor
+loadout-group-k9-eyes = K9 eyewear
+
+loadout-group-detective-lethal = Detective lethal sidearm
 
 # Law
 loadout-group-magistrate-jumpsuit = Magistrate jumpsuit
@@ -92,6 +103,9 @@ loadout-group-salvagelead-id = Salvage Lead ID
 loadout-group-mining-id = Mining Specialist ID
 loadout-group-salvage-id = Salvage Specialist ID
 loadout-group-salvage-lead-mantle = Salvage Lead mantle
+loadout-group-salvage-medic-id = Salvage Medic ID
+loadout-group-salvage-medic-jumpsuit = Salvage Medic jumpsuit
+loadout-group-salvage-medic-mantle = Salvage Medic mantle
 
 # Silicons
 loadout-group-borg-brain-type = Cyborg Brain Type
@@ -124,6 +138,7 @@ loadout-group-lawyer-shoes = Lawyer shoes
 loadout-group-scarves = Scarf
 loadout-group-pins = Pins
 loadout-group-pens = Pen
+loadout-group-ties = Ties
 
 # Brighteye
 loadout-group-brighteye-jumpsuit = Brighteye jumpsuit

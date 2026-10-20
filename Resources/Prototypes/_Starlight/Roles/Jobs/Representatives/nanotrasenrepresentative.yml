@@ -1,5 +1,6 @@
 - type: job
   id: NanoTrasenRepresentative
+  roleType: CorporateAligned
   name: job-name-ntrep
   description: job-description-ntrep
   playTimeTracker: JobNanoTrasenRepresentative
@@ -9,11 +10,15 @@
       time: 30h # Still less than Magistrate. You should be experienced with Command before you tell them how to do their jobs.
     - !type:RolesRequirement
       proto: ExtRolesReq
+    - !type:TraitsRequirement
+      traits:
+        - Iterator
+        - Muted
+      inverted: true
   startingGear: NanoTrasenRepresentativeGear
   icon: JobIconNanoTrasenRepresentative
   rules: job-rules-corporate-aligned
   supervisors: job-supervisors-nanotrasen
-  canBeAntag: false
   displayWeight: 6
   access:
     - Cryogenics
@@ -33,9 +38,7 @@
     - Research
     - Robotics
     - Detective
-    - Salvage
     - Mining
-    - SalvageLead
     - Security
     - Brig
     - Cargo
@@ -48,6 +51,10 @@
     - Surgery
     - Paramedic
     - Debrief
+    - Journalism
+    - Clown
+    - Mime
+    - NTPersonnel
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]

@@ -1,3 +1,5 @@
+using Content.Shared.Botany.Components; // Starlight Edit
+using Content.Shared.Botany.Items.Components; // Starlight Edit
 using Content.Server.Light.Components;
 using Content.Server.Stack;
 using Content.Shared.Clothing.Components;
@@ -32,6 +34,11 @@ namespace Content.Server.Light.EntitySystems
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
+        #region Starlight
+        private float _updateAccumulator;
+        private const float UpdateInterval = 0.25f;
+        #endregion
+
         public override void Initialize()
         {
             base.Initialize();
@@ -45,10 +52,22 @@ namespace Content.Server.Light.EntitySystems
 
         public override void Update(float frameTime)
         {
+            #region Starlight
+            _updateAccumulator += frameTime;
+            if (_updateAccumulator < UpdateInterval)
+                return;
+
+            var elapsed = _updateAccumulator;
+            _updateAccumulator = 0f;
+            #endregion
+
             var query = EntityQueryEnumerator<ExpendableLightComponent>();
             while (query.MoveNext(out var uid, out var light))
             {
-                UpdateLight((uid, light), frameTime);
+                if (!light.Activated) // Starlight
+                    continue;
+
+                UpdateLight((uid, light), elapsed); // Starlight-edit: was frameTime
             }
         }
 
@@ -104,6 +123,15 @@ namespace Content.Server.Light.EntitySystems
                 {
                     _item.SetHeldPrefix(ent, "lit", component: item);
                 }
+
+                // Starlight Edit Start
+                // For botany grown cinnaflares, add the to the burn time by adding modifier * plant potency.
+                if (TryComp<ProduceComponent>(ent, out var produceComp) &&
+                    produceComp.PlantData != null && TryComp<PlantComponent>(produceComp.PlantData, out var plantData))
+                    {
+                        ent.Comp.StateExpiryTime += ent.Comp.PlantBurnTimeModifier * plantData.Potency;
+                    }
+                // Starlight Edit Stop
 
                 var ignite = new IgnitionEvent(true);
                 RaiseLocalEvent(ent, ref ignite);

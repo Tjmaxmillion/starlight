@@ -7,10 +7,7 @@ using Content.Client.Administration.UI.Bwoink;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.Lobby.UI;
-using Content.Client.Stylesheets;
-using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
-using Content.Shared._Starlight.MHelp;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
@@ -29,6 +26,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Client._Starlight.MHelp;
+using Content.Client._Starlight.Lobby.UI;
 
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
@@ -184,7 +182,13 @@ public sealed partial class AHelpUIController: UIController, IOnSystemChanged<Bw
 
         UIHelper.SendMessageAction = (userId, textMessage, playSound, adminOnly) => _bwoinkSystem?.Send(userId, textMessage, playSound, adminOnly);
         UIHelper.InputTextChanged += (channel, text) => _bwoinkSystem?.SendInputTextUpdated(channel, text.Length > 0);
-        UIHelper.OnClose += () => { SetAHelpPressed(false); };
+        // Starlight begin
+        UIHelper.OnClose += () =>
+        {
+            SetAHelpPressed(false);
+            UIHelper.Close();
+        };
+        // Starlight end
         UIHelper.OnOpen +=  () => { SetAHelpPressed(true); };
         SetAHelpPressed(UIHelper.IsOpen);
     }
@@ -197,6 +201,13 @@ public sealed partial class AHelpUIController: UIController, IOnSystemChanged<Bw
             return;
         }
         EnsureUIHelper();
+
+        // Starlight begin
+        localUser = UIHelper!.IsAdmin && UIHelper is AdminAHelpUIHandler { RememberSelected: true } aHelper
+            ? aHelper.SelectedPlayer ?? localUser
+            : localUser;
+        //Starlight end
+
         if (UIHelper!.IsOpen)
             return;
         UIHelper!.Open(localUser.Value, _discordRelayActive);
@@ -216,42 +227,7 @@ public sealed partial class AHelpUIController: UIController, IOnSystemChanged<Bw
         UIHelper?.ToggleWindow();
     }
 
-    public void PopOut()
-    {
-        EnsureUIHelper();
-        if (UIHelper is not AdminAHelpUIHandler helper)
-            return;
-
-        if (helper.Window == null || helper.Control == null)
-        {
-            return;
-        }
-
-        helper.Control.Orphan();
-        helper.Window.Dispose();
-        helper.Window = null;
-        helper.EverOpened = false;
-
-        var monitor = _clyde.EnumerateMonitors().First();
-
-        helper.ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
-        {
-            Maximized = false,
-            Title = Loc.GetString("bwoink-admin-title"),
-            Monitor = monitor,
-            Width = 900,
-            Height = 500
-        });
-
-        helper.ClydeWindow.RequestClosed += helper.OnRequestClosed;
-        helper.ClydeWindow.DisposeOnClose = true;
-
-        helper.WindowRoot = _uiManager.CreateWindowRoot(helper.ClydeWindow);
-        helper.WindowRoot.AddChild(helper.Control);
-
-        helper.Control.PopOut.Disabled = true;
-        helper.Control.PopOut.Visible = false;
-    }
+    // Starlight-edit: upstream pop out removed, BwoinkWindow is a PopOutWindow now.
 
     public void UnreadAHelpReceived()
     {
@@ -345,13 +321,14 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     }
     private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
     public bool IsAdmin => true;
-    public bool IsOpen => Window is { Disposed: false, IsOpen: true } || ClydeWindow is { IsDisposed: false };
+    public bool IsOpen => Window is { Disposed: false, IsOpen: true } || _poppedOut; // Starlight-edit
     public bool EverOpened;
+    public bool RememberSelected => Window?.Bwoink.RememberSelected.Pressed ?? false; // Starlight-edit
+    public NetUserId? SelectedPlayer; // Starlight-edit
 
     public BwoinkWindow? Window;
-    public WindowRoot? WindowRoot;
-    public IClydeWindow? ClydeWindow;
     public BwoinkControl? Control;
+    private bool _poppedOut; // Starlight-edit
 
     public void Receive(SharedBwoinkSystem.BwoinkTextMessage message)
     {
@@ -373,26 +350,18 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
 
     public void Close()
     {
-        Window?.Close();
+        // Starlight-start
+        if (_poppedOut)
+            Window?.DisposePopOut();
+        else
+            Window?.Close();
 
-        // popped-out window is being closed
-        if (ClydeWindow != null)
+        if (Control is { Disposed: false })
         {
-            ClydeWindow.RequestClosed -= OnRequestClosed;
-            ClydeWindow.Dispose();
-            // need to dispose control cause we cant reattach it directly back to the window
-            // but orphan panels first so -they- can get readded when the window is opened again
-            if (Control != null)
-            {
-                foreach (var (_, panel) in _activePanelMap)
-                {
-                    panel.Orphan();
-                }
-                Control?.Dispose();
-            }
-            // window wont be closed here so we will invoke ourselves
-            OnClose?.Invoke();
+            EnsurePanel(_ownerId);
+            Control.SelectChannel(_ownerId);
         }
+        // Starlight-end
     }
 
     public void ToggleWindow()
@@ -426,10 +395,26 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         OpenWindow();
     }
 
-    public void OnRequestClosed(WindowRequestClosedEventArgs args)
+    #region Starlight
+    private void OnFinalClose()
     {
-        Close();
+        if (_poppedOut)
+        {
+            _poppedOut = false;
+            foreach (var (_, panel) in _activePanelMap)
+            {
+                panel.Orphan();
+            }
+
+            Window?.Dispose();
+            Window = null;
+            Control = null;
+            EverOpened = false;
+        }
+
+        OnClose?.Invoke();
     }
+    #endregion
 
     private void EnsureControl()
     {
@@ -438,7 +423,8 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
 
         Window = new BwoinkWindow();
         Control = Window.Bwoink;
-        Window.OnClose += () => { OnClose?.Invoke(); };
+        Window.OnFinalClose += OnFinalClose; // Starlight-edit
+        Window.OnPopout += () => _poppedOut = true; // Starlight-edit
         Window.OnOpen += () =>
         {
             OnOpen?.Invoke();
@@ -454,6 +440,14 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
             }
             panel.Visible = false;
         }
+
+        // Starlight begin
+        Control.ChannelSelector.OnSelectionChanged += inf =>
+        {
+            if (!IsOpen) return;
+            SelectedPlayer = inf?.SessionId ?? _ownerId;
+        };
+        // Starlight end
     }
 
     public void HideAllPanels()
@@ -485,10 +479,21 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     {
         EnsurePanel(uid);
         Control!.SelectChannel(uid);
+        SelectedPlayer = uid; // Starlight
     }
 
     public void Dispose()
     {
+        // Starlight-start
+        if (Window != null)
+        {
+            Window.OnFinalClose -= OnFinalClose;
+            if (_poppedOut)
+                Window.DisposePopOut();
+        }
+        _poppedOut = false;
+        // Starlight-end
+
         Window?.Dispose();
         Window = null;
         Control = null;
@@ -536,11 +541,6 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         }
     }
 
-    // user can't pop out their window.
-    public void PopOut()
-    {
-    }
-
     public void DiscordRelayChanged(bool active)
     {
         _discordRelayActive = active;
@@ -575,8 +575,6 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         _chatPanel.RelayedToDiscordLabel.Visible = relayActive;
         _window = new DefaultWindow()
         {
-            TitleClass="windowTitleAlert",
-            HeaderClass="windowHeaderAlert",
             Title=Loc.GetString("bwoink-user-title"),
             MinSize = new Vector2(500, 300),
         };

@@ -49,17 +49,11 @@
     price: 800
   - type: ResearchClient
   - type: TechnologyDatabase
-  - type: StationAiWhitelist #Starlight
-# SL Start: Lighting Update
-  - type: LitOnPowered
-  - type: PointLight
-    autoRot: true
-    color: "#2f6b2b"
-    radius: 2
-    energy: 1.5
-    castShadows: false
-# SL End
-
+  - type: ApcPowerReceiver
+    powerLoad: 150
+  - type: PowerState
+    idlePowerDraw: 150
+    workingPowerDraw: 1000
 
 # a lathe that can be sped up with space lube / slowed down with glue
 - type: entity
@@ -82,6 +76,11 @@
     solution: lube
   - type: ExaminableSolution
     solution: lube
+
+- type: entity
+  parent: [SolutionLube, SolutionLarge]
+  id: SolutionLatheLube # Its own prototype since some lathes might interface with solutions in other ways
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   abstract: true
@@ -144,19 +143,9 @@
     - ServiceStatic
     - PowerCellsStatic
     - ElectronicsStatic
-    # Starlight Start
-    - CassetteTape
-    - TapeRecorder
-    dynamicPacks:
-    - StarlightAutolatheLootable
   - type: EmagLatheRecipes
     emagStaticPacks:
-    - StarlightSyndicateAmmoStatic
-    - StarlightSecurityEmagWeaponsStatic
-    - StarlightSecurityAmmoStatic
-    - StarlightSecurityAmmoEmagStatic
-    # Starlight end
-    #- SecurityAmmoStatic # SL disable in favor of prior three lines
+    - SecurityAmmoStatic
     - SyndicateAmmoStatic
   - type: BlueprintReceiver
     whitelist:
@@ -212,12 +201,9 @@
     unlitIdleState: unlit
     unlitRunningState: unlit-building
     staticPacks:
-    - NullSpaceDrainer # Starlight
-    - ScienceBlueSpaceStatic # Starlight
     - ChemistryStatic
+    - SurgeryStatic
     dynamicPacks:
-    - ScienceBlueSpace # Starlight
-    - ScienceDarkBreacher # Starlight
     - AdvancedTools
     - ScienceEquipment
     - ScienceExplosives
@@ -231,25 +217,12 @@
     - Janitor
     - Instruments
     - Equipment
-    - StarlightProtolatheLootable # Starlight start
-    - StarlightScienceWeapons
-    - WirelessCameraHandheld # MOFFSTATION CHANGE - Adds wireless handheld camera
   - type: EmagLatheRecipes
     emagDynamicPacks:
-    - StarlightSurgeryDynamic
-    - StarlightCyberlimbDynamic
-    - StarlightCyberOrgansDynamic
-    - StarlightImplantDynamic
-    - StarlightBudgetCyberOrgansDynamic
-    - StarlightSecurityAmmoDynamic
-    - StarlightSecurityExplosives
-    - StarlightSecurityEquipment
-    - StarlightSecurityWeapons
-    - StarlightDefenseStatic
-    emagStaticPacks:
-    - StarlightSecurityEmagWeaponsStatic
-    - StarlightSecurityAmmoStatic
-    - StarlightSyndicateAmmoStatic # Starlight end
+    # - SecurityAmmo // Starlight - This pack commented and can't be changed in partials
+    - SecurityExplosives
+    - SecurityEquipment
+    - SecurityWeapons
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -291,10 +264,7 @@
     - CargoBoardsStatic
     - MedicalBoardsStatic
     - EngineeringBoardsStatic
-    - StarlightVendorBoards # Starlight
     dynamicPacks:
-    - SecurityScienceBlueSpace # Starlight
-    - StarlightShuttleBoards # Starlight
     - EngineeringBoards
     - CargoBoards
     - MedicalBoards
@@ -303,17 +273,9 @@
     - CameraBoards
     - MechBoards
     - ShuttleBoards
-    - StarlightMechBoards
-    - StarlightLawboards
-    - StarlightCircuitImprinterLootable
-    - ReactorCircuitboards # FH edit
-    - OublietteCircuitBoard # Starlight
   - type: EmagLatheRecipes
     emagDynamicPacks:
-    - StarlightSecurityBoards
-    emagStaticPacks: # Starlight
-    - StarlightDangerousLawboards # Starlight
-    - StarlightSyndicateVendorBoards # Starlight
+    - SecurityBoards
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
@@ -359,16 +321,6 @@
     - BorgModules
     - MechParts
     - MechEquipment
-    - StarlightMechReactors
-    - StarlightMechEquipment
-    - StarlightSecurityMechs
-    - StarlightMechParts
-  - type: EmagLatheRecipes
-    emagStaticPacks:
-    - StarlightSyndicateModules
-    emagDynamicPacks:
-    - StarlightMechWeapon
-
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
@@ -411,8 +363,6 @@
     runningState: building
     staticPacks:
     - FriendlyCubesStatic
-    dynamicPacks:
-    - StarlightBiofabricatorLootable
   - type: EmagLatheRecipes
     emagStaticPacks:
     - HostileCubesStatic
@@ -441,41 +391,30 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticPacks:
-    - SecurityEquipmentStatic # Starlight start
-    - NullSpaceDrainer
+    - SecurityEquipmentStatic
     - SecurityPracticeStatic
-    - StarlightSecurityAmmoStatic
-    - SecurityWeaponsStatic # Starlight end
+    - SecurityAmmoStatic
+    - SecurityWeaponsStatic
     dynamicPacks:
-    - SecurityScienceBlueSpace # Stalright
     - SalvageSecurityBoards
     - SalvageSecurityWeapons
+    - SecurityEquipment
+    - SecurityBoards
+    - SecurityExplosives
+    # - SecurityAmmo // Starlight - This pack commented and can't be changed in partials
+    - SecurityWeapons
     - SecurityDisablers
-    - StarlightDefenseStatic # starlight start
-    - SecurityCyberLimbs
-    - StarlightSecurityEquipment
-    - StarlightSecurityBoards
-    - StarlightSecurityExplosives
-    - StarlightSecurityAmmoDynamic
-    - StarlightSecurityWeapons
-    - SecurityDisablers
-    - SecurityCyberLimbs
-    - SecurityImplants # 🌟Starlight🌟
-    - StarlightSecurityMechsWeapons
-    - StarlightSecurityTechFabLootable
-  #region Starlight secfab emagging
   - type: EmagLatheRecipes
     emagStaticPacks:
-    - StarlightSyndicateModulesSecfab
-    - StarlightSyndicateAmmoStatic
-    - StarlightSecurityAmmoEmagStatic
-    - StarlightSecurityGrenadesEmag
-  #endregion Starlight secfab emagging
     - SyndicateAmmoStatic
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
+  # - type: LatheAnnouncing # Starlight reverted this pr
+  #   channels: [Security]
 
 - type: entity
   id: AmmoTechFab
@@ -501,12 +440,12 @@
     - type: Lathe
       idleState: icon
       runningState: icon
+      unlitIdleState: unlit
+      unlitRunningState: unlit-building
       staticPacks:
-      - StarlightSecurityAmmoStatic
-      #- SecurityAmmoStatic # SL - disable in favor of previous line
+      - SecurityAmmoStatic
     - type: EmagLatheRecipes
       emagStaticPacks:
-      - StarlightSyndicateAmmoStatic # Starlight
       - SyndicateAmmoStatic
     - type: MaterialStorage
       whitelist: *StandardMaterialWhitelist
@@ -534,6 +473,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticPacks:
     - TopicalsStatic
     - ChemistryStatic
@@ -541,22 +482,16 @@
     - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
-    - StarlightMedicalStatic # Starlight
-    - AACTabletStatic # Moffstation - AAC tablet
+    - SurgeryStatic
     dynamicPacks:
-    - StarlightSurgeryDynamic
-    - StarlightAutomendersDynamic # Starlight-edit
-    - StarlightCyberlimbDynamic
-    - StarlightCyberOrgansDynamic
-    - StarlightImplantDynamic
     - Chemistry
-    - StarlightBudgetCyberOrgansDynamic
-    - StarlightMedicalTechFabLootable
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
   - type: OreSiloClient
+  # - type: LatheAnnouncing # Starlight reverted this pr
+  #   channels: [Medical]
 
 - type: entity
   parent: BaseLathe
@@ -593,8 +528,6 @@
     - Scarves
     - Carpets
     - Bedsheets
-    dynamicPacks:
-    - StarlightUniformPrinterLootable
   - type: EmagLatheRecipes
     emagStaticPacks:
     - ClothingCentComm
@@ -668,11 +601,6 @@
           map: ["enum.MaterialStorageVisualLayers.Inserting"]
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
-        # Starlight Edit Start - Add magnet layer
-        - state: magnet_on
-          map: ["enum.ToggleableVisuals.Layer"]
-          visible: false
-        # Starlight Edit End
     - type: Machine
       board: OreProcessorMachineCircuitboard
     - type: MaterialStorage
@@ -687,34 +615,6 @@
       staticPacks:
       - OreSmelting
       - RGlassSmelting
-    # starlight edit start - add magnet pickup to ore processors
-    - type: ItemToggle
-      onUse: false
-      onActivate: false
-      verbToggleOn: verb-toggle-magnet-activate
-      verbToggleOff: verb-toggle-magnet-deactivate
-      soundActivate:
-        collection: sparks
-        params:
-          variation: 0.250
-      soundDeactivate:
-        collection: sparks
-        params:
-          variation: 0.250
-    - type: AltUseToggle
-    - type: ComponentToggler
-      components:
-      - type: MagnetPickup
-        range: 3
-        requiresEquipping: false
-        slotFlags: 0
-    - type: GenericVisualizer
-      visuals:
-        enum.ToggleableVisuals.Enabled:
-          enum.ToggleableVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-    # starlight edit end
 
 - type: entity
   parent: OreProcessor

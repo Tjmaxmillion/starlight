@@ -15,6 +15,7 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/cc.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCentcommContraband]
@@ -35,9 +36,10 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/cc.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseNanoTrasenContraband]
+  parent: [ ClothingHeadsetAlt, BaseNanoTrasenContraband ]
   id: ClothingHeadsetAltNanoTrasen
   name: NanoTrasen over-ear headset
   components:
@@ -54,9 +56,10 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/cc.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseNanoTrasenContraband]
+  parent: [ ClothingHeadsetAlt, BaseNanoTrasenContraband ]
   id: ClothingHeadsetAltRepresentative
   name: NanoTrasen representative over-ear headset
   components:
@@ -74,6 +77,7 @@
       path: /Audio/_Starlight/Effects/Radio/captain.ogg
   - type: StealTarget # Starlight
     stealGroup: ClothingHeadsetAltCommand # Starlight
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseNanoTrasenContraband]
@@ -94,6 +98,7 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/captain.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -125,6 +130,7 @@
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/command.rsi
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseBlueShieldContraband]
@@ -143,20 +149,24 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/bso.ogg
+  - type: HeadsetLoudMode
 
+# Gorlex Marauders
 - type: entity
   parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
   id: ClothingHeadsetAltSyndicateCommander
   name: blood-red over-ear commander headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
   components:
+  - type: Contraband # Blimpuf
+    tier: Tier4
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 5
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeySyndie
+      - EncryptionKeyGorlex
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
@@ -164,6 +174,7 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/marauder_commander.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
@@ -171,13 +182,15 @@
   name: blood-red over-ear agent headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
   components:
+  - type: Contraband # Blimpuf
+    tier: Tier4
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 5
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeySyndie
+      - EncryptionKeyGorlex
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
@@ -186,6 +199,28 @@
     sound:
       path: /Audio/_Starlight/Effects/Radio/marauder_agent.ogg
 
+- type: entity
+  parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
+  id: ClothingHeadsetAltGorlex
+  name: blood-red over-ear headset
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
+  components:
+  - type: Headset
+  - type: EncryptionKeyHolder
+    keySlots: 5
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyGorlex
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/marauder.ogg
+
+# Decimus
 - type: entity
   parent: [ ClothingHeadsetAltCentCom, BaseCentcommContraband ]
   id: ClothingHeadsetAltCentComDS
@@ -203,6 +238,7 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/deathsquad.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: [ ClothingHeadsetAltNanoTrasen, BaseNanoTrasenContraband ]
@@ -222,6 +258,7 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/deathsquad.ogg
+  - type: HeadsetLoudMode
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -239,6 +276,7 @@
       sprite: _Starlight/Clothing/Ears/Headsets/global.rsi
     - type: Clothing
       sprite: _Starlight/Clothing/Ears/Headsets/global.rsi
+    - type: HeadsetLoudMode
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -256,6 +294,7 @@
       sprite: _Starlight/Clothing/Ears/Headsets/admeme.rsi
     - type: Clothing
       sprite: _Starlight/Clothing/Ears/Headsets/admeme.rsi
+    - type: HeadsetLoudMode
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -303,18 +342,8 @@
       sprite: _Starlight/Clothing/Ears/Headsets/admeme.rsi
 
 - type: entity
-  parent: [ ClothingHeadsetAlt, BaseMedTakContraband ]
-  id: ClothingHeadsetAltMedTak
-  name: MedTak operator headset
-  description: A headset used by MedTak operators.
+  parent: ClothingHeadsetAltSyndicate
+  id: ClothingHeadsetAltSyndicateUnremovable
+  suffix: Unremovable
   components:
-    - type: Headset
-    - type: ContainerFill
-      containers:
-        key_slots:
-          - EncryptionKeyMedTak
-          - EncryptionKeyCommon
-    - type: Sprite
-      sprite: _Starlight/Admeme/Clothing/Ears/Headsets/medtak.rsi
-    - type: Clothing
-      sprite: _Starlight/Admeme/Clothing/Ears/Headsets/medtak.rsi
+  - type: Unremoveable

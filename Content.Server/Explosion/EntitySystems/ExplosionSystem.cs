@@ -17,6 +17,7 @@ using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
+using Content.Shared.Maps;
 using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
@@ -28,6 +29,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared._Starlight.Camera; // Starlight | ES Screenshake
 
@@ -35,13 +37,13 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
@@ -65,6 +67,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     private EntityQuery<DestructibleComponent> _destructibleQuery;
     private EntityQuery<DamageableComponent> _damageableQuery;
     private EntityQuery<AirtightComponent> _airtightQuery;
+    private EntityQuery<TileHistoryComponent> _tileHistoryQuery;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -107,6 +110,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         _destructibleQuery = GetEntityQuery<DestructibleComponent>();
         _damageableQuery = GetEntityQuery<DamageableComponent>();
         _airtightQuery = GetEntityQuery<AirtightComponent>();
+        _tileHistoryQuery = GetEntityQuery<TileHistoryComponent>();
 
         _prototypeManager.PrototypesReloaded += ReloadExplosionPrototypes;
     }
@@ -297,12 +301,22 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         if (addLog) // dont log if already created a separate, more detailed, log.
             _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
 
+        // Starlight - start
+        // Capture body ownership before TriggerExplosive queues the cause for deletion.
+        var internalBody = cause is { } causeUid ? FindContainingBody(causeUid) : null;
+        // Starlight - end
+
         // try to combine explosions on the same tile if they are the same type
         foreach (var queued in _queuedExplosions)
         {
             // ignore different types or those on different maps
             if (queued.Proto.ID != type.ID || queued.Epicenter.MapId != epicenter.MapId)
                 continue;
+
+            // Starlight - start
+            if (!HasSameInternalBodies(queued.InternalBodies, internalBody))
+                continue;
+            // Starlight - end
 
             var dst2 = queued.Proto.MaxCombineDistance * queued.Proto.MaxCombineDistance;
             var direction = queued.Epicenter.Position - epicenter.Position;
@@ -311,6 +325,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
             // they are close enough to combine so just add total intensity and prevent queuing another one
             queued.TotalIntensity += totalIntensity;
+            AddExplosionCause(queued, cause, internalBody); // Starlight
             return;
         }
 
@@ -325,6 +340,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             CanCreateVacuum = canCreateVacuum,
             Cause = cause
         };
+        AddExplosionCause(boom, cause, internalBody); // Starlight
         _explosionQueue.Enqueue(boom);
         _queuedExplosions.Add(boom);
     }
@@ -404,8 +420,10 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             EntityManager,
             visualEnt,
             queued.Cause,
+            queued.InternalBodies, // Starlight
             _map,
-            _damageableSystem);
+            _damageableSystem,
+            _tileHistoryQuery);
     }
 
     private void SpawnSmokeInRadius(float range, MapCoordinates epicenter, float totalIntensity)

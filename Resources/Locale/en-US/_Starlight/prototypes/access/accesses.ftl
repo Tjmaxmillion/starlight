@@ -2,6 +2,7 @@
 id-card-access-level-debrief = Debrief
 
 # NT
+id-card-access-level-ntpersonnel = NT Personnel
 id-card-access-level-magistrate = Magistrate
 id-card-access-level-ntrep = NanoTrasen Representative
 id-card-access-level-blueshield = BlueShield
@@ -11,6 +12,7 @@ id-card-access-level-iaa = Internal Affairs
 id-card-access-level-salvagelead = Salvage Lead
 id-card-access-level-mining = Mining
 id-card-access-level-mail = Mail
+id-card-access-level-shuttle = Shuttle
 
 # Engineering
 
@@ -22,6 +24,8 @@ id-card-access-level-brigmedic = Brigmedic
 id-card-access-level-cadet = Cadet
 
 # Service
+id-card-access-level-clown = Clown
+id-card-access-level-mime = Mime
 
 # Medical
 id-card-access-level-surgery = Surgery
@@ -51,3 +55,6 @@ id-card-access-level-solgov = SolGov
 id-card-access-level-pirate = Pirate
 id-card-access-level-blackstar = Blackstar
 id-card-access-level-medtak = MedTak
+id-card-access-level-visitor = Visitor
+
+id-card-access-level-itg = Interstellar Trade Guild

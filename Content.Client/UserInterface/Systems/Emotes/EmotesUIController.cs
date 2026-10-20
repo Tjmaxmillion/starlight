@@ -1,6 +1,7 @@
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
-using Content.Shared._Starlight.CloudEmotes; // Starlight
+using Content.Shared._Starlight.Chat;
+using Content.Shared._Starlight.CloudEmotes;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
@@ -135,6 +136,7 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
     {
+        emotePrototypes = SortEmotePrototypes(emotePrototypes); // Starlight: wheel ordering, see EmotesUIController.Starlight.cs
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
 
@@ -151,6 +153,15 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
                 || whitelistSystem.IsWhitelistPass(emote.Blacklist, player.Value))
                 continue;
 
+            // Starlight - start
+            if (emote.Category == EmoteCategory.Vocal
+                && player.HasValue
+                && EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var restrictedSpeech)
+                && restrictedSpeech.RestrictVocalEmotesToAllowed
+                && !restrictedSpeech.AllowedEmotes.Contains(emote.ID))
+                continue;
+            // Starlight - end
+
             if (!emote.Available
                 && EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
                 && !speech.AllowedEmotes.Contains(emote.ID))
@@ -162,7 +173,7 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
                 emotesByCategory.Add(emote.Category, list);
             }
 
-            var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
+            var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote, HandleAlternativeRadialButtonClick) //Starlight-edit
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(emote.Icon),
                 ToolTip = Loc.GetString(emote.Name)
@@ -171,7 +182,7 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
         }
 
         // Starlight - Start
-        var cloudprototypes = _prototypeManager.EnumeratePrototypes<CloudEmotePrototype>();
+        var cloudprototypes = SortCloudEmotePrototypes(_prototypeManager.EnumeratePrototypes<CloudEmotePrototype>());
         foreach (var emote in cloudprototypes)
         {
             if (!emotesByCategory.TryGetValue(EmoteCategory.Cloud, out var list))
@@ -183,7 +194,7 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
             var actionOption = new RadialMenuActionOption<CloudEmotePrototype>(HandleCloudRadialButtonClick, emote)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(emote.Icon),
-                ToolTip = Loc.GetString(emote.ID)
+                ToolTip = Loc.GetString(emote.Name)
             };
             list.Add(actionOption);
         }
@@ -205,6 +216,12 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
 
         return models;
     }
+
+    #region Starlight
+
+    private void HandleAlternativeRadialButtonClick(EmotePrototype emote) => EntityManager.RaisePredictiveEvent(new RequestBindEmoteMessage(emote.ID));
+
+    #endregion
 
     private void HandleRadialButtonClick(EmotePrototype prototype)
     {

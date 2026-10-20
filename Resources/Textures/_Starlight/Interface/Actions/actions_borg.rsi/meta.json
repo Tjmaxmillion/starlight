@@ -60,6 +60,10 @@
       "copyright": "AegisShieldDev"
     },
     {
+      "name": "butcher-module",
+      "copyright": "rhithebirdthing"
+    },
+    {
       "name": "hands",
       "directions": 1,
       "copyright": "Citrea-Lingua, modified from robohands.rsi"
@@ -75,6 +79,10 @@
     {
       "name": "medtak-combat-module",
       "copyright": "SevenShades"
+    },
+    {
+      "name": "gaming-module",
+      "copyright": "Ohelig, using chips from Glaud0283"
     }
   ]
 }

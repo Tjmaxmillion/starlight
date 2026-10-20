@@ -19,8 +19,9 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
-using Robust.Shared.Player; // Starlight
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared._Starlight.Sound;
 
 namespace Content.Shared.Sound;
 
@@ -63,6 +64,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(component.Blacklist, args.User))
         {
             TryEmitSound(uid, component, args.User);
+            args.InteractionParticle = true; // Stellar - interaction particles
         }
     }
 
@@ -99,7 +101,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
             return;
 
         // hand throwing not predicted sadly
-        TryEmitSound(uid, component, args.User, false);
+        TryEmitSound(uid, component, args.User); // Starlight edit: Throwing is predicted now, take that comment one line above me!!
     }
 
     private void OnEmitSoundOnUseInHand(EntityUid uid, EmitSoundOnUseComponent component, UseInHandEvent args)
@@ -113,7 +115,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnThrown(EntityUid uid, BaseEmitSoundComponent component, ref ThrownEvent args)
     {
-        TryEmitSound(uid, component, args.User, false);
+        TryEmitSound(uid, component, args.User); // Starlight edit: Throwing is predicted now
     }
 
     private void OnEmitSoundOnActivateInWorld(EntityUid uid, EmitSoundOnActivateComponent component, ActivateInWorldEvent args)
@@ -127,6 +129,9 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GotEquippedHandEvent args)
     {
+        if (HasComp<SilentPickupComponent>(uid)) // Starlight: quiet pickups, borg modules
+            return;
+
         TryEmitSound(uid, component, args.User);
     }
 

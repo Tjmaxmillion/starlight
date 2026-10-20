@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using System.Text;
-using Content.Server._Starlight.Objectives.Events;
 using Content.Server.GameTicking;
 using Content.Server.Objectives.Commands;
 using Content.Server.Shuttles.Systems;
-using Content.Shared._Starlight.Railroading;
 using Content.Shared.CCVar;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.GameTicking.Components;
@@ -14,28 +12,28 @@ using Content.Shared.Objectives.Systems;
 using Content.Shared.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Shared._Starlight.CustomObjectiveSummary; // Starlight
 using Content.Shared._Starlight.Station;
 using Content.Shared._Starlight.Railroading.Components;
-using Content.Shared._Starlight.Abstract; // Starlight
+using Content.Shared._Starlight.Abstract;
+using Content.Shared._Starlight.Objectives.Events; // Starlight
 
 namespace Content.Server.Objectives;
 
 public sealed partial class ObjectivesSystem : SharedObjectivesSystem
 {
-    [Dependency] private GameTicker _gameTicker = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private SharedJobSystem _job = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
 
     private IEnumerable<string>? _objectives;
 
@@ -66,12 +64,9 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     {
         // go through each gamerule getting data for the roundend summary.
         var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
-        var query = EntityQueryEnumerator<GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var gameRule))
+        var query = EntityQueryEnumerator<ActiveGameRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
             var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
             RaiseLocalEvent(uid, ref info);
             if (info.Minds.Count == 0)
@@ -95,9 +90,11 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             }
             else
             {
-                summary[prepend.Text] = info.Minds;
+                summary[prepend.Text] = info.Minds.ToList();
             }
         }
+
+        CollectPickerSummaries(summaries); // Starlight
 
         // convert the data into summary text
         foreach (var (agent, summary) in summaries)
@@ -108,7 +105,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
-                totalInCustody += minds.Where(pair => IsInCustody(pair.Item1)).Count();
+                totalInCustody += minds.Count(pair => IsInCustody(pair.Item1));
             }
 
             var result = new StringBuilder();
@@ -292,6 +289,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             }
             // Starlight End
 
+            successRate = AppendDifficultySummary(mindId, mind, agentSummary, successRate); // Starlight
             agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
         }
 
@@ -347,12 +345,14 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
         }
     }
 
-    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
+    #region Moffstation
+    // Moffstation - Objective Picker - make sure to use our yield break implementation and take upstream changes
+    public IEnumerable<EntityUid> GetRandomObjectives(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
     {
         if (!_prototypeManager.TryIndex(objectiveGroupProto, out var groupsProto))
         {
             Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
-            return null;
+            yield break; // Moffstation - Objective Picker
         }
 
         // Make a copy of the weights so we don't trash the prototype by removing entries
@@ -363,7 +363,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
                 Log.Error($"Couldn't index objective group prototype {groupName}");
-                return null;
+                yield break; // Moffstation - Objective Picker
             }
 
             var objectives = group.Weights.ShallowClone();
@@ -373,17 +373,31 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
                     continue;
 
                 if (objectiveComp.Difficulty <= maxDifficulty && TryCreateObjective((mindId, mind), objectiveProto, out var objective))
-                    return objective;
+                    yield return objective.Value; // Moffstation - Objective Picker
             }
+        }
+    }
+    #endregion
+
+    // Moffstation - Start - Objective Picker: This is rewritten to use our IEnumerable version for maintainability
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
+    {
+        #region Starlight
+        // Stop after the first candidate; Single exhausts the offer generator.
+        foreach (var objective in GetRandomObjectives(mindId, mind, objectiveGroupProto, maxDifficulty))
+        {
+            return objective;
         }
 
         return null;
+        #endregion
     }
+    // Moffstation - End
 
     /// <summary>
     /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
     /// </summary>
-    private bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
+    public bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind))
             return false;

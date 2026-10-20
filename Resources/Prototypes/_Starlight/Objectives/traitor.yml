@@ -101,24 +101,30 @@
   description: Ensure they die at least once this shift. They know what they did.
   components:
     - type: Objective
+      hidden: true
+      hiddenTitle: objective-picker-hidden-lesson
       difficulty: 1.5
       unique: false
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomPerson
+      pool: !type:WeightedAlivePool
+        weightHighValue: true
       filters:
       # Can't have multiple objectives to teach the same person.
       - !type:TargetObjectiveMindFilter
         blacklist:
           components:
-          - TeachALessonTarget
+          - TeachALessonCondition
 
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
   id: TeachRandomHeadObjective
-  description: Ensure this head dies at least once this shift. They know what they did.
+  description: Ensure this high value person dies at least once this shift. They know what they did.
   components:
     - type: Objective
+      hidden: true
+      hiddenTitle: objective-picker-hidden-lesson-head
       # technically it's still possible for TeachRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
       difficulty: 2 #Starlight edit
       # killing 1 head is enough
@@ -126,15 +132,13 @@
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomPerson
+      pool: !type:HighValueTargetsPool
+        includeCommand: true
       filters:
-      - !type:BodyMindFilter
-        whitelist:
-          components:
-          - CommandStaff
       - !type:TargetObjectiveMindFilter
         blacklist:
           components:
-          - TeachALessonTarget # dont let mutiple teach someone.
+          - TeachALessonCondition # Don't assign multiple lessons for the same person.
 
 - type: entity
   parent: BaseRDStealObjective
@@ -312,15 +316,6 @@
     difficulty: 2.5 # Heavy, huge, hard to hide.
 
 - type: entity
-  parent: BaseTraitorCargoStealObjective
-  id: SalvLeadHardsuitStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: SalvLeadHardsuit
-  - type: Objective
-    difficulty: 2.5 # Heavy, huge, hard to hide. Would be 3, but Salvage Lead usually tosses it after getting a better one.
-
-- type: entity
   parent: BaseTraitorCommandStealObjective
   id: CaptainHardsuitStealObjective
   components:
@@ -362,54 +357,54 @@
   parent: BaseStoryObjective
   id: RetrieveContrabandObjective
   name: Retrieve any contraband confiscated by SEC this shift, sell it or keep it for your collection, just dont let SEC keep it.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 
 - type: entity
   parent: BaseStoryObjective
   id: AccessForAllObjective
   name: Hack, break or give out access so no area is secured by doors.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: ArmsDealerObjective
   name: Open an underground arms trading ring
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 
 - type: entity
   parent: BaseStoryObjective
   id: FrameObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-framing
     - type: PickRandomDepartment
@@ -417,14 +412,14 @@
 - type: entity
   parent: BaseStoryObjective
   id: FalseUprisingObjective
-  description:  Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-false-uprising
     - type: PickRandomDepartment
@@ -433,78 +428,78 @@
   parent: BaseStoryObjective
   id: DuelistObjective
   name: Challenge others to duels and win
-  description: You don't need to kill them, unless you want to.  Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: You don't need to kill them, unless you want to. Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: EspionageObjective
-  name: Interrogate the NT rep and department heads for corporate secrets.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  name: Interrogate the NanoTrasen Representative and department heads for corporate secrets.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: ManifestoObjective
   name: Distribute your manifesto. Write why you do what you do, and covertly spread it to sway others to our cause.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: CallingCardObjective
   name: Leave a Syndicate Business Card at the scene of your crimes.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: SELFObjective
   name: Pressure for equal rights for Silicons, for the Silicon Engine Liberation Front!
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1.5
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: StalkingObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 0.5
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-stalking
     - type: PickRandomDepartment
@@ -512,14 +507,14 @@
 - type: entity
   parent: BaseStoryObjective
   id: DisgraceObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-disgrace
     - type: PickRandomDepartment
@@ -527,14 +522,14 @@
 - type: entity
   parent: BaseStoryObjective
   id: HarassObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-harass
     - type: PickRandomDepartment
@@ -542,14 +537,14 @@
 - type: entity
   parent: BaseStoryObjective
   id: ImpersonateObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-impersonate
     - type: PickRandomDepartment
@@ -557,14 +552,14 @@
 - type: entity
   parent: BaseStoryObjective
   id: FeudObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-feud
     - type: PickRandomDepartment
@@ -572,14 +567,14 @@
 - type: entity
   parent: BaseStoryObjective
   id: WasteObjective
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 1
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
     - type: DepartmentObjective
       title: objective-waste
     - type: PickRandomDepartment
@@ -588,79 +583,79 @@
   parent: BaseStoryObjective
   id: MaintsBarObjective
   name: Ensure that the maints bar prospers, and extort them into allowing the Syndicate to conduct business within.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
-  id: ReputationObjective # Vampires
-  name: Commit petty crimes, litter the station, ruin the repuatation of the onboard security force and the stations command members.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  id: ReputationObjective
+  name: Commit petty crimes, litter the station, ruin the reputation of the onboard security force and the stations command members.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
-  id: FalseOutbreakObjective # Vampires
+  id: FalseOutbreakObjective
   name: Spread rumors of a biological outbreak of any kind onboard the station.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: PanicObjective
   name: Convince the station of the existence of a threat that isn't, to your knowledge, present.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2 # Rev metagame counterplay.
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: RumorObjective
   name: Spread rumors about NanoTrasen and CentComm that paint them in a negative light.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 0.5 # Easy, lets you slander people for fun.
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 - type: entity
   parent: BaseStoryObjective
   id: SyndielandObjective
   name: Reopen Syndieland, and make some serious cash on behalf of the Syndicate.
-  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Escape to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2 # Doing this should take the majority of your shift, so it can be higher difficulty.
+      difficulty: 0
       unique: true
       icon:
-        sprite: _Starlight/Interface/Misc/rp_icon.rsi
-        state: icon
+        sprite: _Starlight/Interface/Misc/objective_icons.rsi
+        state: rp
 
 # RP OBJECTIVES END
 
@@ -686,3 +681,17 @@
         sprite: Objects/Specific/Medical/syndi_implanter.rsi
         state: implanter0
     - type: FreeObjective
+
+# Achieve your Objectives
+- type: entity
+  parent: BaseTraitorObjective
+  id: TraitorAchieveObjective
+  name: Achieve your objectives.
+  description: Fulfill the objectives assigned to you. How you finish the shift is up to you.
+  components:
+  - type: Objective
+    difficulty: 0
+    icon:
+      sprite: _Starlight/Interface/Misc/objective_icons.rsi
+      state: rp
+  - type: AchieveObjectivesCondition

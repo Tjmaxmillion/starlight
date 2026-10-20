@@ -1,11 +1,11 @@
 using System.Numerics;
-using Content.Server.Botany.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Botany.Items.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Events;
@@ -22,10 +22,10 @@ using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -211,11 +211,19 @@ namespace Content.Server.Medical.BiomassReclaimer
                 _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
             {
                 component.BloodReagents = solution.Clone();
-                component.BloodReagents.ScaleSolution(50 / component.BloodReagents.Volume);
+                // Starlight-start: fix Biomass divide by zero and presumed incorrect fluid scaling
+                component.BloodReagents.ScaleSolution(.25f);
+                if (component.BloodReagents.Volume > 50)
+                    component.BloodReagents.ScaleTo(50f);
+                // Starlight-end
             }
-            if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
+            if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
             {
-                component.SpawnedEntities = butcherableComponent.SpawnedEntities;
+                component.SpawnedEntities = refinable.RefineResult;
+            }
+            else
+            {
+                component.SpawnedEntities = new();
             }
 
             var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;

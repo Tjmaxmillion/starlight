@@ -55,7 +55,8 @@ namespace Content.Server.Zombies
             SlotFlags.MASK |
             SlotFlags.NECK |
             SlotFlags.INNERCLOTHING |
-            SlotFlags.OUTERCLOTHING;
+            SlotFlags.OUTERCLOTHING | // Starlight
+            SlotFlags.OUTERCLOTHING2; // Starlight
 
         public override void Initialize()
         {
@@ -236,6 +237,8 @@ namespace Content.Server.Zombies
             return MathF.Max(chance, zombieComponent.MinZombieInfectionChance);
         }
 
+        partial void OnDeadTargetInfectionFailed(Entity<ZombieComponent> entity, EntityUid uid, ref MeleeHitEvent args); // Starlight
+
         private void OnMeleeHit(Entity<ZombieComponent> entity, ref MeleeHitEvent args)
         {
             if (!args.IsHit)
@@ -284,7 +287,10 @@ namespace Content.Server.Zombies
                 {
                     if (HasComp<ZombieImmuneComponent>(uid) || cannotSpread
                     || !_random.Prob(GetZombieInfectionChance(uid, entity.Comp))) //Starlight fix: Infection-proof suits don't just lose their resistance on death.
+                    {
+                        OnDeadTargetInfectionFailed(entity, uid, ref args); // Starlight: If the target is dead and fully immune to conversion, display a message
                         continue;
+                    }
 
                     // If the target is dead and can be infected, infect.
                     ZombifyEntity(uid);

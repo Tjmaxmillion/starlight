@@ -113,27 +113,6 @@
   - type: SolutionScanner
   - type: IgnoreUIRange
   - type: ShowAntagIcons
-  - type: AdminGhostHud # Starlight BEGIN
-  - type: ShowCriminalRecordIcons
-  - type: ShowJobIcons
-  - type: ShowMindShieldIcons
-  - type: ShowSyndicateIcons
-  - type: ShowHealthBars
-    damageContainers:
-      - Biological
-      - Inorganic
-      - Silicon
-      - IPC
-      - Hybrid
-  - type: ShowHealthIcons
-    damageContainers:
-      - Biological
-      - Inorganic
-      - Silicon
-      - IPC
-      - Hybrid
-  - type: ShowHungerIcons
-  - type: ShowThirstIcons # Starlight END
   - type: ShowContrabandDetails
   - type: Inventory
     templateId: aghost
@@ -142,6 +121,7 @@
   - type: BypassInteractionChecks
   - type: ExplosionResistance
     damageCoefficient: 0
+  - type: AdminGhost # Starlight
 
 - type: entity
   abstract: true

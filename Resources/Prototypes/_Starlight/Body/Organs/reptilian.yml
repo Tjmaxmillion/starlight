@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: OrganReptilianStomach
   parent: [OrganAnimalStomach, BaseOrganStomach]
   name: reptilian stomach
@@ -13,12 +13,21 @@
       - Pill
       - Crayon
       - Paper
-  - type: SolutionContainerManager
+      - IceCream
+      - Birthday
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+    - SolutionOrganFoodMeat
+    - SolutionOrganStomach50
+
+- type: entity
+  id: OrganReptilianTongue
+  parent: OrganHumanTongue
+  suffix: Reptilian
+  components:
+  - type: OrganTongue
+    allowedEmotes: ['Liss', 'Lurr', 'Rattle']
+    sounds:
+      Male: MaleReptilian
+      Female: FemaleReptilian
+      Unsexed: MaleReptilian

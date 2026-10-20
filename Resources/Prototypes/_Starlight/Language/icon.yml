@@ -235,5 +235,13 @@
   id: LanguageIconSqueakish
   icon:
     sprite: /Textures/_Starlight/Interface/language_icon.rsi
-    state: rodentia
+    state: squeakish
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconCommunist
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: communist
   allowSelection: false

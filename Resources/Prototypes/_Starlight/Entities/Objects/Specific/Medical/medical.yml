@@ -24,12 +24,10 @@
   - type: Medibot
     treatments:
       Alive:
-        reagent: Omnizine
-        quantity: 10
-        minDamage: 49
-        maxDamage: 120
+        reagent: Tricordrazine
+        quantity: 15
       Critical:
-        reagent: Omnizine
+        reagent: Epinephrine
         quantity: 10
   - type: EmaggableMedibot
     replacements:
@@ -78,6 +76,7 @@
     sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: BrigKube
   - type: Storage
+    maxItemSize: Small
     whitelist:
       tags:
         - Bottle
@@ -87,9 +86,11 @@
         - Hypospray
         - Ointment
         - PillCanister
+        - PatchPack
       components:
         - Injector
         - Pill
+        - ConditionalHealing
     grid:
     - 0,0,3,2
   - type: Item

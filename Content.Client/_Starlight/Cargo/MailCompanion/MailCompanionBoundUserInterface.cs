@@ -1,6 +1,6 @@
 using Content.Shared._Starlight.Cargo.MailCompanion;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
+using Content.Client._Starlight.UserInterface;
 
 namespace Content.Client._Starlight.Cargo.MailCompanion;
 
@@ -14,18 +14,11 @@ public sealed class MailCompanionBoundUserInterface(EntityUid owner, Enum uiKey)
         base.Open();
 
         EntityUid? gridUid = null;
-        var stationName = string.Empty;
 
         if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
-        {
             gridUid = xform.GridUid;
-
-            if (EntMan.TryGetComponent<MetaDataComponent>(gridUid, out var metaData))
-                stationName = metaData.EntityName;
-        }
-
-        _window = this.CreateWindow<MailCompanionWindow>();
-        _window.Set(stationName, gridUid);
+        _window = this.CreatePopOutableWindow<MailCompanionWindow>(EntMan);
+        _window.Set(gridUid, Owner);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -34,5 +27,13 @@ public sealed class MailCompanionBoundUserInterface(EntityUid owner, Enum uiKey)
 
         if (state is MailCompanionState companionState)
             _window?.UpdateState(companionState, Owner);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (disposing)
+            _window?.DisposePopOut();
     }
 }

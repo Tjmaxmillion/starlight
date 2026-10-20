@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Contraband;
+using Content.Shared._Blimpuf.Contraband; // Blimpuf
 using Content.Shared.Emp;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -66,12 +66,20 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
 
     private void OnGotEquipped(EntityUid uid, ChameleonClothingComponent component, GotEquippedEvent args)
     {
-        component.User = args.Equipee;
+        if (Timing.ApplyingState)
+            return; // Already networked as part of the same gamestate
+
+        component.User = args.EquipTarget;
+        Dirty(uid, component);
     }
 
     private void OnGotUnequipped(EntityUid uid, ChameleonClothingComponent component, GotUnequippedEvent args)
     {
+        if (Timing.ApplyingState)
+            return; // Already networked as part of the same gamestate
+
         component.User = null;
+        Dirty(uid, component);
     }
 
     // Updates chameleon visuals and meta information.

@@ -1,25 +1,4 @@
 - type: entity
-  id: USSPUplinkImplant
-  name: USSP uplink implant
-  description: A subdermal implant containing the USSP uplink radio.
-  parent: [ BaseSubdermalImplant, StorePresetUSSP ]
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: SubdermalImplant
-      implantAction: ActionOpenSKBUplinkImplant
-      whitelist:
-        components:
-          - Hands
-    - type: Store
-      balance:
-        Telebond: 0
-    - type: UserInterface
-      interfaces:
-        enum.StoreUiKey.Key:
-          type: StoreBoundUserInterface
-    - type: USSPUplinkImplant
-
-- type: entity
   parent: BaseSubdermalImplant
   id: MagillitisSerumImplant
   name: magillitis serum implant
@@ -56,6 +35,17 @@
   - type: RattleOnTrigger
     radioChannel:
     - TSF
+
+- type: entity
+  parent: DeathRattleImplant
+  id: DeathRattleImplantSalvage
+  name: Salvage death rattle implant
+  description: This implant will inform the Expedition radio channel should the user fall into critical condition or die.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: RattleOnTrigger
+      radioChannel:
+        - Expedition
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -132,8 +122,8 @@
 #SELF
 - type: entity
   parent: BaseSubdermalImplant
-  id: SELFStorageImplant
-  name: S.E.L.F storage implant
+  id: BluespaceStorageImplant
+  name: bluespace storage implant
   description: This implant grants hidden storage within a person's body using bluespace technology.
   categories: [ HideSpawnMenu ]
   components:
@@ -203,41 +193,6 @@
   components:
     - type: MindControlImplant
 
-# MedTak
-- type: entity
-  parent: DeathRattleImplant
-  id: DeathRattleImplantMedTak
-  name: MedTak beacon
-  description: This implant will inform the nearest MedTak unit should the user fall into critical condition or die.
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: RattleOnTrigger
-      radioChannel:
-      - MedTak
-    - type: SuitSensor
-      faction: MedTak
-      randomMode: false
-      controlsLocked: true
-      mode: SensorCords
-      activationContainer: "implant"
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      transmitFrequencyId: SuitSensor
-    - type: StationLimitedNetwork
-      allowNonStationPackets: true
-    - type: WirelessNetworkConnection
-      range: 1500
-
-- type: entity
-  parent: MindShieldImplant
-  id: MedTakMindShieldImplant
-  name: MedTak mindshield implant
-  description: This implant protects operators from mind control devices.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: MindShieldImplant
-    mindShieldStatusIcon: MedTakMindShieldIcon
-
 # NanoTrasen Implants
 - type: entity
   parent: BaseSubdermalImplant
@@ -298,3 +253,71 @@
     tags:
     - SubdermalImplant
     - HideContextMenu
+
+# ITG Implants
+- type: entity
+  parent: TrackingImplant
+  id: ITGTrackingImplant
+  name: itg tracking implant
+  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the expedition channel.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: RattleOnTrigger
+      targetUser: true
+      radioChannel:
+      - Expedition
+
+# USSP Implants
+- type: entity
+  id: USSPUplinkImplant
+  name: USSP uplink implant
+  description: A subdermal implant containing the USSP uplink radio.
+  parent: [ BaseSubdermalImplant, StorePresetUSSP ]
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionOpenSKBUplinkImplant
+      whitelist:
+        components:
+          - Hands
+    - type: Store
+      balance:
+        Telebond: 0
+    - type: UserInterface
+      interfaces:
+        enum.StoreUiKey.Key:
+          type: StoreBoundUserInterface
+    - type: USSPUplinkImplant
+
+- type: entity
+  parent: DeathRattleImplant
+  id: DeathRattleImplantUSSP
+  name: USSP death rattler
+  description: This implant will inform the USSP radio channel should the user fall into critical condition or die.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RattleOnTrigger
+    radioChannel:
+    - Soviet
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplantUSSP
+  name: USSP radio implant
+  description: This implant will allow you to listen and talk in the USSP radio channel without a headset.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - Soviet
+
+- type: entity
+  parent: MindShieldImplant
+  id: ITGMindShieldImplant
+  name: ITG mindshield implant
+  description: This implant will ensure loyalty to the Guild and prevent mind control devices.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MindShieldImplant
+    mindShieldStatusIcon: ITGMindShieldIcon

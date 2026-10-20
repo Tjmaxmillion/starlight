@@ -1,5 +1,6 @@
 - type: job
   id: NTNCBlueShield
+  roleType: CorporateAligned
   name: job-name-ntncblueshield
   description: job-description-ntncblueshield
   playTimeTracker: JobConsortiumBlueShield
@@ -14,7 +15,6 @@
   icon: JobIconNTNCBlueShield
   rules: job-rules-corporate-aligned
   supervisors: job-supervisors-centcom
-  canBeAntag: false
   bypassEorPacification: true
   accessGroups:
   - AllAccess

@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Server.AlertLevel;
+using Content.Server.Chat.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
 using Content.Shared._Starlight.CCVar;
@@ -37,7 +38,7 @@ namespace Content.Server._Starlight.Revolutionary;
 public sealed partial class RevSupplyRiftSystem : EntitySystem
 {
     [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private Chat.Managers.IChatManager _chatManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private StoreSystem _store = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -72,6 +73,8 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
     /// This prevents multiple rifts from being purchased by spam-clicking.
     /// </summary>
     private bool _isProcessingRift = false;
+
+    private readonly List<EntityUid> _nearbyHumanoids = new();
 
     public override void Initialize()
     {
@@ -209,20 +212,25 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
             var riftTransform = Transform(uid);
 
             // Get all entities with HumanoidAppearanceComponent within a small radius
-            var nearbyHumanoids = EntityManager.EntityQuery<HumanoidAppearanceComponent, TransformComponent>()
-                .Where(pair =>
+            _nearbyHumanoids.Clear();
+            var query = EntityQueryEnumerator<HumanoidAppearanceComponent, TransformComponent>();
+            while (query.MoveNext(out var nearbyUid, out var nearbyHumanoid, out var nearbyTransform))
+            {
+                // 2 unit radius
+                if (riftTransform.MapID != nearbyTransform.MapID ||
+                    (_transform.GetWorldPosition(riftTransform) - _transform.GetWorldPosition(nearbyTransform))
+                    .LengthSquared() >= 4)
                 {
-                    var (_, otherTransform) = pair;
-                    return riftTransform.MapID == otherTransform.MapID &&
-                           (_transform.GetWorldPosition(riftTransform) - _transform.GetWorldPosition(otherTransform)).LengthSquared() < 4; // 2 unit radius
-                })
-                .Select(pair => pair.Item1.Owner)
-                .ToList();
+                    continue;
+                }
 
-            if (nearbyHumanoids.Count > 0)
+                _nearbyHumanoids.Add(nearbyUid);
+            }
+
+            if (_nearbyHumanoids.Count > 0)
             {
                 // Use the first nearby humanoid
-                var humanoid = nearbyHumanoids[0];
+                var humanoid = _nearbyHumanoids[0];
                 var name = Identity.Name(humanoid, EntityManager);
 
                 if (!string.IsNullOrEmpty(name))
@@ -232,13 +240,13 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
                 }
                 else
                 {
-                    revRift.PlacedBy = "Unknown";
+                    revRift.PlacedBy = null;
                     Log.Info("Revolutionary entity is null, nearby humanoid has no name");
                 }
             }
             else
             {
-                revRift.PlacedBy = "Unknown";
+                revRift.PlacedBy = null;
                 Log.Info("Revolutionary entity is null, no nearby humanoids found");
             }
         }
@@ -402,7 +410,7 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
 
                     // Update the description with the charging status and location
                     // Don't use color tags as they're not properly handled in the UI
-                    var chargingText = $"Supply rift (Charging: {revRift.ChargePercentage}% - Placed by comrade {revRift.PlacedBy ?? "Unknown"} {locationString})";
+                    var chargingText = Loc.GetString("rev-supply-rift-listing-charging", ("charge", revRift.ChargePercentage), ("name", revRift.PlacedBy ?? Loc.GetString("rev-supply-rift-unknown-placer")), ("location", locationString));
 
                     listing.Description = chargingText;
 
@@ -461,11 +469,11 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
         int activeRiftCount = 0;
         EntityUid rift = default; // there has to be a better way to do this? (starlight)
         var riftsQuery = EntityQueryEnumerator<RevSupplyRiftComponent, DragonRiftComponent>();
-        while (riftsQuery.MoveNext(out _, out var revRift, out var dragonRift))
+        while (riftsQuery.MoveNext(out var uid, out var revRift, out var dragonRift))
         {
             if (revRift.State == DragonRiftState.Finished)
             {
-                rift = revRift.Owner;
+                rift = uid;
                 activeRiftCount++;
             }
 
@@ -553,22 +561,22 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
     /// Checks if a rift has been destroyed and updates the listing accordingly.
     /// This is called by the StoreSystem whenever listings are refreshed.
     /// </summary>
-    /// <param name="storeComp">The store component being refreshed</param>
-    public void CheckRiftDestroyedAndUpdateListing(StoreComponent storeComp)
+    /// <param name="ent">The store being refreshed</param>
+    public void CheckRiftDestroyedAndUpdateListing(Entity<StoreComponent> ent)
     {
         // If no rift has been destroyed, we don't need to do anything
         if (!_riftDestroyed)
             return;
 
         // Find the supply rift listing
-        foreach (var listing in storeComp.FullListingsCatalog)
+        foreach (var listing in ent.Comp.FullListingsCatalog)
         {
             if (listing.ID == RevSupplyRiftListingId)
             {
                 // Store the original description if we haven't already
-                if (!_originalDescriptions.TryGetValue(storeComp.Owner, out _))
+                if (!_originalDescriptions.TryGetValue(ent, out _))
                 {
-                    _originalDescriptions[storeComp.Owner] = listing.Description ?? "";
+                    _originalDescriptions[ent] = listing.Description ?? "";
                 }
 
                 // Update the description with the destroyed message
@@ -591,7 +599,7 @@ public sealed partial class RevSupplyRiftSystem : EntitySystem
 
         // Get the nearest beacon location
         var locationString = _navMap.GetNearestBeaconString((rift.Owner, xform));
-        var placedBy = rift.Comp.PlacedBy ?? "Unknown";
+        var placedBy = rift.Comp.PlacedBy ?? Loc.GetString("rev-supply-rift-unknown-placer");
         var message = Loc.GetString("rev-supply-rift-placed", ("location", locationString), ("name", placedBy));
         var sender = Loc.GetString("rev-supply-rift-sender");
 

@@ -23,19 +23,26 @@
       - ClothMade
       - Paper
       - Pill
-  - type: SolutionContainerManager
+      - IceCream
+      - Birthday
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+    - SolutionOrganFoodMeat
+    - SolutionOrganStomach50
+    - SolutionOrganNutriment
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [ Moth ]
-    removeEmpty: true
-    groups:
-      - id: Food
-      - id: Drink
+    stages: [ Digestion ]
+
+- type: entity
+  id: OrganMothTongue
+  parent: OrganHumanTongue
+  suffix: Moth
+  components:
+  - type: OrganTongue
+    allowedEmotes: ['Chitter', 'Squeak']
+    sounds:
+      Male: UnisexMoth
+      Female: UnisexMoth
+      Unsexed: UnisexMoth

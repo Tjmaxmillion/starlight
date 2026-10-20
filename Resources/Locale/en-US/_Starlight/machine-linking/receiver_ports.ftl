@@ -18,3 +18,9 @@ signal-port-description-ticket-machine-burntickets = Burns all served tickets wh
 
 signal-port-name-set-particle-lambda = Set particle type: lambda
 signal-port-description-set-particle-lambda = Sets the type of particle this device emits to lambda.
+
+signal-port-name-trigger-spawn = Trigger Spawn
+signal-port-description-trigger-spawn = Activates the spawner, causing it to spawn something.
+
+signal-port-name-turret-controller-sync-receiver = Sync
+signal-port-description-turret-controller-sync-receiver = Shares armament and authorization settings with another turret control panel.

@@ -11,7 +11,6 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.FixedPoint;
-using Robust.Client.Graphics;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Robust.Client.GameObjects;
 
@@ -25,6 +24,9 @@ namespace Content.Client.Chemistry.UI
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IEntityManager _entityManager = default!;
+        private NetEntity? _lastOutputContainer; // Starlight
+        private bool _containerLabelManuallySet; // Starlight
+        private bool _settingContainerLabelProgrammatically; // Starlight
 
         private readonly SpriteSystem _sprite;
 
@@ -95,6 +97,14 @@ namespace Content.Client.Chemistry.UI
 
             // Ensure label length is within the character limit.
             LabelLineEdit.IsValid = s => s.Length <= SharedChemMaster.LabelMaxLength;
+            // Starlight-start
+            ContainerLabelLineEdit.IsValid = s => s.Length <= SharedChemMaster.LabelMaxLength; // Starlight
+            ContainerLabelLineEdit.OnTextChanged += _ =>
+            {
+                if (!_settingContainerLabelProgrammatically)
+                    _containerLabelManuallySet = true;
+            };
+            // Starlight-end
 
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
@@ -127,10 +137,10 @@ namespace Content.Client.Chemistry.UI
                 ("10", ChemMasterReagentAmount.U10, StyleClass.ButtonOpenBoth),
                 ("15", ChemMasterReagentAmount.U15, StyleClass.ButtonOpenBoth),
                 ("20", ChemMasterReagentAmount.U20, StyleClass.ButtonOpenBoth),
-                ("25", ChemMasterReagentAmount.U25, StyleClass.ButtonOpenBoth),
                 ("30", ChemMasterReagentAmount.U30, StyleClass.ButtonOpenBoth),
-                ("50", ChemMasterReagentAmount.U50, StyleClass.ButtonOpenBoth),
-                ("100", ChemMasterReagentAmount.U100, StyleClass.ButtonOpenBoth),
+                ("40", ChemMasterReagentAmount.U40, StyleClass.ButtonOpenBoth),
+                ("60", ChemMasterReagentAmount.U60, StyleClass.ButtonOpenBoth),
+                ("120", ChemMasterReagentAmount.U120, StyleClass.ButtonOpenBoth),
                 (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleClass.ButtonOpenLeft),
             };
 
@@ -155,6 +165,22 @@ namespace Content.Client.Chemistry.UI
 
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
+
+            // Starlight-start
+            var currentContainer = castState.OutputContainerInfo?.Uid;
+            if (currentContainer != _lastOutputContainer)
+            {
+                _lastOutputContainer = currentContainer;
+                _containerLabelManuallySet = false;
+                ContainerLabelLine = "";
+            }
+
+            if (castState.OutputContainerInfo is not null && !_containerLabelManuallySet)
+            {
+                var existingLabel = castState.OutputContainerInfo?.ContainerLabel;
+                ContainerLabelLine = !string.IsNullOrEmpty(existingLabel) ? existingLabel : LabelLine;
+            }
+            // Starlight-end
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
@@ -280,7 +306,7 @@ namespace Content.Client.Chemistry.UI
             BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
             BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);
 
-            BufferInfo.Children.Clear();
+            BufferInfo.ClearDisplay();
 
             // This has to happen here due to people possibly
             // setting sorting before putting any chemicals
@@ -297,7 +323,7 @@ namespace Content.Client.Chemistry.UI
 
             if (!state.BufferReagents.Any())
             {
-                BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
+                BufferInfo.ShowEmptyMessage();
 
                 return;
             }
@@ -312,7 +338,7 @@ namespace Content.Client.Chemistry.UI
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}u",
+                Text = $"{state.BufferCurrentVolume}{Loc.GetString("units-u")}",
                 StyleClasses = { StyleClass.LabelWeak }
             };
             bufferHBox.AddChild(bufferVol);
@@ -320,14 +346,13 @@ namespace Content.Client.Chemistry.UI
             // This sets up the needed data for sorting later in a list
             // Its done this way to not repeat having to use same code twice (once for sorting
             // and once for displaying)
-            var reagentList = new List<(ReagentId reagentId, string name, Color color, FixedPoint2 quantity)>();
+            var reagentList = new List<(ReagentId reagentId, string name, FixedPoint2 quantity)>();
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
                 var reagentId = reagent;
                 _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                var reagentColor = proto?.SubstanceColor ?? default(Color);
-                reagentList.Add(new (reagentId, name, reagentColor, quantity));
+                reagentList.Add(new (reagentId, name, quantity));
             }
 
             // We sort here since we need sorted list to be filled first.
@@ -351,24 +376,20 @@ namespace Content.Client.Chemistry.UI
                     break;
             }
 
-            // initialises rowCount to allow for striped rows
-            var rowCount = 0;
             foreach (var reagent in reagentList)
             {
-                BufferInfo.Children.Add(BuildReagentRow(reagent.color, rowCount++, reagent.name, reagent.reagentId, reagent.quantity, true, true));
+                BufferInfo.AddReagent(reagent.reagentId, reagent.quantity,
+                    CreateReagentTransferButtons(reagent.reagentId, true, true));
             }
         }
 
-        private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
+        private void BuildContainerUI(ReagentDisplayControl control, ContainerInfo? info, bool addReagentButtons)
         {
-            control.Children.Clear();
+            control.ClearDisplay();
 
             if (info is null)
             {
-                control.Children.Add(new Label
-                {
-                    Text = Loc.GetString("chem-master-window-no-container-loaded-text")
-                });
+                control.ShowEmptyMessage();
                 return;
             }
 
@@ -386,9 +407,6 @@ namespace Content.Client.Chemistry.UI
                     }
                 }
             });
-            // Initialises rowCount to allow for striped rows
-            var rowCount = 0;
-
             // Handle entities if they are not null
             // Starlight-start
             var entities = info.PillEntities ?? info.PatchEntities;
@@ -397,7 +415,7 @@ namespace Content.Client.Chemistry.UI
                 foreach (var (id, quantity) in entities.Select(x => (x.Id, x.Quantity)))
                 {
                     // Starlight-end
-                    control.Children.Add(BuildReagentRow(default(Color), rowCount++, id, default(ReagentId), quantity, false, addReagentButtons));
+                    control.AddEntity(id, quantity);
                 }
             }
 
@@ -406,71 +424,10 @@ namespace Content.Client.Chemistry.UI
             {
                 foreach (var reagent in info.Reagents)
                 {
-                    _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
-                    var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                    var reagentColor = proto?.SubstanceColor ?? default(Color);
-
-                    control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
+                    control.AddReagent(reagent.Reagent, reagent.Quantity,
+                        CreateReagentTransferButtons(reagent.Reagent, false, addReagentButtons));
                 }
             }
-        }
-        /// <summary>
-        /// Take reagent/entity data and present rows, labels, and buttons appropriately. todo sprites?
-        /// </summary>
-        private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool addReagentButtons)
-        {
-            //Colors rows and sets fallback for reagentcolor to the same as background, this will hide colorPanel for entities hopefully
-            var rowColor1 = Color.FromHex("#1B1B1E");
-            var rowColor2 = Color.FromHex("#202025");
-            var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-            if ((reagentColor == default(Color))|(!addReagentButtons))
-            {
-                reagentColor = currentRowColor;
-            }
-            //this calls the separated button builder, and stores the return to render after labels
-            var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
-
-            // Create the row layout with the color panel
-            var rowContainer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
-                {
-                    new Label { Text = $"{name}: " },
-                    new Label
-                    {
-                        Text = $"{quantity}u",
-                        StyleClasses = { StyleClass.LabelWeak }
-                    },
-
-                    // Padding
-                    new Control { HorizontalExpand = true },
-                    // Colored panels for reagents
-                    new PanelContainer
-                    {
-                        Name = "colorPanel",
-                        VerticalExpand = true,
-                        MinWidth = 4,
-                        PanelOverride = new StyleBoxFlat
-                        {
-                            BackgroundColor = reagentColor
-                        },
-                        Margin = new Thickness(0, 1)
-                    }
-                }
-            };
-
-            // Add the reagent buttons after the color panel
-            foreach (var reagentTransferButton in reagentButtonConstructors)
-            {
-                rowContainer.AddChild(reagentTransferButton);
-            }
-            //Apply panencontainer to allow for striped rows
-            return new PanelContainer
-            {
-                PanelOverride = new StyleBoxFlat(currentRowColor),
-                Children = { rowContainer }
-            };
         }
 
         public string LabelLine
@@ -478,6 +435,18 @@ namespace Content.Client.Chemistry.UI
             get => LabelLineEdit.Text;
             set => LabelLineEdit.Text = value;
         }
+        // Starlight Start
+        public string ContainerLabelLine
+        {
+            get => ContainerLabelLineEdit.Text;
+            set
+            {
+                _settingContainerLabelProgrammatically = true;
+                ContainerLabelLineEdit.Text = value;
+                _settingContainerLabelProgrammatically = false;
+            }
+        }
+        // Starlight end
 
         private void SetBufferText(FixedPoint2? volume, string text)
         {

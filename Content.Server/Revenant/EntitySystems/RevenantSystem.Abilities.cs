@@ -4,7 +4,6 @@ using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Content.Shared.Tag;
 using Content.Shared.Storage.Components;
-using Content.Server.Light.Components;
 using Content.Server.Ghost;
 using Robust.Shared.Physics;
 using Content.Shared.Throwing;
@@ -18,7 +17,6 @@ using Content.Server.Revenant.Components;
 using Content.Shared.Physics;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Light.Components;
 using Content.Shared.Maps;
@@ -31,7 +29,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Content.Shared.SSDIndicator; // Starlight-edit
+using Content.Shared.SSDIndicator;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -60,6 +58,8 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+
+        InitializeStarlightAbilities(); // Starlight
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -201,7 +201,7 @@ public sealed partial class RevenantSystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+        _store.TryAddCurrency(new()
             { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
 
         if (!HasComp<MobStateComponent>(args.Args.Target))

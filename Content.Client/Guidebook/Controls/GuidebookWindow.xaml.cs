@@ -1,10 +1,8 @@
-using System.Diagnostics;
 using System.Linq;
 using Content.Client._Starlight.UserInterface; // Starlight
 using Content.Client._Starlight.Guidebook.Richtext;
 using Content.Client.Guidebook.RichText;
 using Content.Client.UserInterface.ControlExtensions;
-using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.UserInterface.Systems.Info;
 using Content.Shared.Guidebook;
@@ -43,6 +41,10 @@ public sealed partial class GuidebookWindow : PopOutFancyWindow, ILinkClickHandl
         {
             HandleFilter();
         };
+
+        #region Starlight
+        CategorySearchBar.OnTextChanged += _ => HandleCategorySearch();
+        #endregion
     }
 
     public void HandleClick(string link)
@@ -133,7 +135,7 @@ public sealed partial class GuidebookWindow : PopOutFancyWindow, ILinkClickHandl
 
         LastEntry = entry.Id;
 
-        // Starlight start
+        #region Starlight
         void RefreshLinks()
         {
             var (linkableControls, linkControls) = GetLinkableControlsAndLinks(EntryContainer);
@@ -167,7 +169,7 @@ public sealed partial class GuidebookWindow : PopOutFancyWindow, ILinkClickHandl
         }
 
         RefreshLinks();
-        // Starlight end
+        #endregion
     }
 
     public void UpdateGuides(
@@ -268,6 +270,58 @@ public sealed partial class GuidebookWindow : PopOutFancyWindow, ILinkClickHandl
 
         return item;
     }
+
+    #region Starlight
+    private void HandleCategorySearch()
+    {
+        var query = CategorySearchBar.Text.Trim();
+
+        if (query.Length == 0)
+        {
+            CategoryNoResultsLabel.Visible = false;
+            foreach (var topLevel in Tree.Body.Children.ToList())
+                topLevel.Visible = true;
+            return;
+        }
+
+        var anyVisible = false;
+        foreach (var topLevel in Tree.Body.Children.ToList())
+        {
+            if (topLevel is not TreeItem item)
+                continue;
+
+            // Show root if it or any descendant matches
+            var matches = SubtreeContainsMatch(item, query);
+            item.Visible = matches;
+            if (matches)
+                anyVisible = true;
+        }
+
+        CategoryNoResultsLabel.Visible = !anyVisible;
+    }
+
+    private static bool SubtreeContainsMatch(TreeItem item, string query)
+    {
+        if (MatchesCategoryQuery(item.Label.Text ?? string.Empty, query))
+            return true;
+
+        foreach (var child in item.Body.Children)
+        {
+            if (child is TreeItem childItem && SubtreeContainsMatch(childItem, query))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool MatchesCategoryQuery(string name, string query)
+    {
+        var words = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (words.Length == 0)
+            return true;
+        return words.All(word => name.Contains(word, StringComparison.OrdinalIgnoreCase));
+    }
+    #endregion
 
     private void HandleFilter()
     {
