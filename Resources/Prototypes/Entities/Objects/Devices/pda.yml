@@ -480,6 +480,12 @@
   components:
   - type: Pda
     id: QuartermasterIDCard
+    penSlot:
+      startingItem: PenQM
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -708,6 +714,12 @@
   components:
   - type: Pda
     id: CEIDCard
+    penSlot:
+      startingItem: PenCE
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -764,6 +776,12 @@
   components:
   - type: Pda
     id: CMOIDCard
+    penSlot:
+      startingItem: PenCMO
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -870,6 +888,12 @@
   components:
   - type: Pda
     id: RDIDCard
+    penSlot:
+      startingItem: PenRD
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -909,6 +933,12 @@
   components:
   - type: Pda
     id: HoSIDCard
+    penSlot:
+      startingItem: PenHOS
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -937,6 +967,12 @@
   components:
   - type: Pda
     id: WardenIDCard
+    penSlot:
+      startingItem: PenWarden
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:

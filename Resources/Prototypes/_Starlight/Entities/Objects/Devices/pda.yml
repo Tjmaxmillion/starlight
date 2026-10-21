@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BasePDA
   id: RoboticistPDA
   name: roboticist PDA
@@ -183,7 +183,7 @@
   - type: Pda
     id: MagistrateIDCard
     penSlot:
-      startingItem: Pen
+      startingItem: PenMagi
       priority: -1
       whitelist:
         tags:
@@ -239,6 +239,12 @@
   components:
   - type: Pda
     id: IAAIDCard
+    penSlot:
+      startingItem: PenIAA
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -335,6 +341,12 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
     id: SalvageLeadIDCard
+    penSlot:
+      startingItem: PenSalvLead
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:
