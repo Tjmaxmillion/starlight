@@ -161,10 +161,11 @@
       enum.NetworkConfiguratorUiKey.Link:
         type: NetworkConfiguratorBoundUserInterface
   - type: ItemSwitch
+    onAltUse: true
     state: pen
     states:
       pen: !type:ItemSwitchState
-        verb: Pen
+        verb: pen-mode-pen-screwdriver
         soundStateActivate:
           path: /Audio/Items/pen_click.ogg
         components:
@@ -172,18 +173,13 @@
           tags:
           - Write
           - Pen
-      screwing: !type:ItemSwitchState
-        verb: Screwdriver
-        soundStateActivate:
-          collection: Screwdriver
-        components:
         - type: Tool
           qualities:
           - Screwing
           useSound:
             collection: Screwdriver
       multitool: !type:ItemSwitchState
-        verb: Multitool
+        verb: pen-mode-multitool
         soundStateActivate:
           path: /Audio/Items/change_drill.ogg
         components:
@@ -284,14 +280,9 @@
     - Approved
     - Denied
   - type: UseDelay
-    delay: 1.5
-    delays:
-      panic_button:
-        length: 120.0
+    delay: 120.0
   - type: UseDelayTriggerCondition
-    useDelayId: panic_button
   - type: UseDelayOnTrigger
-    useDelayId: panic_button
   - type: TriggerOnVerb
     text: verb-panic-button
   - type: EmitSoundOnTrigger
@@ -314,14 +305,9 @@
     - Approved
     - Denied
   - type: UseDelay
-    delay: 1.5
-    delays:
-      panic_button:
-        length: 120.0
+    delay: 120.0
   - type: UseDelayTriggerCondition
-    useDelayId: panic_button
   - type: UseDelayOnTrigger
-    useDelayId: panic_button
   - type: TriggerOnVerb
     text: verb-panic-button
   - type: EmitSoundOnTrigger
