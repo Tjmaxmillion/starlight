@@ -110,6 +110,43 @@
     - HOP
     - Approved
     - Denied
+  - type: UserInterface
+    interfaces:
+      enum.HandLabelerUiKey.Key:
+        type: HandLabelerBoundUserInterface
+  - type: ItemSwitch
+    onUse: false
+    onAltUse: true
+    state: pen
+    states:
+      pen: !type:ItemSwitchState
+        verb: pen-mode-pen
+        soundStateActivate:
+          path: /Audio/Items/pen_click.ogg
+        components:
+        - type: Tag
+          tags:
+          - Write
+          - Pen
+      labeler: !type:ItemSwitchState
+        verb: pen-mode-labeler
+        soundStateActivate:
+          path: /Audio/Items/pen_click.ogg
+        components:
+        - type: ActivatableUI
+          key: enum.HandLabelerUiKey.Key
+          inHandsOnly: true
+        - type: HandLabeler
+          blacklist:
+            tags:
+            - NotLabelable
+          whitelist:
+            components:
+            - Item
+            - WallMount
+            tags:
+            - Structure
+            - Labelable
 
 - type: !PartialOnly entity
   id: PenHOS

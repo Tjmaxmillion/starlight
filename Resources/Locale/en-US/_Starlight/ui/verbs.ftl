@@ -20,3 +20,6 @@ item-switch-switched-mode = Switched to {$state}
 
 pen-mode-pen-screwdriver = Pen / Screwdriver
 pen-mode-multitool = Multitool
+pen-mode-pen = Pen
+pen-mode-labeler = Hand Labeler
+
