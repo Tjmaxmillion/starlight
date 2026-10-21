@@ -120,6 +120,13 @@
     - Warden
     - Approved
     - Denied
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Slash: 10
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
 
 - type: !PartialOnly entity
   id: PenWarden
@@ -129,6 +136,13 @@
     - Warden
     - Approved
     - Denied
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Slash: 10
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
 
 - type: !PartialOnly entity
   id: PenCE
@@ -138,6 +152,52 @@
     - CE
     - Approved
     - Denied
+  - type: UserInterface
+    interfaces:
+      enum.NetworkConfiguratorUiKey.List:
+        type: NetworkConfiguratorBoundUserInterface
+      enum.NetworkConfiguratorUiKey.Configure:
+        type: NetworkConfiguratorBoundUserInterface
+      enum.NetworkConfiguratorUiKey.Link:
+        type: NetworkConfiguratorBoundUserInterface
+  - type: ItemSwitch
+    state: pen
+    states:
+      pen: !type:ItemSwitchState
+        verb: Pen
+        soundStateActivate:
+          path: /Audio/Items/pen_click.ogg
+        components:
+        - type: Tag
+          tags:
+          - Write
+          - Pen
+      screwing: !type:ItemSwitchState
+        verb: Screwdriver
+        soundStateActivate:
+          collection: Screwdriver
+        components:
+        - type: Tool
+          qualities:
+          - Screwing
+          useSound:
+            collection: Screwdriver
+      multitool: !type:ItemSwitchState
+        verb: Multitool
+        soundStateActivate:
+          path: /Audio/Items/change_drill.ogg
+        components:
+        - type: Tool
+          qualities:
+          - Pulsing
+        - type: NetworkConfigurator
+        - type: ActivatableUI
+          key: enum.NetworkConfiguratorUiKey.List
+          inHandsOnly: true
+        - type: Tag
+          tags:
+          - Multitool
+          - DoorElectronicsConfigurator
 
 - type: !PartialOnly entity
   id: PenCMO
@@ -147,6 +207,31 @@
     - CMO
     - Approved
     - Denied
+  - type: Solution
+    id: hypospray
+    solution:
+      maxVol: 10
+      reagents:
+      - ReagentId: Epinephrine
+        Quantity: 10
+  - type: SolutionRegeneration
+    duration: 300
+    generated:
+      reagents:
+      - ReagentId: Epinephrine
+        Quantity: 10
+  - type: Injector
+    solutionName: hypospray
+    ignoreClosed: true
+    activeModeProtoId: HyposprayInjectMode
+    allowedModes:
+    - HyposprayInjectMode
+    currentTransferAmount: 10
+    reagentWhitelist:
+    - Epinephrine
+  - type: ExaminableSolution
+    solution: hypospray
+    exactVolume: true
 
 - type: !PartialOnly entity
   id: PenRD
@@ -156,6 +241,18 @@
     - RD
     - Approved
     - Denied
+  - type: ActivatableUI
+    key: enum.AnomalyScannerUiKey.Key
+    requireActiveHand: false
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.AnomalyScannerUiKey.Key:
+        type: AnomalyScannerBoundUserInterface
+  - type: AnomalyScanner
+  - type: GuideHelp
+    guides:
+    - ScannersAndVessels
 
 - type: !PartialOnly entity
   id: PenQM
@@ -165,6 +262,7 @@
     - QM
     - Approved
     - Denied
+  - type: PriceGun
 
 - type: !PartialOnly entity
   id: PenSalvLead
@@ -174,6 +272,7 @@
     - SalvageLead
     - Approved
     - Denied
+  - type: PriceGun
 
 - type: !PartialOnly entity
   id: PenNTR
@@ -184,6 +283,26 @@
     - IAA
     - Approved
     - Denied
+  - type: UseDelay
+    delay: 1.5
+    delays:
+      panic_button:
+        length: 120.0
+  - type: UseDelayTriggerCondition
+    useDelayId: panic_button
+  - type: UseDelayOnTrigger
+    useDelayId: panic_button
+  - type: TriggerOnVerb
+    text: verb-panic-button
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: TriggerActivate
+  - type: RattleOnTrigger
+    radioChannel:
+    - NanoTrasen
+    targetUser: true
+    messages:
+      Alive: rattle-on-trigger-distress-message
 
 - type: !PartialOnly entity
   id: PenMagi
@@ -194,6 +313,26 @@
     - IAA
     - Approved
     - Denied
+  - type: UseDelay
+    delay: 1.5
+    delays:
+      panic_button:
+        length: 120.0
+  - type: UseDelayTriggerCondition
+    useDelayId: panic_button
+  - type: UseDelayOnTrigger
+    useDelayId: panic_button
+  - type: TriggerOnVerb
+    text: verb-panic-button
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: TriggerActivate
+  - type: RattleOnTrigger
+    radioChannel:
+    - NanoTrasen
+    targetUser: true
+    messages:
+      Alive: rattle-on-trigger-distress-message
 
 - type: !PartialOnly entity
   id: PenIAA
@@ -203,3 +342,27 @@
     - IAA
     - Approved
     - Denied
+  - type: TapeRecorder
+  - type: ActiveListener
+    range: 4
+  - type: Speech
+  - type: TextToSpeech
+  - type: ItemSlots
+    slots:
+      cassette_tape:
+        priority: 4
+        startingItem: CassetteTape
+        whitelist:
+          components:
+          - FitsInTapeRecorder
+  - type: ContainerContainer
+    containers:
+      cassette_tape: !type:ContainerSlot
+  - type: ActivatableUI
+    key: enum.TapeRecorderUIKey.Key
+    inHandsOnly: true
+    requireActiveHand: false
+  - type: UserInterface
+    interfaces:
+      enum.TapeRecorderUIKey.Key:
+        type: TapeRecorderBoundUserInterface

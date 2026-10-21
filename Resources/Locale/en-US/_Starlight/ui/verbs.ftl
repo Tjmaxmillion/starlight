@@ -12,3 +12,6 @@ speed-potion-apply-text = Apply speed potion
 setup-verb-text = Setup
 # Radio
 verb-categories-manage-channels = Manage channels
+
+verb-panic-button = Panic Button
+
