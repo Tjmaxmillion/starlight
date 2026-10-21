@@ -14,7 +14,7 @@
   - Trinkets
   - Scarves
   - Pins
-  - LuxuryPens
+  - MagiPens
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -46,7 +46,7 @@
   - Trinkets
   - Scarves
   - Pins
-  - LuxuryPens
+  - IAAPens
   #- LawyerJobTrinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -157,7 +157,7 @@
   - Trinkets
   - Scarves
   - Pins
-  - Pens
+  - SalvLeadPens
   - GroupSpeciesBreathTool
 
 # Security

@@ -294,7 +294,7 @@
   - Trinkets
   - Scarves # Starlight
   - Pins # Starlight
-  - Pens # Starlight
+  - QMPens # Starlight
   #- QuartermasterJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -352,7 +352,7 @@
   - Trinkets
   - Scarves # Starlight
   - Pins # Starlight
-  - Pens # Starlight
+  - CEPens # Starlight
   #- ChiefEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -423,7 +423,7 @@
   - Trinkets
   - Scarves # Starlight
   - Pins # Starlight
-  - Pens # Starlight
+  - RDPens # Starlight
   #- ResearchDirectorJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -487,7 +487,7 @@
   - Trinkets
   - Scarves # Starlight
   - Pins # Starlight
-  - Pens # Starlight
+  - HOSPens # Starlight
   - HeadofSecurityJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -508,7 +508,7 @@
   - Trinkets
   - Scarves # Starlight
   - Pins # Starlight
-  - Pens # Starlight
+  - WardenPens # Starlight
   - WardenJobTrinkets
   - GroupSpeciesBreathToolSecurity
 

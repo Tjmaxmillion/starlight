@@ -91,6 +91,7 @@
   id: Pens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - Pen
   - FancyPen
@@ -99,6 +100,7 @@
   id: ClownPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - CrayonOrange
   - Pen
@@ -108,6 +110,7 @@
   id: MimePens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - CrayonMime
   - Pen
@@ -117,6 +120,7 @@
   id: LuxuryPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - FancyPenNoReq
   - Pen
@@ -125,6 +129,7 @@
   id: HoPPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenHop
   - Pen
@@ -134,6 +139,7 @@
   id: CapPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenCap
   - Pen
@@ -143,6 +149,7 @@
   id: NTRPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenNTR
   - Pen
@@ -152,6 +159,7 @@
   id: CCPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenCentcom
   - Pen
@@ -161,6 +169,7 @@
   id: HOSPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenHOS
   - Pen
@@ -170,6 +179,7 @@
   id: WardenPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenWarden
   - Pen
@@ -179,6 +189,7 @@
   id: CEPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenCE
   - Pen
@@ -188,6 +199,7 @@
   id: CMOPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenCMO
   - Pen
@@ -197,6 +209,7 @@
   id: RDPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenRD
   - Pen
@@ -206,6 +219,7 @@
   id: QMPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenQM
   - Pen
@@ -215,6 +229,7 @@
   id: SalvLeadPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenSalvLead
   - Pen
@@ -224,6 +239,7 @@
   id: MagiPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenMagi
   - Pen
@@ -233,11 +249,11 @@
   id: IAAPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenIAA
   - Pen
   - FancyPen
-
 
 - type: loadoutGroup
   id: AssistantGlasses
