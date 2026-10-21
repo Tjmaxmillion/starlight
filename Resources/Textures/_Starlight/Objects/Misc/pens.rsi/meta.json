@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "pen_ntr is a resprited version of pen_centcom by PuroSlavKing (Github - https://github.com/space-wizards/space-station-14/pull/15415/files), pen_devil by DocMoth for STARLIGHT, department pens (pen_ce, pen_cmo, pen_hos, pen_iaa, pen_magi, pen_qm, pen_rd, pen_salvlead, pen_warden) are resprites of pen_cap",
+  "copyright": "pen_ntr is a resprited version of pen_centcom by PuroSlavKing (Github - https://github.com/space-wizards/space-station-14/pull/15415/files), pen_devil by DocMoth for STARLIGHT, department pens (pen_ce, pen_cmo, pen_hos, pen_iaa, pen_magi, pen_qm, pen_rd, pen_salvlead, pen_warden, pen_bso) are resprites of pen_cap",
   "size": {
     "x": 32,
     "y": 32
@@ -55,6 +55,9 @@
     },
     {
       "name": "pen_warden"
+    },
+    {
+      "name": "pen_bso"
     }
   ]
 }

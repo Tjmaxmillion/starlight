@@ -265,6 +265,12 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
     id: BlueShieldIDCard
+    penSlot:
+      startingItem: PenBSO
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:

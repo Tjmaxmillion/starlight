@@ -126,3 +126,14 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_iaa
+
+- type: entity
+  name: blue shield's fountain pen
+  parent: [ PenEmbeddable, BaseBlueShieldContraband ]
+  id: PenBSO
+  description: A combat fountain pen for the Blue Shield Officer.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_bso

@@ -256,6 +256,16 @@
   - FancyPen
 
 - type: loadoutGroup
+  id: BlueShieldPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenBSO
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
   id: AssistantGlasses
   name: loadout-group-assistant-glasses
   minLimit: 0

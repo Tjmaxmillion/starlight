@@ -73,6 +73,12 @@
     pairId: IAA
 
 - type: !PartialOnly entity
+  id: RubberStampBSO
+  components:
+  - type: PairedStamp
+    pairId: BSO
+
+- type: !PartialOnly entity
   id: RubberStampApproved
   components:
   - type: PairedStamp
@@ -431,3 +437,19 @@
     interfaces:
       enum.TapeRecorderUIKey.Key:
         type: TapeRecorderBoundUserInterface
+
+- type: !PartialOnly entity
+  id: PenBSO
+  components:
+  - type: PairedPen
+    pairIds:
+    - BSO
+    - Approved
+    - Denied
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Slash: 10
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg

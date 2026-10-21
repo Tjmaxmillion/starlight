@@ -112,3 +112,9 @@
     id:
       - PenIAA
 
+- type: loadout
+  id: PenBSO
+  storage:
+    id:
+      - PenBSO
+

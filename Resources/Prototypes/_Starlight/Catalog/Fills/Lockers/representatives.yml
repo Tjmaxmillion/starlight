@@ -149,6 +149,7 @@
         - id: ClothingOuterArmorBlueShield
         - id: ClothingNeckCloakBsoCape
         - id: RubberStampBSO
+        - id: PenBSO
 
 - type: entity
   id: LockerBlueshieldFilledBluespaced
