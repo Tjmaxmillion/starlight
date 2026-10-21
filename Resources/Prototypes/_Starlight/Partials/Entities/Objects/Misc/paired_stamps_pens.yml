@@ -110,6 +110,9 @@
     - HOP
     - Approved
     - Denied
+  - type: ActivatableUI
+    key: enum.HandLabelerUiKey.Key
+    inHandsOnly: true
   - type: UserInterface
     interfaces:
       enum.HandLabelerUiKey.Key:
@@ -130,12 +133,10 @@
           - Pen
       labeler: !type:ItemSwitchState
         verb: pen-mode-labeler
+        activatableUiKey: enum.HandLabelerUiKey.Key
         soundStateActivate:
           path: /Audio/Items/pen_click.ogg
         components:
-        - type: ActivatableUI
-          key: enum.HandLabelerUiKey.Key
-          inHandsOnly: true
         - type: HandLabeler
           blacklist:
             tags:
@@ -189,6 +190,9 @@
     - CE
     - Approved
     - Denied
+  - type: ActivatableUI
+    key: enum.NetworkConfiguratorUiKey.List
+    inHandsOnly: true
   - type: UserInterface
     interfaces:
       enum.NetworkConfiguratorUiKey.List:
@@ -217,6 +221,7 @@
             collection: Screwdriver
       multitool: !type:ItemSwitchState
         verb: pen-mode-multitool
+        activatableUiKey: enum.NetworkConfiguratorUiKey.List
         soundStateActivate:
           path: /Audio/Items/change_drill.ogg
         components:
@@ -224,9 +229,6 @@
           qualities:
           - Pulsing
         - type: NetworkConfigurator
-        - type: ActivatableUI
-          key: enum.NetworkConfiguratorUiKey.List
-          inHandsOnly: true
         - type: Tag
           tags:
           - Multitool
@@ -316,21 +318,41 @@
     - IAA
     - Approved
     - Denied
-  - type: UseDelay
-    delay: 120.0
-  - type: UseDelayTriggerCondition
-  - type: UseDelayOnTrigger
   - type: TriggerOnVerb
     text: verb-panic-button
+    keyOut: panic
   - type: EmitSoundOnTrigger
+    keysIn:
+    - panic
     sound:
       collection: TriggerActivate
   - type: RattleOnTrigger
+    keysIn:
+    - panic
     radioChannel:
     - NanoTrasen
     targetUser: true
     messages:
       Alive: rattle-on-trigger-distress-message
+  - type: RemoveComponentsOnTrigger
+    keysIn:
+    - panic
+    components:
+    - type: TriggerOnVerb
+  - type: TimerTrigger
+    keysIn:
+    - panic
+    delay: 120
+    examinable: false
+    popup: null
+    keyOut: reset_panic
+  - type: AddComponentsOnTrigger
+    keysIn:
+    - reset_panic
+    components:
+    - type: TriggerOnVerb
+      text: verb-panic-button
+      keyOut: panic
 
 - type: !PartialOnly entity
   id: PenMagi
@@ -341,21 +363,41 @@
     - IAA
     - Approved
     - Denied
-  - type: UseDelay
-    delay: 120.0
-  - type: UseDelayTriggerCondition
-  - type: UseDelayOnTrigger
   - type: TriggerOnVerb
     text: verb-panic-button
+    keyOut: panic
   - type: EmitSoundOnTrigger
+    keysIn:
+    - panic
     sound:
       collection: TriggerActivate
   - type: RattleOnTrigger
+    keysIn:
+    - panic
     radioChannel:
     - NanoTrasen
     targetUser: true
     messages:
       Alive: rattle-on-trigger-distress-message
+  - type: RemoveComponentsOnTrigger
+    keysIn:
+    - panic
+    components:
+    - type: TriggerOnVerb
+  - type: TimerTrigger
+    keysIn:
+    - panic
+    delay: 120
+    examinable: false
+    popup: null
+    keyOut: reset_panic
+  - type: AddComponentsOnTrigger
+    keysIn:
+    - reset_panic
+    components:
+    - type: TriggerOnVerb
+      text: verb-panic-button
+      keyOut: panic
 
 - type: !PartialOnly entity
   id: PenIAA
