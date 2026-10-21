@@ -151,7 +151,7 @@ public sealed partial class PaperSystem : EntitySystem
     {
         // only allow editing if there are no stamps or when using a cyberpen
         var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag)
-            || _pairedPen.CanEdit(args.Used, args.User, entity.Comp.StampedBy); // Starlight - paired pens
+            || _pairedPen.CanEdit(args.Used, entity.Comp.StampedBy); // Starlight - paired pens
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
             if (editable)

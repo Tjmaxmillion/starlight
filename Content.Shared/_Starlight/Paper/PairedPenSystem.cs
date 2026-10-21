@@ -34,7 +34,7 @@ public sealed class PairedPenSystem : EntitySystem
     /// 1. Every rubber stamp on the paper has a pair ID this pen accepts.
     /// 2. Every signature on the paper was made using one of the special department pens.
     /// </summary>
-    public bool CanEdit(EntityUid pen, EntityUid user, List<StampDisplayInfo> stamps)
+    public bool CanEdit(EntityUid pen, List<StampDisplayInfo> stamps)
     {
         if (!TryComp<PairedPenComponent>(pen, out var paired))
             return false;

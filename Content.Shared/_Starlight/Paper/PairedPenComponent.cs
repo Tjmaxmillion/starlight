@@ -2,7 +2,7 @@ namespace Content.Shared._Starlight.Paper;
 
 /// <summary>
 /// Lets a pen edit stamped paper, as long as every rubber stamp on it carries one of
-/// <see cref="PairIds"/> and every signature belongs to the person writing.
+/// <see cref="PairIds"/> and every signature was made with a department pen.
 /// </summary>
 [RegisterComponent, Access(typeof(PairedPenSystem))]
 public sealed partial class PairedPenComponent : Component

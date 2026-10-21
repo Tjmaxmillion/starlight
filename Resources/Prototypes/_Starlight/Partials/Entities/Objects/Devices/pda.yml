@@ -3,3 +3,69 @@
   id: BasePDA
   components:
   - type: DarkLight
+
+- type: !PartialOnly entity
+  id: QuartermasterPDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenQM
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: !PartialOnly entity
+  id: CEPDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenCE
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: !PartialOnly entity
+  id: CMOPDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenCMO
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: !PartialOnly entity
+  id: RDPDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenRD
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: !PartialOnly entity
+  id: HoSPDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenHOS
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: !PartialOnly entity
+  id: WardenPDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenWarden
+      priority: -1
+      whitelist:
+        tags:
+        - Write

@@ -14,9 +14,6 @@ setup-verb-text = Setup
 verb-categories-manage-channels = Manage channels
 
 verb-panic-button = Panic Button
-verb-disabled-on-cooldown = On cooldown
-
-item-switch-switched-mode = Switched to {$state}
 
 pen-mode-pen-screwdriver = Pen / Screwdriver
 pen-mode-multitool = Multitool
