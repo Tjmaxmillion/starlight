@@ -119,7 +119,7 @@
 
 - type: entity
   name: captain's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenCap
   description: A luxurious fountain pen for the captain of the station.
   components:
@@ -128,7 +128,7 @@
 
 - type: entity
   name: HoP's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenHop
   description: A luxurious fountain pen for the HoP of the station.
   components:

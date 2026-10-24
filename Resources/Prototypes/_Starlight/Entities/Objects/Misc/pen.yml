@@ -1,6 +1,6 @@
 - type: entity
   name: NanoTrasen representative's pen
-  parent: [ PenEmbeddable, BaseNanoTrasenContraband ]
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseNanoTrasenContraband ]
   id: PenNTR
   description: The NT Representative's own unique pen, just not as sharp.
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   name: HoS's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenHOS
   description: A combat fountain pen for the Head of Security.
   components:
@@ -41,7 +41,7 @@
 
 - type: entity
   name: warden's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseSecurityContraband ]
   id: PenWarden
   description: A combat fountain pen for the Warden.
   components:
@@ -52,7 +52,7 @@
 
 - type: entity
   name: CE's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenCE
   description: A durable fountain pen for the Chief Engineer.
   components:
@@ -63,7 +63,7 @@
 
 - type: entity
   name: CMO's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenCMO
   description: A sterile fountain pen for the Chief Medical Officer.
   components:
@@ -74,7 +74,7 @@
 
 - type: entity
   name: RD's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenRD
   description: A high-tech fountain pen for the Research Director.
   components:
@@ -85,7 +85,7 @@
 
 - type: entity
   name: QM's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
   id: PenQM
   description: A well-used fountain pen for the Quartermaster.
   components:
@@ -96,7 +96,7 @@
 
 - type: entity
   name: salvage lead's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseSalvageContraband ]
   id: PenSalvLead
   description: A rugged fountain pen for the Salvage Lead.
   components:
@@ -107,7 +107,7 @@
 
 - type: entity
   name: magistrate's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseNanoTrasenContraband ]
   id: PenMagi
   description: A distinguished fountain pen for the Magistrate.
   components:
@@ -118,7 +118,7 @@
 
 - type: entity
   name: internal affairs agent's fountain pen
-  parent: PenEmbeddable
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseNanoTrasenContraband ]
   id: PenIAA
   description: A corporate fountain pen for the Internal Affairs Agent.
   components:
@@ -129,7 +129,7 @@
 
 - type: entity
   name: blue shield's fountain pen
-  parent: [ PenEmbeddable, BaseBlueShieldContraband ]
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseBlueShieldContraband ]
   id: PenBSO
   description: A combat fountain pen for the Blue Shield Officer.
   components:
