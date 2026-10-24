@@ -67,3 +67,18 @@ steal-target-groups-secure-documents-brighteye = Bright-Eyes classified secure d
 
 # Wizard Duelist
 steal-target-groups-wizard-medallions = Space Wizards Federation medallion
+
+# Pens
+steal-target-groups-pen-cap = captain's fountain pen
+steal-target-groups-pen-hop = head of personnel's fountain pen
+steal-target-groups-pen-hos = head of security's fountain pen
+steal-target-groups-pen-warden = warden's fountain pen
+steal-target-groups-pen-ce = chief engineer's fountain pen
+steal-target-groups-pen-cmo = chief medical officer's fountain pen
+steal-target-groups-pen-rd = research director's fountain pen
+steal-target-groups-pen-qm = quartermaster's fountain pen
+steal-target-groups-pen-salvlead = salvage lead's fountain pen
+steal-target-groups-pen-ntr = nanotrasen representative's pen
+steal-target-groups-pen-magi = magistrate's fountain pen
+steal-target-groups-pen-iaa = internal affairs agent's fountain pen
+steal-target-groups-pen-bso = blueshield officer's fountain pen

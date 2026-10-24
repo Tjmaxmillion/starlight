@@ -347,3 +347,96 @@
   sprite:
     sprite: _Starlight/Objects/Specific/wizcoin.rsi
     state: omniwizcoin
+
+# Pens
+
+- type: stealTargetGroup
+  id: CaptainPen
+  name: steal-target-groups-pen-cap
+  sprite:
+    sprite: Objects/Misc/pens.rsi
+    state: pen_cap
+
+- type: stealTargetGroup
+  id: HopPen
+  name: steal-target-groups-pen-hop
+  sprite:
+    sprite: Objects/Misc/pens.rsi
+    state: pen_hop
+
+- type: stealTargetGroup
+  id: HOSPen
+  name: steal-target-groups-pen-hos
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_hos
+
+- type: stealTargetGroup
+  id: WardenPen
+  name: steal-target-groups-pen-warden
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_warden
+
+- type: stealTargetGroup
+  id: CEPen
+  name: steal-target-groups-pen-ce
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_ce
+
+- type: stealTargetGroup
+  id: CMOPen
+  name: steal-target-groups-pen-cmo
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_cmo
+
+- type: stealTargetGroup
+  id: RDPen
+  name: steal-target-groups-pen-rd
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_rd
+
+- type: stealTargetGroup
+  id: QMPen
+  name: steal-target-groups-pen-qm
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_qm
+
+- type: stealTargetGroup
+  id: SalvLeadPen
+  name: steal-target-groups-pen-salvlead
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_salvlead
+
+- type: stealTargetGroup
+  id: NTRPen
+  name: steal-target-groups-pen-ntr
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_ntr
+
+- type: stealTargetGroup
+  id: MagiPen
+  name: steal-target-groups-pen-magi
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_magi
+
+- type: stealTargetGroup
+  id: IAAPen
+  name: steal-target-groups-pen-iaa
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_iaa
+
+- type: stealTargetGroup
+  id: BSOPen
+  name: steal-target-groups-pen-bso
+  sprite:
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    state: pen_bso

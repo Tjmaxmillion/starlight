@@ -51,6 +51,20 @@
     CriminalReportsStealObjective: 0.75 #Starlight Unique Target
     SecureKnowledgeStealObjective:  0.75 #Starlight Unique Target
     CaptainTabletStealObjective: 0.75 # #Starlight Unique Target
+    # Pens
+    CaptainPenStealObjective: 0.75
+    HopPenStealObjective: 0.75
+    HOSPenStealObjective: 0.75
+    WardenPenStealObjective: 0.75
+    CEPenStealObjective: 0.75
+    CMOPenStealObjective: 0.75
+    RDPenStealObjective: 0.75
+    QMPenStealObjective: 0.75
+    SalvLeadPenStealObjective: 0.75
+    NTRPenStealObjective: 0.75
+    MagiPenStealObjective: 0.75
+    IAAPenStealObjective: 0.75
+    BSOPenStealObjective: 0.75
     # Starlight end
 
 

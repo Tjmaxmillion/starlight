@@ -12,6 +12,8 @@
       tags:
         - Write
         - Pen
+    - type: StealTarget
+      stealGroup: NTRPen
 
 - type: entity
   id: PenQuillBurnt
@@ -38,6 +40,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_hos
+    - type: StealTarget
+      stealGroup: HOSPen
 
 - type: entity
   name: warden's fountain pen
@@ -49,6 +53,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_warden
+    - type: StealTarget
+      stealGroup: WardenPen
 
 - type: entity
   name: CE's fountain pen
@@ -60,6 +66,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_ce
+    - type: StealTarget
+      stealGroup: CEPen
 
 - type: entity
   name: CMO's fountain pen
@@ -71,6 +79,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_cmo
+    - type: StealTarget
+      stealGroup: CMOPen
 
 - type: entity
   name: RD's fountain pen
@@ -82,6 +92,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_rd
+    - type: StealTarget
+      stealGroup: RDPen
 
 - type: entity
   name: QM's fountain pen
@@ -93,6 +105,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_qm
+    - type: StealTarget
+      stealGroup: QMPen
 
 - type: entity
   name: salvage lead's fountain pen
@@ -104,6 +118,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_salvlead
+    - type: StealTarget
+      stealGroup: SalvLeadPen
 
 - type: entity
   name: magistrate's fountain pen
@@ -115,6 +131,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_magi
+    - type: StealTarget
+      stealGroup: MagiPen
 
 - type: entity
   name: internal affairs agent's fountain pen
@@ -126,6 +144,8 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_iaa
+    - type: StealTarget
+      stealGroup: IAAPen
 
 - type: entity
   name: blue shield's fountain pen
@@ -137,3 +157,5 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_bso
+    - type: StealTarget
+      stealGroup: BSOPen

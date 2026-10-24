@@ -351,6 +351,124 @@
   - type: Objective
     difficulty: 2.5 # Mildly easier to obtain.
 
+# Pens
+- type: entity
+  parent: BaseTraitorCommandStealObjective
+  id: CaptainPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CaptainPen
+  - type: Objective
+    difficulty: 3
+
+- type: entity
+  parent: BaseTraitorCommandStealObjective
+  id: HopPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HopPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorSecurityStealObjective
+  id: HOSPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HOSPen
+  - type: Objective
+    difficulty: 3
+
+- type: entity
+  parent: BaseTraitorSecurityStealObjective
+  id: WardenPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WardenPen
+  - type: Objective
+    difficulty: 3
+
+- type: entity
+  parent: BaseTraitorEngineeringStealObjective
+  id: CEPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CEPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorMedicalStealObjective
+  id: CMOPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CMOPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorScienceStealObjective
+  id: RDPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: RDPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorCargoStealObjective
+  id: QMPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: QMPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorCargoStealObjective
+  id: SalvLeadPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: SalvLeadPen
+  - type: Objective
+    difficulty: 3
+
+- type: entity
+  parent: BaseTraitorNanoTrasenStealObjective
+  id: NTRPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: NTRPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorNanoTrasenStealObjective
+  id: MagiPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: MagiPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorNanoTrasenStealObjective
+  id: IAAPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: IAAPen
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseTraitorNanoTrasenStealObjective
+  id: BSOPenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: BSOPen
+  - type: Objective
+    difficulty: 3
+
   # RP OBJECTIVES START
 
 - type: entity

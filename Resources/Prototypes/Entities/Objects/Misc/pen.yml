@@ -125,6 +125,8 @@
   components:
   - type: Sprite
     state: pen_cap
+  - type: StealTarget
+    stealGroup: CaptainPen
 
 - type: entity
   name: HoP's fountain pen
@@ -134,6 +136,8 @@
   components:
   - type: Sprite
     state: pen_hop
+  - type: StealTarget
+    stealGroup: HopPen
 
 - type: entity
   name: wizard's magical pen
