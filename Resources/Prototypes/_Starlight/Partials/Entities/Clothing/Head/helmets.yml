@@ -28,3 +28,9 @@
   components:
   - type: Contraband
     tier: Tier2
+
+- type: !PartialOnly entity
+  id: ClothingHeadHelmetAtmosFire
+  components:
+  - type: Contraband
+    tier: Tier2

@@ -37,3 +37,9 @@
   - type: ScanDetectable
   - type: Contraband
     tier: Tier3
+
+- type: !PartialOnly entity
+  id: GrenadeBola
+  components:
+  - type: Contraband
+    tier: Tier2

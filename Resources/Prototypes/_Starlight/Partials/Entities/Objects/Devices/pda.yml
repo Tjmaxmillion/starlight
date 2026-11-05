@@ -22,3 +22,129 @@
       id: VisitorIDCard
     - type: Pda
       id: EmotionalSupportScurretIDCard
+
+- type: !PartialOnly entity
+  id: BlueShieldPDA
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+    contrabandType: NanoTrasen
+    allowedJobs:
+    - BlueShield
+
+- type: !PartialOnly entity
+  id: VeteranBlueShieldPDA
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+    contrabandType: NanoTrasen
+    allowedJobs:
+    - BlueShield
+
+- type: !PartialOnly entity
+  id: CasinoPDAOwner
+  components:
+  - type: Contraband
+    tier: Tier2
+    contrabandType: Casino
+    allowedDepartments:
+    - Casino
+
+- type: !PartialOnly entity
+  id: CaptainPDA
+  components:
+  - type: Contraband
+    tier: Tier4
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: HoPPDA
+  components:
+  - type: Contraband
+    tier: Tier4
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: CEPDA
+  components:
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: CMOPDA
+  components:
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: RnDPDA
+  components:
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: HoSPDA
+  components:
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: QuartermasterPDA
+  components:
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Command
+
+- type: !PartialOnly entity
+  id: GunnerySergeantPDA
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Security
+
+- type: !PartialOnly entity
+  id: DutyOfficerPDA
+  components:
+  - type: Contraband
+    tier: Tier2
+    allowedDepartments:
+    - Security
+
+- type: !PartialOnly entity
+  id: SalvageLeadPDA
+  components:
+  - type: Contraband
+    tier: Tier2
+    allowedDepartments:
+    - ITG
+
+- type: !PartialOnly entity
+  id: IAAPDA
+  components:
+  - type: Contraband
+    tier: Tier2
+    allowedDepartments:
+    - Law
+
+- type: !PartialOnly entity
+  id: AssistantManagerPDA
+  components:
+  - type: Contraband
+    tier: Tier2
+    allowedJobs:
+    - AssistantManager

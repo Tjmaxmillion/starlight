@@ -65,3 +65,37 @@
     allowedDepartments:
     - Command
 
+
+- type: !PartialOnly entity
+  id: GunnerySergeantIDCard
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+    allowedDepartments:
+    - Security
+
+- type: !PartialOnly entity
+  id: DutyOfficerIDCard
+  components:
+  - type: Contraband
+    tier: Tier2
+    allowedDepartments:
+    - Security
+
+- type: !PartialOnly entity
+  id: SalvageLeadIDCard
+  components:
+  - type: Contraband
+    tier: Tier2
+    allowedDepartments:
+    - ITG
+
+- type: !PartialOnly entity
+  id: CasinoIDCardOwner
+  components:
+  - type: Contraband
+    tier: Tier2
+    contrabandType: Casino
+    allowedDepartments:
+    - Casino

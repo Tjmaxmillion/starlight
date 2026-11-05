@@ -17,3 +17,17 @@
   - type: ScanDetectable
   - type: Contraband
     tier: Tier4
+
+- type: !PartialOnly entity
+  id: ChainsawSword
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: WeaponAdmemeX09Headsman
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4

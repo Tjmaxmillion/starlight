@@ -1,0 +1,55 @@
+- type: !PartialOnly entity
+  id: LeftArmCyberGorilla
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: RightArmCyberGorilla
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: LeftHandCyberGorilla
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: RightHandCyberGorilla
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: LeftArmCyberInvestigator
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: RightArmCyberInvestigator
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: LeftHandCyberInvestigator
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: RightHandCyberInvestigator
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3

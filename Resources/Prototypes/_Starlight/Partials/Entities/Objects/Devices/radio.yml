@@ -5,3 +5,27 @@
     tier: Tier3
     allowedDepartments:
     - Security
+
+- type: !PartialOnly entity
+  id: BaseRevUplinkRadio
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+    contrabandType: Soviet
+
+- type: !PartialOnly entity
+  id: USSPUplinkRadioPreset
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+    contrabandType: Soviet
+
+- type: !PartialOnly entity
+  id: USSPUplinkRadioPresetDebug
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+    contrabandType: Soviet

@@ -10,3 +10,15 @@
   components:
   - type: Contraband
     tier: Tier4
+
+- type: !PartialOnly entity
+  id: ClothingOuterSecurityBomber
+  components:
+  - type: Contraband
+    tier: Tier2
+
+- type: !PartialOnly entity
+  id: ClothingOuterSecurityBomberOpened
+  components:
+  - type: Contraband
+    tier: Tier2

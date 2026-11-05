@@ -1,0 +1,17 @@
+- type: !PartialOnly entity
+  id: UraniumReactorFuelRod
+  components:
+  - type: Contraband
+    tier: Tier2
+
+- type: !PartialOnly entity
+  id: UraniumGlassReactorFuelRod
+  components:
+  - type: Contraband
+    tier: Tier2
+
+- type: !PartialOnly entity
+  id: BananiumReactorFuelRod
+  components:
+  - type: Contraband
+    tier: Tier2

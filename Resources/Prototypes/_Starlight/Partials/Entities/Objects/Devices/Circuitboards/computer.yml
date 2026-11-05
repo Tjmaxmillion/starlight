@@ -8,3 +8,24 @@
     sound:
       path: /Audio/_Starlight/Items/Handling/component_drop.ogg
 
+
+- type: !PartialOnly entity
+  id: UniversalIdConsoleCircuitboard
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier5
+
+- type: !PartialOnly entity
+  id: IDComputerCircuitboard
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+
+- type: !PartialOnly entity
+  id: CommsComputerCircuitboard
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4

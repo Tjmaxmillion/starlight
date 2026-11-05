@@ -287,3 +287,23 @@
   - type: ScanDetectable
   - type: Contraband
     tier: Tier5
+
+- type: !PartialOnly entity
+  id: ClothingOuterHardsuitNTNCConsortium
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+
+- type: !PartialOnly entity
+  id: ClothingOuterHardsuitNTNCConsortiumMedic
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier4
+
+- type: !PartialOnly entity
+  id: ClothingOuterHardsuitAdvancedMining
+  components:
+  - type: Contraband
+    tier: Tier2

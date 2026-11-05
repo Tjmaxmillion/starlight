@@ -1,0 +1,5 @@
+- type: !PartialOnly entity
+  id: MetalHydrogenAxe
+  components:
+  - type: Contraband
+    tier: Tier2

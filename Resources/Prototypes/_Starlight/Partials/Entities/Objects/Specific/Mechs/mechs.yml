@@ -25,3 +25,17 @@
   - type: ScanDetectable
   - type: Contraband
     tier: Tier4
+
+- type: !PartialOnly entity
+  id: MechPobeda
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: MechHouse
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3

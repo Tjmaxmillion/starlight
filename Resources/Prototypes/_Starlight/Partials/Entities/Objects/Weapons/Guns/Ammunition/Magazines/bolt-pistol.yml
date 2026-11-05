@@ -1,0 +1,13 @@
+- type: !PartialOnly entity
+  id: MagazineBoltPistol
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
+
+- type: !PartialOnly entity
+  id: MagazineBoltPistolEmpty
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3

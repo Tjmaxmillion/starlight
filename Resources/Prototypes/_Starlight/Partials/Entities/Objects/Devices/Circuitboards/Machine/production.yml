@@ -28,3 +28,10 @@
   - type: ScanDetectable
   - type: Contraband
     tier: Tier3
+
+- type: !PartialOnly entity
+  id: CommandTechFabCircuitboard
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3

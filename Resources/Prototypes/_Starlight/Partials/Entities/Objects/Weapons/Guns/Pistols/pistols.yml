@@ -52,3 +52,10 @@
     minAngle: 0
     maxAngle: 0
     angleDecayDivider: 0.6
+
+- type: !PartialOnly entity
+  id: WeaponPistolBolt
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3

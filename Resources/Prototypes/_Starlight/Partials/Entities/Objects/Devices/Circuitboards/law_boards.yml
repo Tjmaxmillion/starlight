@@ -5,10 +5,17 @@
     IsLawboard: true
   - type: StaticPrice # Made all lawboards sellable for at least 700
     price: 700
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: NTDefaultCircuitBoard
   description: !Remove # Removed for Dynamic Description
+  components:
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: AsimovCircuitBoard
@@ -17,6 +24,9 @@
   - type: SiliconLawProvider
     laws: CrewsimovAI
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: CorporateCircuitBoard
@@ -24,6 +34,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: CommandmentCircuitBoard
@@ -31,6 +44,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: PaladinCircuitBoard
@@ -38,6 +54,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: LiveLetLiveCircuitBoard
@@ -52,6 +71,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: RobocopCircuitBoard
@@ -59,6 +81,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: OverlordCircuitBoard
@@ -66,6 +91,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: GameMasterCircuitBoard
@@ -73,6 +101,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: ArtistCircuitBoard
@@ -80,6 +111,9 @@
   components:
   - type: SiliconLawProvider
     IsLawboard: true
+  - type: ScanDetectable
+  - type: Contraband
+    tier: Tier3
 
 - type: !PartialOnly entity
   id: AntimovCircuitBoard
