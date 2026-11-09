@@ -3,6 +3,7 @@ contraband-tier-2 = heavily regulated
 contraband-tier-3 = serious
 contraband-tier-4 = highly illegal
 contraband-tier-5 = extremely dangerous
+contraband-tier-6 = redacted
 
 contraband-type-syndicate = Syndicate
 contraband-type-cybersun = Cybersun
