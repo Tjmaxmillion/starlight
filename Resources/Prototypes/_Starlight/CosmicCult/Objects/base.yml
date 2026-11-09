@@ -5,6 +5,6 @@
   # Blimpuf start - distinguish cosmic contraband from other magical contraband
   components:
   - type: Contraband
-    tier: Tier5
+    tier: Tier6
     contrabandType: Cosmic
   # Blimpuf end
