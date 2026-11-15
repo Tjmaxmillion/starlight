@@ -17,6 +17,7 @@ paper-form-dialog-cancel = Cancel
 paper-signature-unknown = Unknown
 
 paper-tamper-proof-modified-message = This page was written using tamper-proof ink.
+stamp-charges-depleted = {CAPITALIZE(THE($stamp))} has no charges remaining.
 
 # Paper tools
 stamp-slot-component-slot-name-stamp = Stamp

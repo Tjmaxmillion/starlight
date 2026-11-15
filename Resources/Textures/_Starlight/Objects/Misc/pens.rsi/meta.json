@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "pen_ntr is a resprited version of pen_centcom by PuroSlavKing (Github - https://github.com/space-wizards/space-station-14/pull/15415/files), pen_devil by DocMoth for STARLIGHT",
+  "copyright": "pen_ntr by biteless-dot is a resprited version of pen_centcom by PuroSlavKing (Github - https://github.com/space-wizards/space-station-14/pull/15415/files), pen_devil by DocMoth for STARLIGHT, department pens (pen_ce, pen_cmo, pen_hos, pen_iaa, pen_magi, pen_qm, pen_rd, pen_salvlead, pen_warden, pen_bso, pen_gunnerysergeant, pen_assistantmanager, pen_ntr_slate_black) and pen inhands (including pen_cap and pen_hop inhands) are resprites/edits by Tjmaxmillion based on pen_cap (taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432) and pen_ntr (by biteless-dot, based on pen_centcom by PuroSlavKing)",
   "size": {
     "x": 32,
     "y": 32
@@ -27,6 +27,165 @@
     },
     {
       "name": "pen_devil-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_ce"
+    },
+    {
+      "name": "pen_ce-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_ce-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_cmo"
+    },
+    {
+      "name": "pen_cmo-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_cmo-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_hos"
+    },
+    {
+      "name": "pen_hos-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_hos-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_iaa"
+    },
+    {
+      "name": "pen_iaa-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_iaa-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_magi"
+    },
+    {
+      "name": "pen_magi-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_magi-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_qm"
+    },
+    {
+      "name": "pen_qm-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_qm-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_rd"
+    },
+    {
+      "name": "pen_rd-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_rd-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_salvlead"
+    },
+    {
+      "name": "pen_salvlead-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_salvlead-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_warden"
+    },
+    {
+      "name": "pen_warden-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_warden-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_bso"
+    },
+    {
+      "name": "pen_bso-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_bso-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_gunnerysergeant"
+    },
+    {
+      "name": "pen_gunnerysergeant-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_gunnerysergeant-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_assistantmanager"
+    },
+    {
+      "name": "pen_assistantmanager-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_assistantmanager-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_cap-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_cap-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_hop-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_hop-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_ntr_slate_black"
+    },
+    {
+      "name": "pen_ntr_slate_black-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_ntr_slate_black-inhand-right",
       "directions": 4
     }
   ]

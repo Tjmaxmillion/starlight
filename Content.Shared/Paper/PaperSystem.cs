@@ -137,7 +137,7 @@ public sealed partial class PaperSystem : EntitySystem
                 // Umbra: Ditto for signatures.
                 if (signatures.Count > 0)
                 {
-                    var joined = string.Join(", ", signatures.Select(s => s.StampedName));
+                    var joined = string.Join(", ", signatures.Select(FormatSignatureExamine)); // Starlight
                     args.PushMarkup(
                         Loc.GetString(
                             "paper-component-examine-detail-signed-by",
@@ -154,6 +154,9 @@ public sealed partial class PaperSystem : EntitySystem
     {
         // only allow editing if there are no stamps or when using a cyberpen
         var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
+        // Starlight-start: Paired department pens can edit papers stamped with their paired stamps
+        editable |= _pairedPen.CanEdit(args.Used, entity.Comp.StampedBy);
+        // Starlight-end
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
             if (editable)
@@ -195,7 +198,7 @@ public sealed partial class PaperSystem : EntitySystem
 
         // If a stamp, attempt to stamp paper
         if (TryComp<StampComponent>(args.Used, out var stampComp) &&
-            TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+            TryStampWithCharges(entity, args.Used, args.User, stampComp)) // Starlight
         {
             // successfully stamped, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
@@ -335,10 +338,7 @@ public sealed partial class PaperSystem : EntitySystem
 
         AlternativeVerb verb = new()
         {
-            Act = () =>
-            {
-                TrySign(uid, user, pen); // Starlight - add pen argument
-            },
+            Act = () => TrySign(uid, user, pen), // Starlight - add pen argument
             Text = Loc.GetString("paper-component-verb-sign"),
             Priority = 4
             // Icon = Don't have an icon yet. Todo for later.
@@ -370,13 +370,19 @@ public sealed partial class PaperSystem : EntitySystem
         }
         Log.Debug($"3: {baseConfig}");
 
+        var pairId = _pairedPen.GetSignatureGroup(pen);
+
         // Generate display information.
         StampDisplayInfo info = new StampDisplayInfo
         {
             StampedName = SanitizeSignature(Name(signer)),
-            StampedColor = baseConfig.PenColor!.Value,
+            StampedColor = baseConfig.PenColor is { Count: > 0 }
+                ? baseConfig.PenColor[baseConfig.PenColor.Count / 2]
+                : DefaultSignatureColor,
             Type = StampType.Signature,
-            Font = baseConfig.FontPath
+            Font = baseConfig.FontPath ?? "/Fonts/_Starlight/Signature.ttf",
+            PairId = pairId,
+            Gradient = baseConfig.PenColor is { Count: > 1 } ? [.. baseConfig.PenColor] : null,
         };
 
         // moved the paper signing event here, so that it becomes possible to cancel signing,

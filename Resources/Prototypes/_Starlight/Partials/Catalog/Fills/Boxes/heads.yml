@@ -1,0 +1,25 @@
+- type: !PartialOnly entity
+  id: BoxHoPStamps
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children: !Clear
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampHop
+        - id: PenHop
+
+- type: !PartialOnly entity
+  id: BoxQMStamps
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children: !Clear
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampQm
+        - id: PenQM

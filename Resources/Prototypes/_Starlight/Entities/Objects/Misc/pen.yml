@@ -1,17 +1,45 @@
 - type: entity
   name: NanoTrasen representative's pen
-  parent: [ PenEmbeddable, BaseNanoTrasenContraband ]
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseNanoTrasenContraband ]
   id: PenNTR
   description: The NT Representative's own unique pen, just not as sharp.
+  categories: [ DoNotMap ]
   components:
     - type: Sprite
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
         - state: pen_ntr
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_ntr
     - type: Tag
       tags:
         - Write
         - Pen
+    - type: StealTarget
+      stealGroup: NTRPen
+    - type: CustomSignature
+      config:
+        penColor:
+          - "#6b4500"
+          - "#b88514"
+          - "#fff2a8"
+          - "#b88514"
+          - "#523400"
+
+- type: entity
+  name: NanoTrasen representative's pen
+  parent: PenNTR
+  id: PenNTRSlateBlack
+  description: The NT Representative's own unique pen in an executive slate black finish, just not as sharp.
+  suffix: Slate Black, DO NOT MAP
+  components:
+    - type: Sprite
+      layers:
+        - state: pen_ntr_slate_black
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_ntr_slate_black
 
 - type: entity
   id: PenQuillBurnt
@@ -23,7 +51,268 @@
       sprite: _Starlight/Objects/Misc/pens.rsi
       layers:
       - state: pen_devil
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_devil
     - type: Tag
       tags:
       - Write
       - Pen
+    - type: CustomSignature
+      config:
+        penColor:
+          - "#2b0000"
+          - "#7a0808"
+          - "#ff4242"
+          - "#7a0808"
+          - "#170000"
+
+- type: entity
+  name: HoS's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  id: PenHOS
+  description: A combat fountain pen for the Head of Security.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_hos
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_hos
+    - type: StealTarget
+      stealGroup: HOSPen
+    - type: CustomSignature
+      config:
+        penColor: "#ff4242"
+
+- type: entity
+  name: warden's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseSecurityContraband ]
+  id: PenWarden
+  description: A combat fountain pen for the Warden.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_warden
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_warden
+    - type: StealTarget
+      stealGroup: WardenPen
+    - type: CustomSignature
+      config:
+        penColor: "#ff4242"
+
+- type: entity
+  name: gunnery sergeant's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseSecurityContraband ]
+  id: PenGunnerySergeant
+  description: A combat fountain pen for the Gunnery Sergeant.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_gunnerysergeant
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_gunnerysergeant
+    - type: StealTarget
+      stealGroup: GunnerySergeantPen
+    - type: CustomSignature
+      config:
+        penColor: "#ff4242"
+
+- type: entity
+  name: assistant manager's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband, BaseAssistantManagerContraband ]
+  id: PenAssistantManager
+  description: A fountain pen for the Assistant Manager.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_assistantmanager
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_assistantmanager
+
+- type: entity
+  name: CE's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  id: PenCE
+  description: A durable fountain pen for the Chief Engineer.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_ce
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_ce
+    - type: StealTarget
+      stealGroup: CEPen
+    - type: CustomSignature
+      config:
+        penColor: "#ff733c"
+
+- type: entity
+  name: CMO's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  id: PenCMO
+  description: A sterile fountain pen for the Chief Medical Officer.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_cmo
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_cmo
+    - type: StealTarget
+      stealGroup: CMOPen
+    - type: CustomSignature
+      config:
+        penColor: "#57b8f0"
+
+- type: entity
+  name: RD's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  id: PenRD
+  description: A high-tech fountain pen for the Research Director.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_rd
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_rd
+    - type: StealTarget
+      stealGroup: RDPen
+    - type: CustomSignature
+      config:
+        penColor: "#cd7ccd"
+
+- type: entity
+  name: QM's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  id: PenQM
+  description: A well-used fountain pen for the Quartermaster.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_qm
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_qm
+    - type: StealTarget
+      stealGroup: QMPen
+    - type: CustomSignature
+      config:
+        penColor: "#b48b57"
+
+- type: entity
+  name: salvage lead's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseSalvageContraband ]
+  id: PenSalvLead
+  description: A rugged fountain pen for the Salvage Lead.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_salvlead
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_salvlead
+    - type: StealTarget
+      stealGroup: SalvLeadPen
+    - type: CustomSignature
+      config:
+        penColor: "#963dca"
+
+- type: entity
+  name: magistrate's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseNanoTrasenContraband ]
+  id: PenMagi
+  description: A distinguished fountain pen for the Magistrate.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_magi
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_magi
+    - type: StealTarget
+      stealGroup: MagiPen
+    - type: CustomSignature
+      config:
+        penColor:
+          - "#480617"
+          - "#871934"
+          - "#ffa3b8"
+          - "#871934"
+          - "#330410"
+
+- type: entity
+  name: internal affairs agent's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseNanoTrasenContraband ]
+  id: PenIAA
+  description: A corporate fountain pen for the Internal Affairs Agent.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_iaa
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_iaa
+    - type: StealTarget
+      stealGroup: IAAPen
+    - type: CustomSignature
+      config:
+        penColor:
+          - "#4a5568"
+          - "#7e8d9f"
+          - "#ffffff"
+          - "#7e8d9f"
+          - "#38414f"
+
+- type: entity
+  name: blue shield's fountain pen
+  parent: [ BaseContrabandTier3, PenEmbeddable, BaseBlueShieldContraband ]
+  id: PenBSO
+  description: A combat fountain pen for the Blue Shield Officer.
+  categories: [ DoNotMap ]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_bso
+    - type: Item
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      heldPrefix: pen_bso
+    - type: StealTarget
+      stealGroup: BSOPen
+    - type: CustomSignature
+      config:
+        penColor:
+          - "#10327a"
+          - "#2253b5"
+          - "#4a7df0"
+          - "#2d3748"
+          - "#11141a"

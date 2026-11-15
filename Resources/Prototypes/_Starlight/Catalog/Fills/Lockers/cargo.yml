@@ -22,7 +22,7 @@
   table: !type:AllSelector
     children:
     - id: BoxFolderClipboardSalvageLead
-    - id: RubberStampSalvageLead
+    - id: BoxSalvageLeadStamps
     - id: ClothingNeckMantleDecoratedSalvager
     - id: ITGTrackerImplanter
     - id: SalvageTechFabFlatpack

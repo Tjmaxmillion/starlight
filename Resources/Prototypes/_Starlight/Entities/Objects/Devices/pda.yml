@@ -182,6 +182,12 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
     id: GunnerySergeantIDCard
+    penSlot:
+      startingItem: PenGunnerySergeant
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:
@@ -212,7 +218,7 @@
   - type: Pda
     id: MagistrateIDCard
     penSlot:
-      startingItem: Pen
+      startingItem: PenMagi
       priority: -1
       whitelist:
         tags:
@@ -268,6 +274,12 @@
   components:
   - type: Pda
     id: IAAIDCard
+    penSlot:
+      startingItem: PenIAA
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -288,6 +300,12 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
     id: BlueShieldIDCard
+    penSlot:
+      startingItem: PenBSO
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -347,6 +365,12 @@
        pda-assistantmanager
   - type: Pda
     id: AssistantManagerIDCard
+    penSlot:
+      startingItem: PenAssistantManager
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#789876"
     accentVColor: "#447987"
@@ -364,6 +388,12 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
     id: SalvageLeadIDCard
+    penSlot:
+      startingItem: PenSalvLead
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:

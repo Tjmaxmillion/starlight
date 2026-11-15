@@ -29,3 +29,4 @@ stamp-component-stamped-name-rubber-stamp-solgov-rep = Solgov Representative
 stamp-component-stamped-name-rubber-stamp-solgov-traders = Solgov Traders
 stamp-component-stamped-name-rubber-stamp-itg = Interstellar Trade Guild
 stamp-component-stamped-name-rubber-stamp-med-tak = MedTak
+stamp-component-stamped-name-rubber-stamp-sealed = Sealed

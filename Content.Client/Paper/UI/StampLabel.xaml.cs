@@ -49,6 +49,15 @@ public sealed partial class StampLabel : Label
         _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
         handle.UseShader(_stampShader);
         handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
+
+        // Starlight-start
+        if (TryDrawGradient(handle))
+        {
+            handle.SetTransform(Matrix3x2.Identity);
+            handle.UseShader(null);
+            return;
+        }
+        // Starlight-end
         base.Draw(handle);
 
         // Restore a sane transform+shader

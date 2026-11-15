@@ -1,7 +1,8 @@
-﻿- type: entity
+- type: entity
   parent: BoxStamps
   id: BoxWardenStamps
   name: warden's stamp box
+  categories: [ DoNotMap ]
   components:
   - type: EntityTableContainerFill
     containers:
@@ -10,3 +11,192 @@
         - id: RubberStampApproved
         - id: RubberStampDenied
         - id: RubberStampWarden
+        - id: PenWarden
+
+- type: entity
+  parent: BoxStamps
+  id: BoxCaptainStamps
+  name: captain's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampCaptain
+        - id: PenCap
+        - id: SealingKit
+
+- type: entity
+  parent: BoxStamps
+  id: BoxHoSStamps
+  name: head of security's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampHos
+        - id: PenHOS
+
+- type: entity
+  parent: BoxStamps
+  id: BoxGunnerySergeantStamps
+  name: gunnery sergeant's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampGunnerySergeant
+        - id: PenGunnerySergeant
+
+- type: entity
+  parent: BoxStamps
+  id: BoxCEStamps
+  name: chief engineer's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampCE
+        - id: PenCE
+
+- type: entity
+  parent: BoxStamps
+  id: BoxCMOStamps
+  name: chief medical officer's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampCMO
+        - id: PenCMO
+
+- type: entity
+  parent: BoxStamps
+  id: BoxRDStamps
+  name: research director's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampRd
+        - id: PenRD
+
+- type: entity
+  parent: BoxStamps
+  id: BoxSalvageLeadStamps
+  name: salvage lead's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampSalvageLead
+        - id: PenSalvLead
+
+- type: entity
+  parent: BoxStamps
+  id: BoxNTRStamps
+  name: nanotrasen representative's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: PenNTR
+        - id: SealingKit
+
+- type: entity
+  parent: BoxStamps
+  id: BoxMagistrateStamps
+  name: magistrate's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: PenMagi
+        - id: SealingKit
+
+- type: entity
+  parent: BoxStamps
+  id: BoxIAAStamps
+  name: internal affairs agent's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: PenIAA
+
+- type: entity
+  parent: BoxStamps
+  id: BoxBlueshieldStamps
+  name: blue shield's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampBSO
+        - id: PenBSO
+
+- type: entity
+  parent: BoxStamps
+  id: BoxAssistantManagerStamps
+  name: assistant manager's stamp box
+  categories: [ DoNotMap ]
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: PenAssistantManager

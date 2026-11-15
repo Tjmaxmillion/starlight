@@ -126,6 +126,7 @@
   id: HoPPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenHop
   - Pen
@@ -135,6 +136,7 @@
   id: CapPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenCap
   - Pen
@@ -144,8 +146,10 @@
   id: NTRPens
   name: loadout-group-pens
   minLimit: 1
+  defaultSelected: 1
   loadouts:
   - PenNTR
+  - PenNTRSlateBlack
   - Pen
   - FancyPen
 
@@ -155,6 +159,126 @@
   minLimit: 1
   loadouts:
   - PenCentcom
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: HOSPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenHOS
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: WardenPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenWarden
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: GunnerySergeantPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenGunnerySergeant
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: AssistantManagerPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenAssistantManager
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: CEPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenCE
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: CMOPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenCMO
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: RDPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenRD
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: QMPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenQM
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: SalvLeadPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenSalvLead
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: MagiPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenMagi
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: IAAPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenIAA
+  - Pen
+  - FancyPen
+
+- type: loadoutGroup
+  id: BlueShieldPens
+  name: loadout-group-pens
+  minLimit: 1
+  defaultSelected: 1
+  loadouts:
+  - PenBSO
   - Pen
   - FancyPen
 

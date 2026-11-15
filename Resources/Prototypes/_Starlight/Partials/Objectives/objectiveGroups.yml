@@ -40,6 +40,21 @@
     CriminalReportsStealObjective: 0.75
     SecureKnowledgeStealObjective:  0.75
     CaptainTabletStealObjective: 0.75
+    # Pens (~0.77 total across all 14, matching a single 0.75 standalone objective)
+    CaptainPenStealObjective: 0.055
+    HopPenStealObjective: 0.055
+    HOSPenStealObjective: 0.055
+    WardenPenStealObjective: 0.055
+    GunnerySergeantPenStealObjective: 0.055
+    CEPenStealObjective: 0.055
+    CMOPenStealObjective: 0.055
+    RDPenStealObjective: 0.055
+    QMPenStealObjective: 0.055
+    SalvLeadPenStealObjective: 0.055
+    NTRPenStealObjective: 0.055
+    MagiPenStealObjective: 0.055
+    IAAPenStealObjective: 0.055
+    BSOPenStealObjective: 0.055
 
 - type: !PartialOnly weightedRandom
   id: TraitorObjectiveGroupKill

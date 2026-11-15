@@ -142,3 +142,33 @@
   id: JobLawyer
   groups:
   - !Remove Glasses
+
+- type: !PartialOnly roleLoadout
+  id: JobQuartermaster
+  groups:
+    - !Remove Pens
+    - QMPens
+
+- type: !PartialOnly roleLoadout
+  id: JobChiefEngineer
+  groups:
+    - !Remove Pens
+    - CEPens
+
+- type: !PartialOnly roleLoadout
+  id: JobResearchDirector
+  groups:
+    - !Remove Pens
+    - RDPens
+
+- type: !PartialOnly roleLoadout
+  id: JobHeadOfSecurity
+  groups:
+    - !Remove Pens
+    - HOSPens
+
+- type: !PartialOnly roleLoadout
+  id: JobWarden
+  groups:
+    - !Remove Pens
+    - WardenPens

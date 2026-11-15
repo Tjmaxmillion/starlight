@@ -40,6 +40,7 @@ public sealed partial class StampWidget : PanelContainer
             {
                 StampedByLabel.FontOverride = null;
             }
+            StampedByLabel.Gradient = value.Gradient;
             //🌟Starlight Edit end🌟
 
             // Umbra: PanelOverride is the border texture, as inferred from ctor. Set null if the stamp is a signature to hide the border.

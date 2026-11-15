@@ -89,7 +89,10 @@
     - id: PinpointerNuclear
     - id: PlushieNuke
       prob: 0.1
-    - id: RubberStampCaptain
+# Starlight-start
+    - id: BoxCaptainStamps
+#    - id: RubberStampCaptain
+# Starlight-end
     - id: SpaceCash1000
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
@@ -271,7 +274,10 @@
     - id: RPD # Starlight: RPD
     - id: HandheldEngineeringMonitor # Starlight-edit: CE's handheld power/atmospherics monitor
 #    - id: RCDAmmo # Starlight-edit: CE RCD self-recharges
-    - id: RubberStampCE
+# Starlight-start
+    - id: BoxCEStamps
+#    - id: RubberStampCE
+# Starlight-end
 #    - id: MetalFoamGrenade # Starlight-edit: in the EngiVend
     - id: FireExtinguisherAtmos # Starlight
     - id: EngineeringTechFabFlatpack # Starlight
@@ -336,7 +342,10 @@
     - id: Hypospray
     - id: MedTekCartridge
     # Standard command gear
-    - id: RubberStampCMO
+# Starlight-start
+    - id: BoxCMOStamps
+#    - id: RubberStampCMO
+# Starlight-end
     - id: ClothingHeadsetAltMedical
     - id: DoorRemoteMedical
     - id: BoxEncryptionKeyMedical
@@ -414,7 +423,10 @@
     - id: ClothingHeadsetAltScience
     - id: DoorRemoteResearch
     - id: HandTeleporter
-    - id: RubberStampRd
+# Starlight-start
+    - id: BoxRDStamps
+#    - id: RubberStampRd
+# Starlight-end
     - id: EncryptionKeyMedicalScience # Starlight start, steal target
       prob: 0.5
     - id: ScienceTechFabFlatpack
@@ -492,7 +504,10 @@
     - id: FlashlightSeclite
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
-    - id: RubberStampHos
+# Starlight-start
+    - id: BoxHoSStamps
+#    - id: RubberStampHos
+# Starlight-end
     - id: BoxHoSCircuitboards
     - id: WeaponDisabler
     - id: WeaponTaser

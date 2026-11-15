@@ -564,3 +564,19 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/stamps.rsi
     state: stamp-senttoATS
+
+# Sealing Kit
+- type: entity
+  name: sealing kit
+  parent: RubberStampBase
+  id: SealingKit
+  description: A specialized kit used to officially seal documents against any further modification from department pens. Has three uses.
+  components:
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-rubber-stamp-sealed
+    stampedColor: "#000000"
+    stampState: "paper_stamp-trader"
+  - type: Sprite
+    state: stamp-trader

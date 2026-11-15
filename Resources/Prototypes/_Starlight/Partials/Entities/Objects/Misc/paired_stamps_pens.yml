@@ -1,0 +1,330 @@
+# Rubber stamps
+
+- type: !PartialOnly entity
+  id: RubberStampCaptain
+  components:
+  - type: PairedStamp
+    pairId: Captain
+
+- type: !PartialOnly entity
+  id: RubberStampHop
+  components:
+  - type: PairedStamp
+    pairId: HOP
+
+- type: !PartialOnly entity
+  id: RubberStampAssistantManager
+  components:
+  - type: PairedStamp
+    pairId: AssistantManager
+
+- type: !PartialOnly entity
+  id: RubberStampChaplain
+  components:
+  - type: PairedStamp
+    pairId: Chaplain
+
+- type: !PartialOnly entity
+  id: RubberStampReporter
+  components:
+  - type: PairedStamp
+    pairId: Reporter
+
+- type: !PartialOnly entity
+  id: RubberStampClown
+  components:
+  - type: PairedStamp
+    pairId: Clown
+
+- type: !PartialOnly entity
+  id: RubberStampMime
+  components:
+  - type: PairedStamp
+    pairId: Mime
+
+- type: !PartialOnly entity
+  id: RubberStampHos
+  components:
+  - type: PairedStamp
+    pairId: HOS
+
+- type: !PartialOnly entity
+  id: RubberStampWarden
+  components:
+  - type: PairedStamp
+    pairId: Warden
+
+- type: !PartialOnly entity
+  id: RubberStampGunnerySergeant
+  components:
+  - type: PairedStamp
+    pairId: GunnerySergeant
+
+- type: !PartialOnly entity
+  id: RubberStampDetective
+  components:
+  - type: PairedStamp
+    pairId: Detective
+
+- type: !PartialOnly entity
+  id: RubberStampBrigmedic
+  components:
+  - type: PairedStamp
+    pairId: Brigmedic
+
+- type: !PartialOnly entity
+  id: RubberStampCE
+  components:
+  - type: PairedStamp
+    pairId: CE
+
+- type: !PartialOnly entity
+  id: RubberStampCMO
+  components:
+  - type: PairedStamp
+    pairId: CMO
+
+- type: !PartialOnly entity
+  id: RubberStampPsychologist
+  components:
+  - type: PairedStamp
+    pairId: Psychologist
+
+- type: !PartialOnly entity
+  id: RubberStampRd
+  components:
+  - type: PairedStamp
+    pairId: RD
+
+- type: !PartialOnly entity
+  id: RubberStampQm
+  components:
+  - type: PairedStamp
+    pairId: QM
+
+- type: !PartialOnly entity
+  id: RubberStampSalvageLead
+  components:
+  - type: PairedStamp
+    pairId: SalvageLead
+
+- type: !PartialOnly entity
+  id: RubberStampNtrep
+  components:
+  - type: PairedStamp
+    pairId: NTR
+
+- type: !PartialOnly entity
+  id: RubberStampMagistrate
+  components:
+  - type: PairedStamp
+    pairId: Magistrate
+
+- type: !PartialOnly entity
+  id: RubberStampIAA
+  components:
+  - type: PairedStamp
+    pairId: IAA
+
+- type: !PartialOnly entity
+  id: RubberStampBSO
+  components:
+  - type: PairedStamp
+    pairId: BSO
+
+- type: !PartialOnly entity
+  id: RubberStampApproved
+  components:
+  - type: PairedStamp
+    pairId: Approved
+
+- type: !PartialOnly entity
+  id: RubberStampDenied
+  components:
+  - type: PairedStamp
+    pairId: Denied
+
+# Pens
+
+- type: !PartialOnly entity
+  id: PenCap
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - Captain
+    - HOP
+    - AssistantManager
+    - Chaplain
+    - Reporter
+    - Clown
+    - Mime
+    - HOS
+    - GunnerySergeant
+    - Warden
+    - Detective
+    - Brigmedic
+    - CE
+    - CMO
+    - Psychologist
+    - RD
+    - QM
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenHop
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - HOP
+    - AssistantManager
+    - Chaplain
+    - Reporter
+    - Clown
+    - Mime
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenAssistantManager
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - AssistantManager
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenHOS
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - HOS
+    - GunnerySergeant
+    - Warden
+    - Detective
+    - Brigmedic
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenGunnerySergeant
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - GunnerySergeant
+    - Warden
+    - Detective
+    - Brigmedic
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenWarden
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - Warden
+    - Detective
+    - Brigmedic
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenCE
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - CE
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenCMO
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - CMO
+    - Psychologist
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenRD
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - RD
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenQM
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - QM
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenSalvLead
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - SalvageLead
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenNTR
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - NTR
+    - IAA
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenMagi
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - Magistrate
+    - IAA
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenIAA
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - IAA
+    - Approved
+    - Denied
+
+- type: !PartialOnly entity
+  id: PenBSO
+  components:
+  - type: PairedPen
+    signatureGroup: NTCC
+    pairIds:
+    - BSO
+    - Approved
+    - Denied

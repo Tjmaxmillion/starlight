@@ -6,3 +6,61 @@
     timeToMix: 3.0
     reactionTypes:
     - Stir
+
+- type: !PartialOnly entity
+  id: PenCap
+  parent: !Clear [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  categories: [ DoNotMap ]
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    heldPrefix: pen_cap
+  - type: StealTarget
+    stealGroup: CaptainPen
+  - type: CustomSignature
+    config:
+      penColor:
+        - "#003366"
+        - "#0060b8"
+        - "#85c2ff"
+        - "#0060b8"
+        - "#002244"
+
+- type: !PartialOnly entity
+  id: PenHop
+  parent: !Clear [ BaseContrabandTier3, PenEmbeddable, BaseCommandContraband ]
+  categories: [ DoNotMap ]
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Misc/pens.rsi
+    heldPrefix: pen_hop
+  - type: StealTarget
+    stealGroup: HopPen
+  - type: CustomSignature
+    config:
+      penColor: "#539c00"
+
+- type: !PartialOnly entity
+  id: PenCentcom
+  components:
+  - type: CustomSignature
+    config:
+      penColor:
+        - "#093314"
+        - "#1c7a36"
+        - "#b8ff78"
+        - "#1c7a36"
+        - "#05220c"
+
+- type: !PartialOnly entity
+  id: PenWiz
+  components:
+  - type: CustomSignature
+    config:
+      penColor:
+        - "#e62a6b"
+        - "#e67e22"
+        - "#f1c40f"
+        - "#1abc9c"
+        - "#3498db"
+        - "#9b59b6"

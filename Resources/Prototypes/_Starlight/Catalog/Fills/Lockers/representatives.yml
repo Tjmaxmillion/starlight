@@ -19,7 +19,7 @@
         - id: ClothingShoesBootsLaceup
         - id: ClothingHeadsetAltRepresentative
         - id: WeaponDisabler
-        - id: LuxuryPen
+        - id: BoxNTRStamps
         - id: BoxFolderClipboardFilled
         - id: PrinterDocFlatpack
         - id: FaxMachineFlatpack
@@ -58,7 +58,7 @@
         - id: ClothingHeadsetMagistrate
         - id: WeaponDisabler
         - id: BookSpaceLaw
-        - id: LuxuryPen
+        - id: BoxMagistrateStamps
         - id: BoxFolderNanoTrasenClipboard
         - id: PrinterDocFlatpack
         - id: FaxMachineFlatpack
@@ -93,7 +93,7 @@
         - id: ClothingShoesBootsLaceup
         - id: ClothingHeadsetIAA
         - id: BookSpaceLaw
-        - id: LuxuryPen
+        - id: BoxIAAStamps
         - id: BoxFolderNanoTrasenClipboard
         - id: BriefcaseBrown # Empty
         - id: BoxTapeRecorder # Starlight
@@ -148,7 +148,7 @@
         - id: ClothingOuterCoatBlueShield
         - id: ClothingOuterArmorBlueShield
         - id: ClothingNeckCloakBsoCape
-        - id: RubberStampBSO
+        - id: BoxBlueshieldStamps
 
 - type: entity
   id: LockerBlueshieldFilledBluespaced

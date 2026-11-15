@@ -88,7 +88,16 @@ namespace Content.IntegrationTests.Tests
             {"/Maps/_Starlight/Shuttles/Admeme/scarletSHCdefenderFinal.yml", ["RubberStampSyndicate", "TraitorCodePaper"]},
             {"/Maps/_Starlight/Centcomms/CC_Outpost_SC17.yml", ["BoxFolderCentComEmpty", "BoxFolderCentCom", "RubberStampCentcom", "BoxFolderCentComThreePapers"]},
             {"/Maps/_Starlight/Centcomms/CC_Outpost_G24.yml", ["BoxFolderCentCom", "RubberStampCentcom"]},
-            {"/Maps/_Starlight/Centcomms/CC_Outpost_GNT9.yml", ["BoxFolderCentCom", "RubberStampCAD", "RubberStampCCD", "RubberStampCDD", "RubberStampCED", "RubberStampCentcom", "RubberStampCID", "RubberStampCMD", "RubberStampCRD", "RubberStampCSD"]}// Starlight end
+            {"/Maps/_Starlight/Centcomms/CC_Outpost_GNT9.yml", ["BoxFolderCentCom", "RubberStampCAD", "RubberStampCCD", "RubberStampCDD", "RubberStampCED", "RubberStampCentcom", "RubberStampCID", "RubberStampCMD", "RubberStampCRD", "RubberStampCSD"]},
+            {"/Maps/_Starlight/Shuttles/Evac/emergency_raven.yml", ["PenCap"]},
+            {"/Maps/_Starlight/Stations/Bagel.yml", ["PenNTR"]},
+            {"/Maps/_Starlight/Stations/Cluster.yml", ["PenCap"]},
+            {"/Maps/_Starlight/Stations/NovoLobster.yml", ["PenCap"]},
+            {"/Maps/_Starlight/Stations/Oasis.yml", ["PenCap", "PenHop"]},
+            {"/Maps/_Starlight/Stations/Plasma.yml", ["PenHop"]},
+            {"/Maps/_Starlight/Stations/Refinery.yml", ["PenNTR"]},
+            {"/Maps/_Starlight/Stations/Silica.yml", ["PenNTR"]},
+            {"/Maps/_Starlight/Stations/Starboard.yml", ["PenCap"]}// Starlight end
         };
 
         /// <summary>
